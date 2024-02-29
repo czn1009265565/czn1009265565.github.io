@@ -1,0 +1,266 @@
+# PostgreSQL操作手册
+
+## 数据库操作
+
+### 数据库查看
+
+```sql
+-- 查看单个数据库大小
+select pg_database_size('dbname');
+
+-- 查看所有数据库大小
+select pg_database.datname, pg_database_size(pg_database.datname) AS size from pg_database order by size desc;
+
+-- 以KB，MB，GB的方式来查看数据库大小
+select pg_size_pretty(pg_database_size('dbname'));
+
+-- 查看表大小
+select pg_relation_size('tb_name');
+
+-- 以KB，MB，GB的方式来查看表大小
+select pg_size_pretty(pg_relation_size('tb_name'));
+
+-- 查看表的总大小，包括索引大小
+select pg_size_pretty(pg_total_relation_size('tb_name'));
+```
+
+### 创建数据库
+
+```sql
+-- 当前角色自动成为该新数据库的拥有者
+create database dbname;
+
+-- 为其他人创建一个数据库，并且使其成为新数据库的拥有者
+CREATE DATABASE dbname OWNER rolename;
+
+-- 删除数据库
+drop database dbname;
+```
+
+
+### 数据更新
+
+```sql
+-- 全表更新
+update tb_name set column_a=value_a;
+
+-- 条件更新
+update tb_name set column_a=value_a where id=1;
+
+-- 连表更新
+update tb_name_1 t1 set column_a=t2.column_a from tb_name_2 t2 where t1.column_b=t2.column_b;
+```
+
+### 数据格式类型转换
+
+|函数|返回类型|描述|例子|
+|---|---|---|---|
+|to_char(timestamp, text)|text|把时间戳转成字符串|to_char(current_timestamp, 'HH12:MI:SS')|
+|to_char(interval, text) |text  |把间隔转成字符串  |to_char(interval '15h 2m 12s', 'HH24:MI:SS')|
+|to_char(int, text)|  text | 把整数转成字符串 | to_char(125, '999')|
+|to_char(double precision, text) |text | 把实数或双精度转成字符串 | to_char(125.8::real, '999D9')|
+|to_char(numeric, text) | text | 把数字转成字符串 | to_char(-125.8, '999D99S')|
+|to_date(text, text)| date | 把字符串转成日期 | to_date('05 Dec 2000', 'DD Mon YYYY')|
+|to_number(text, text) |numeric |把字符串转成数字 | to_number('12,454.8-', '99G999D9S')|
+|to_timestamp(text, text) | timestamp with time zone | 把字符串转成时间戳 |to_timestamp('05 Dec 2000', 'DD Mon YYYY')|
+
+
+#### to_number
+这里详细介绍下数值转换的用法
+
+|模式 | 描述|
+|---|---|
+|9 |数位（如果无意义可以被删除）|
+|0 |数位（即便没有意义也不会被删除）|
+|. |(period)  小数点|
+|, |(comma) 分组（千）分隔符|
+|PR | 尖括号内的负值|
+|S| 带符号的数字（使用区域）|
+|L |货币符号（使用区域）|
+|D |小数点（使用区域）|
+|G |分组分隔符（使用区域）|
+|MI | 在指定位置的负号（如果数字 < 0）|
+|PL | 在指定位置的正号（如果数字 > 0）|
+|SG | 在指定位置的正/负号|
+|RN | 罗马数字（输入在 1 和 3999 之间）|
+|TH or th | 序数后缀|
+|V |移动指定位数（参阅注解）|
+|EEEE | 科学记数的指数|
+
+这里主要介绍0和9和小数点，相信已经满足绝大多数情况了
+
+- 0指定一个总是被打印的数位，即便它包含前导的零。
+- 9也指定一个数位，但是如果它是前导零则会被空格替换，而如果是拖尾零并且指定了填充模式则它会被删除（对于to_number()来说，这两种模式字符等效）。
+
+
+
+
+
+### 备份与恢复
+
+```shell
+# 备份数据库
+pg_dump -U username -h localhost -p 5432 -d dbname -f dbname.bak
+
+# 恢复数据库
+psql -U username -h localhost -p 5432 -d dbname -f dbname.bak
+
+# 备份表数据
+pg_dump -U username -d dbname -p 5432 -t table_name -a -f table_name.sql
+# 恢复表数据
+psql -U username -h localhost -p 5432 -d dbname -f table_name.sql
+```
+参数说明:
+
+1. -t 参数指定要导出的表名
+2. -d 参数指定要导出的数据库名
+3. -a 参数指定只导出数据而不导出表结构
+4. -f 参数指定导出数据的文件名
+
+注意点：在还原中往往会遇到异常，例如缺少postgis插件，缺少函数方法等，根据报错日志配置环境即可。
+
+## 存储过程
+### 优点
+- 减少应用和数据库之间的网络传输。所有的 SQL 语句都存储在数据库服务器中，应用程序只需要发送函数调用并获取除了结果，避免了发送多个 SQL 语句并等待结果。
+- 提高应用的性能。因为自定义函数和存储过程进行了预编译并存储在数据库服务器中。
+- 可重用性。存储过程和函数的功能可以被多个应用同时使用。
+
+### 缺点
+
+- 调试麻烦，问题不容易排查
+- 移植问题，数据库端代码与数据库相关，不同的数据库语法有所不同
+- 维护问题，如果在一个程序系统中大量的使用存储过程，到程序交付使用的时候随着用户需求的增加会导致数据结构的变化，这时涉及到存储过程修改和维护
+
+### 代码块示例
+
+```plpgsql
+DO $$ 
+DECLARE
+  name text;
+BEGIN 
+  name := 'PL/pgSQL';
+  RAISE NOTICE 'Hello %!', name;
+END $$;
+```
+以上是一个匿名块，与此相对的是命名块（也就是存储过程和函数）。其中，DO 语句用于执行匿名块；我们定义了一个字符串变量 name，然后给它赋值并输出一个信息；RAISE NOTICE 用于输出通知消息。
+
+
+### 变量
+
+```
+-- 变量申明
+variable_name data_type [ NOT NULL ] [ { DEFAULT | := | = } expression ];
+
+-- 示例
+user_id integer;
+quantity numeric(5) DEFAULT 0;
+url varchar := 'http://mysite.com';
+```
+
+### 常量
+如果在定义变量时指定了 CONSTANT 关键字，意味着定义的是常量。常量的值需要在声明时初始化，并且不能修改。
+
+```
+PI CONSTANT NUMERIC := 3.14159265;
+```
+
+### 控制结构
+
+#### IF语句
+IF 语句可以基于条件选择性执行操作， PL/pgSQL 提供了三种形式的 IF 语句。
+
+- IF ... THEN ... END IF
+- IF ... THEN ... ELSE ... END IF
+- IF ... THEN ... ELSIF ... THEN ... ELSE ... END IF
+
+```
+-- 初始化字典表
+DO $$
+BEGIN
+    if (select count(*) from sys_dict_data)<1
+    then insert into sys_dict_data(dict_code,dict_sort,dict_label,dict_value,status,create_time,update_time,remark) values(1,0,'city','china',0,'2022-10-19','2022-10-19','remark');
+    end if;
+END $$;
+```
+
+#### 循环语句
+
+```
+-- 
+DO $$
+DECLARE
+  i integer := 0;
+BEGIN 
+  LOOP
+    EXIT WHEN i = 10;
+    i := i + 1;
+    CONTINUE WHEN mod(i, 2) = 1;
+    RAISE NOTICE 'Loop: %', i;
+  END LOOP;
+END $$;
+```
+
+### 错误处理
+
+PL/pgSQL 提供了 RAISE 语句，用于打印消息或者抛出错误：
+
+```
+RAISE level format;
+```
+
+不同的 level 代表了错误的不同严重级别，包括：
+
+- DEBUG
+- LOG
+- NOTICE
+- INFO
+- WARNING
+- EXCEPTION
+
+
+### 自定义函数
+
+```
+-- 定义求和函数
+CREATE OR REPLACE FUNCTION sum_num(
+  VARIADIC nums numeric[])
+  RETURNS numeric
+AS $$
+DECLARE ln_total numeric;
+BEGIN
+  SELECT SUM(nums[i]) INTO ln_total
+  FROM generate_subscripts(nums, 1) t(i);
+
+  RETURN ln_total;
+END; $$
+LANGUAGE plpgsql;
+
+-- 调用
+select sum_num(1,2,3);
+```
+如果函数不需要返回结果，可以返回 void 类型；或者直接使用存储过程
+
+
+### 存储过程
+存储过程使用 CREATE PROCEDURE 语句创建
+
+存储过程的定义和函数主要的区别在于没有返回值，其他内容都类似。
+
+在存储过程内部，可以使用 COMMIT 或者 ROLLBACK 语句提交或者回滚事务。
+
+```
+CREATE OR REPLACE PROCEDURE update_emp(
+  p_empid in integer,
+  p_salary in numeric,
+  p_phone in varchar)
+AS $$
+BEGIN
+  update employees 
+  set salary = p_salary,
+      phone_number = p_phone
+  where employee_id = p_empid;
+END; $$
+LANGUAGE plpgsql;
+```
+
+
