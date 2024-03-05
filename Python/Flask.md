@@ -527,43 +527,10 @@ def login():
 
 #### 模板页面
 login.html
-```
-{% macro render_field(field) %}
-<dt>{{ field.label }}:</dt>
-<dd>
-    { { field(**kwargs)|safe } }
-    {% if field.errors %}
-    <ul class=errors>
-        {% for error in field.errors %}
-        <li>{{ error }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-</dd>
-{% endmacro %}
 
-<!-- 登录表单 -->
-<form method="POST">
-    {{ form.csrf_token }}
-    {{ render_field(form.username) }}
-    {{ render_field(form.password) }}
-    {% if msg %}  <!-- 如果有错误信息 则显示 -->
-    <h3> {{ msg }}</h3>
-    {% endif %}
-    <input type="submit" value="登录">
-</form>
-```
 
 index.html  
-```
-<h1>
-{% if name %}
-    Hello, {{ name }}!
-{% else %}
-    Hello, Stranger!
-{% endif %}
-</h1>
-```
+
 
 #### 保护视图
 
