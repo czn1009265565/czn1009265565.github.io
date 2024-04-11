@@ -90,13 +90,48 @@ arr[arr > 3]
 
 
 ### 数学与统计函数
+**数学函数**  
 
-np.abs()/np.fabs()	计算数组各元素的绝对值
-np.sqrt()	计算数组各元素的平方根
-np.square()	计算数组各元素的平方
-np.log(x)/np.log10(x)/np.log2(x)	计算数组各元素的自然对数、10底对数和2底对数
-np.ceil(x),np.floor(x)	计算数组各元素的ceiling值或floor值
-np.rint(x)	计算数组各元素的四舍五入值
-np.modf(x)	将数据各元素的整数和小数部分以两个独立的数组形式返回
-np.cos/cosh/sin/sinh/tan/tanh	计算数据各元素的普通型和双典型的三角函数
-np.exp(x)	计算数组各元素的指数值
+| 函数                               | 说明                          |
+|----------------------------------|-----------------------------|
+| np.abs(a) np.fabs(a)             | 计算数组a各元素的绝对值                |
+| np.sqrt(a)	                      | 计算数组a各元素的平方根                |
+| np.square(a)	                    | 计算数组a各元素的平方                 |
+| np.power(a, n)                   | 计算数组a各元素的n次方                |
+| np.log(a) np.log10(a) np.log2(a) | 	计算数组a各元素的自然对数、10底对数和2底对数   |
+| np.ceil(a)	                      | 计算数组a各元素的ceiling值(向上取整)     |
+| np.floor(a)                      | 计算数组a各元素的floor值(向下取整)       |
+| np.rint(a)	                      | 计算数组a各元素的四舍五入值              |
+| np.modf(a)	                      | 将数组a各元素的整数和小数部分以两个独立的数组形式返回 |
+| np.cos/cosh/sin/sinh/tan/tanh    | 	计算数据各元素的普通型和双典型的三角函数       |
+| np.exp(a)	                       | 计算数组各元素的指数值                 |
+
+**统计函数**  
+
+| 函数	                                | 说明                       |
+|------------------------------------|--------------------------|
+| sum(a,axis=None)	                  | 根据给定axis计算数组a相关元素之和      |
+| mean(a,axis=None)	                 | 根据给定axis计算数组a的算数平均值      |
+| average(a,axis=None,weights=None)	 | 根据给定axis计算数组a相关元素的加权平均值  |
+| std(a,axis=None)	                  | 根据给定轴axis计算数组a相关元素的标准差   |
+| var(a,axis = None)	                | 根据给定轴axis计算数组a相关元素的方差    |
+| cov(a,axis = None)	                | 根据给定轴axis计算数组a相关元素的协方差   |
+| min(a) max(a)	                     | 计算数组a中元素的最小值，最大值         |
+| argmin(a) argmax(a)                | 	计算数组a中元素的最小值，最大值的降一维后下标 |
+| ptp(a, axis=None)	                 | 计算数组a中元素最大值和最小值的差        |
+| median(a, axis=None)	              | 计算数组a中元素的中位数(中值)         |
+
+**随机数函数**  
+
+| 函数	                                               | 说明                                                |
+|---------------------------------------------------|---------------------------------------------------|
+| random.rand(d0,d1,...dn)                          | 各元素是[0,1)的浮点数，服从均匀分布                              |
+| random.randn(d0,d1,...dn)                         | 标准正态分布                                            |
+| randint(low, high=None, size=None, dtype=int)     | 根据shape创建随机整数数组，范围是[low,high)                     |
+| random.seed(s)                                    | 随机数种子                                             |
+| random.shuffle(a)                                 | 根据数组a的第一轴进行随机排列，改变数组a                             |
+| random.permutation(a)                             | 根据数组a的第一轴进行随机排列,生成新的数组，不改变数组a                     |
+| random.choice(a, size=None, replace=True, p=None) | 从数组a中，以概率p抽取元素，形成size形状新数组，replace表示是否重用元素，默认True |
+| random.uniform(low=0.0, high=1.0, size=None)      | 产生均匀分布的数组,起始值为low,结束值为high,size为形状                |
+| random.normal(loc=0.0, scale=1.0, size=None)      | 产生正态分布的数组，loc为均值，scale为标准差，size为形状                |
+| random.poisson(lam=1.0, size=None)                | 产生泊松分布的数组，lam随机事件发生的概率，size为形状                    |
