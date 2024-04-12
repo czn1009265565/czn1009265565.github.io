@@ -23,7 +23,7 @@ DataFrame中的数据是以一个或多个二维块存放的（而不是列表�
 
 ### 创建
 
-**通过字典创建**
+#### 字典创建
 ```python
 # 创建一个字典，其中包含不同的列和数据
 data = {
@@ -36,12 +36,14 @@ data = {
 df = pd.DataFrame(data)
 ```
 
-**通过Numpy数据创建**
+#### Numpy数据创建
 ```python
 df = pd.DataFrame(np.random.randn(10,3), columns = ["Column1", "Column2", "Column3"], index = list("abcdefghij"))
 ```
 
-**读取CSV**  
+#### 读取CSV
+
+CSV文件示例:  
 ```csv
 "date","close","volume","open","high","low"
 2018/10/23,23.230,17943360.0000,22.610,23.5900,22.3300
@@ -57,13 +59,33 @@ df = pd.DataFrame(np.random.randn(10,3), columns = ["Column1", "Column2", "Colum
 ```python
 df = pd.read_csv("jd.csv")
 
+# 指定逗号分隔符
+df = pd.read_csv("jd.csv", sep=",")
+# 指定第一行作为表头
+df = pd.read_csv("jd.csv", header=0)
+# 自定义表头
+df = pd.read_csv("jd.csv", header=0, names=["日期","收盘价","数量","开盘价","最高价","最低价"])
 # 指定date列做为index
 df = pd.read_csv("jd.csv", index_col=['date'])
-df = pd.read_csv("jd.csv", index_col=0)
 ```
-header ：指定作为列名的行，默认0，即取第一行，数据为列名行以下的数据；若数据不含列名，则设定 header = None；
 
-**读取Excel**  
+**公共参数介绍:**  
+- sep: 指定分隔符。如果不指定参数，则会尝试使用逗号分隔
+- header: 指定作为列名的行，默认0，即取第一行，数据为列名行以下的数据；若数据不含列名，则设定 header = None
+- names: 指定结果的列名列表，如果数据文件中没有列标题行，就需要执行header=None
+- index_col: 用作行索引的列编号或者列名，如果给定一个序列则有多个行索引
+
+**转存CSV**  
+```python
+df.to_csv("jd2.csv", index=False)
+```
+
+#### 读取Excel
 ```python
 df = pd.read_excel('../data/bikes.xlsx', sheet_name="Sheet1")
+```
+
+**转存Excel**  
+```python
+df.to_excel("jd2.xlsx",sheet_name="Sheet1", index=False)
 ```
