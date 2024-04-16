@@ -89,3 +89,36 @@ df = pd.read_excel('../data/bikes.xlsx', sheet_name="Sheet1")
 ```python
 df.to_excel("jd2.xlsx",sheet_name="Sheet1", index=False)
 ```
+
+### 属性
+
+#### columns
+columns属性可以获得DataFrame有那些列，即DataFrame的表头
+```python
+df.columns
+>>>
+Index(['date', 'close', 'volume', 'open', 'high', 'low'], dtype='object')
+```
+
+#### shape
+shape属性是描述DataFrame的形状的。
+```python
+df.shape
+>>>
+(8,6)
+```
+
+#### size
+size属性返回的是DataFrame的value的个数
+```python
+df.size
+>>>
+48
+```
+
+#### values
+当前DataFrame的数据,是numpy.ndarray类型
+
+```python
+df.values
+```
