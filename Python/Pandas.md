@@ -125,4 +125,41 @@ df.values
 
 ### 时间序列
 
-时间序列是指多个时间点上形成的数值序列，它既可以是定期的，也可以是不定期出现的
+时间序列是指多个时间点上形成的数值序列，它既可以是定期的，也可以是不定期出现的。
+
+#### 创建时间序列
+Pandas 支持解析时间格式字符串、`np.datetime64`、`datetime.datetime` 等多种时间序列数据,
+生成 `DatetimeIndex`、`TimedeltaIndex` 、`PeriodIndex` 等定频日期与时间段序列。
+
+```python
+import datetime
+import numpy as np
+import pandas as pd
+
+dti = pd.to_datetime(['2024-04-24',np.datetime64('2024-04-25'), datetime.datetime(2024,4,26)])
+```
+
+#### 生成定频时间戳
+- date_range 默认的频率是日历日
+- bdate_range 的默认频率是工作日
+
+```python
+# 根据起始和结束日期
+start = datetime.datetime(2011, 1, 1)
+end = datetime.datetime(2012, 1, 1)
+index1 = pd.date_range(start, end)
+index2 = pd.bdate_range(start, end)
+
+# 根据频率和周期
+pd.date_range(start, periods=10, freq='D')
+```
+
+#### 切片索引
+
+```python
+# 字符串索引
+df['2021-01-01':'2021-02-01']
+
+# 精确索引
+df[datetime.datetime(2021, 1, 1):datetime.datetime(2021, 2, 1)]
+```
