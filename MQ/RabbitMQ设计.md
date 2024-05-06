@@ -49,28 +49,59 @@
 
 RabbitMQ 消息确认机制分为两大类：发送方确认、接收方确认
 
+### 发送方确认
+生产者发送消息后，需要等待RabbitMQ服务器的确认消息，以确保消息已经被成功地发送到RabbitMQ服务器。  
+如果RabbitMQ服务器没有收到消息或者消息发送失败，生产者会收到一个确认消息，从而可以进行重发或者其他处理。
+
+### 接收方确认
+
+消费者接收到消息后，需要向RabbitMQ服务器发送确认消息，以告诉服务器已经成功地接收并处理了该消息。  
+如果消费者没有发送确认消息，RabbitMQ服务器会认为该消息没有被正确地处理，从而会将该消息重新发送给其他消费者进行处理。  
+
+**确认示例:**  
+```java
+@Slf4j
+@Component
+public class MessageListener {
+    @RabbitListener(queues = RabbitMqConfig.TOPIC_QUEUE)
+    public void receiveTopic(@Payload Message message, @Headers Map<String,Object> headers, Channel channel) throws IOException {
+        log.info("消息接收 message code:{} msg:{}", message.getCode(), message.getMessage());
+        /**
+         * Delivery Tag 用来标识信道中投递的消息。RabbitMQ 推送消息给 Consumer 时，会附带一个 Delivery Tag，
+         * 以便 Consumer 可以在消息确认时告诉 RabbitMQ 到底是哪条消息被确认了。
+         * RabbitMQ 保证在每个信道中，每条消息的 Delivery Tag 从 1 开始递增。
+         */
+        Long deliveryTag = (Long) headers.get(AmqpHeaders.DELIVERY_TAG);
+        /**
+         *  multiple 取值为 false 时，表示通知 RabbitMQ 当前消息被确认
+         *  如果为 true，则额外将比第一个参数指定的 delivery tag 小的消息一并确认
+         */
+        channel.basicAck(deliveryTag, false);
+    }
+}
+```
 
 ## 持久化存储
 
-RabbitMQ的持久化分为三个部分:  
-- 交换器的持久化
-- 队列的持久化
-- 消息的持久化
+持久化，即将原本存在于内存中的数据写入到磁盘上永久保存数据，防止服务宕机时内存数据的丢失。  
+Rabbitmq 的持久化分为队列持久化、消息持久化和交换器持久化。  
+对于消息来说，不管是持久化的消息还是非持久化的消息都可以被写入到磁盘。  
+持久化的消息会同时写入磁盘和内存（加快读取速度），非持久化消息会在内存不够用时，将消息写入磁盘。  
 
 ### 交换器的持久化
-- 交换器的持久化是通过在声明交换器时， 指定Durability参数为durable实现的。
-- 若交换器不设置持久化，在RabbitMQ服务重启之后，相关的交换器元数据会丢失，但消息不会丢失，只是不能将消息发送到这个交换器中。所以在声明交换器时，都要设置持久化。
+对于消息的可靠性来说，只需要设置队列的持久化和消息的持久化即可。`exchange` 的持久化并没有什么影响。
+但是，如果 `exchange` 不设置持久化的话，当 `broker` 服务重启之后，`exchange` 将不复存在，这样会导致消息发送者 producer 无法正常发送消息。
 
 
 ### 队列持久化
 
-- 队列的持久化是通过在声明队列时， 指定Durability参数为durable实现的。
+- 队列的持久化是在定义队列时的通过 `durable` 参数来决定的，当 `durable` 为 `true` 时，才代表队列会持久化
 - 若队列不设置持久化，在rabbitmq服务重启之后，相关队列的元数据和消息数据同时丢失。
-- 若队列设置持久化，只能保证队列本身的元数据不会因异常情况而丢失，但是并不能保证内部所存储的消息不会丢失。要确保消息不会丢失，需要将其设置为持久化。
+- 若队列设置持久化，只能保证队列本身的元数据不会因异常情况而丢失，但是并不能保证内部所存储的消息不会丢失。
 
 
 ### 消息持久化
 
-- 消息的持久化可以通过消息的投递模式来实现，属于代码层面上的。
-- 在web监控页面没有指定持久化的属性参数，但是消息一般都是要设置持久化的，所以在web页面我们可以看到发送消息时下面都带有持久化标识的。
+- 消息持久化的实现需要在发送消息时设置消息的持久化标识
+- 当 `broker` 服务其重启后，想要消息不丢失，既需要设置队列持久化，也需要设置消息持久化。
 - 但是将所有消息都设置为持久化，会严重影响rabbitmq服务器性能，写入磁盘的速度比写入内存的速度慢得不只一点点。所以对于可靠性不是那么高的消息可以不采用持久化处理以提高整体的吞吐量。在选择是否要将消息持久化时，需要在可靠性和吐吞量之间做一个权衡。
