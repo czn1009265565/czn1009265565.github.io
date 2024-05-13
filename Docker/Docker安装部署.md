@@ -1,6 +1,6 @@
 # Docker安装部署
 
-## 安装部署
+## Linux
 
 ### 系统要求
 Docker 支持 64 位版本 CentOS 7/8，并且要求内核版本不低于 3.10。 CentOS 7 满足最低内核的要求，但由于内核版本比较低，部分功能（如 overlay2 存储层驱动）无法使用，并且部分功能可能不太稳定.
@@ -25,7 +25,6 @@ sudo yum remove docker \
 ```shell
 sudo yum install -y yum-utils
 ```
-
 
 鉴于国内网络问题，强烈建议使用国内源，官方源请在注释中查看。
 执行下面的命令添加 yum 软件源：
@@ -73,10 +72,10 @@ docker run --rm hello-world
 ```
 
 
-## 镜像配置
+### 镜像配置
 由于镜像服务可能出现宕机，建议同时配置多个镜像，这里同时配置网易、百度、阿里云镜像加速服务。
 
-### 查看是否配置过镜像地址
+#### 查看是否配置过镜像地址
 
 ```shell
 systemctl cat docker | grep '\-\-registry\-mirror'
@@ -95,15 +94,15 @@ vim /etc/docker/daemon.json
 }
 ```
 
-重启服务
+#### 重启服务
 ```shell
 sudo systemctl daemon-reload
 sudo systemctl restart docker
 ```
 
-## 代理配置
+### 代理配置
 
-### dockerd网络代理
+#### dockerd网络代理
 "docker pull" 命令是由 dockerd 守护进程执行。而 dockerd 守护进程是由 systemd 管理。因此，如果需要在执行 "docker pull" 命令时使用 HTTP/HTTPS 代理，需要通过 systemd 配置。
 
 1. 为 dockerd 创建配置文件夹
@@ -127,3 +126,16 @@ Environment="NO_PROXY=localhost,127.0.0.1,.example.com"
 sudo systemctl daemon-reload
 sudo systemctl restart docker
 ```
+
+## Windows
+
+本文介绍基于WSL2安装Docker Desktop
+
+1. 打开控制面板,勾选如下两项:  
+   1. 基于Linux的Windows子系统
+   2. 虚拟机平台
+2. 重启电脑
+3. 以管理员身份运行`wsl --set-default-version 2`，设置WSL默认版本
+4. 下载Docker Desktop for Windows
+5. 双击安装即可
+6. 验证 CMD执行 `docker -v`
