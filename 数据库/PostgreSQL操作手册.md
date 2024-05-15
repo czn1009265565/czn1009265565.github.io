@@ -1,6 +1,25 @@
 # PostgreSQL操作手册
 
 ## 数据库操作
+运行PostgreSQL的交互式终端程序，它被称为psql， 它允许你交互地输入、编辑和执行SQL命令。
+
+```shell
+# 查看版本
+psql --version
+
+# 连接数据库
+psql -U postgre -d postgres
+```
+
+**连接参数介绍**  
+- -h, --host=HOSTNAME
+- -p, --port=PORT
+- -U, --username=USERNAME
+- -w, --no-password
+- -W, --password
+- -d, --dbname=DBNAME
+- -c, --command=COMMAND
+
 
 ### 数据库查看
 
