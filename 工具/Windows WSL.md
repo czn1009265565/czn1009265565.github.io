@@ -29,8 +29,4 @@
 
 1. 打开 `Microsoft Store`，安装 `Ubuntu 22.04`
 2. 首次启动 `Ubuntu 22.04` 需要创建用户账户和密码
-3. 安装图形界面
-   ```shell
-   sudo apt update
-   sudo apt install ubuntu-desktop
-   ```
+3. 卸载 `wsl --unregister Ubuntu-22.04`
