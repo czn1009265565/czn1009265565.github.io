@@ -35,7 +35,28 @@
 
 ### 远程终端
 
+菜单路径: Terminal => v => <远程服务地址>
+
+启动服务: `java -jar ./target/spring-boot-examples-0.0.1-SNAPSHOT.jar`
 
 ### 远程调试
 
+1. IDEA 右上角编辑配置 `Edit Configurations`
+2. 新建远程 JVM Debug 配置 `Remote JVM Debug`
+3. 修改自己虚拟机的 IP、希望占用的远程调试端口、JDK 版本等，IDEA 会自动生成一段远程调试参数
+   ![img.png](imgs/IDEA.png)
+4. 在远程终端启动服务  
+   ```shell
+   java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 -jar ./target/spring-boot-examples-0.0.1-SNAPSHOT.jar
+   ```
+5. IDEA开启Debug
 
+## 远程开发
+
+使用 IDEA 自带的远程开发功能，可以直接将本地的编译、构建、调试、运行等工作全部都放在远程服务器上执行！
+而本地仅运行客户端软件连接服务器，像之前一样编写代码、进行其他开发操作即可。
+
+1. 菜单路径: File => Remote Development => SSH
+2. 配置SSH连接
+3. 指定远程开发的代码路径
+4. 首次使用时，需要等待下载 `JetBrains Client` 客户端。同时服务器上也会安装对应远程开发后端
