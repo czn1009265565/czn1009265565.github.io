@@ -45,7 +45,7 @@
 2. 新建远程 JVM Debug 配置 `Remote JVM Debug`
 3. 修改自己虚拟机的 IP、希望占用的远程调试端口、JDK 版本等，IDEA 会自动生成一段远程调试参数
    ![img.png](imgs/IDEA.png)
-4. 在远程终端启动服务  
+4. 在远程终端启动服务(注意点：调试参数需要放在`-jar`前面)  
    ```shell
    java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 -jar ./target/spring-boot-examples-0.0.1-SNAPSHOT.jar
    ```
