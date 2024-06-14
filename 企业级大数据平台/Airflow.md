@@ -4,9 +4,25 @@ airflow提供了丰富的命令行工具用于系统管控，而其web管理界�
 
 ## 安装部署
 
+### 虚拟环境
+安装依赖  
+```shell
+pip install virtualenv -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
+
+创建虚拟环境  
+```shell
+virtualenv airflow
+```
+
+激活虚拟环境  
+- Linux: `source airflow/bin/activate`
+- Windows: `airflow\Scripts\activate`
+
 ### 安装基础包
 
 ```shell
+export AIRFLOW_HOME = ~/airflow
 pip install apache-airflow
 ```
 
