@@ -64,35 +64,79 @@ public interface UserService {
 3. `@FeignClient(name="user-service", url="http://localhost:${user-service.port:8080}")` 配置文件中定义 `user-service.port=8080`，没有负载均衡能力
 4. `@FeignClient(name="user-service")` 通过服务发现寻址，有负载均衡能力
 
-### Feign拦截器
+### 自定义配置
 
-拦截器是OpenFeign可用的一种强大的工具，它可以被用来在请求和响应前后进行一些额外的处理
+#### 默认配置
+在FeignClientsConfiguration类中，OpenFeign为我们做了很多默认配置，其中所有的配置我们都可以自定义并且覆盖。
+
+- Decoder: feign解码器
+- Encoder: feign编码器
+- Logger: feign的Logger，默认Slf4jLogger
+- MicrometerObservationCapability
+- MicrometerCapability
+- CachingCapability
+- Contract: feignContract，默认SpringMvcContract
+- Feign.Builder: feignBuilder默认FeignCircuitBreaker.Builder
+- Client: feignClient
+
+#### 自定义配置
+我们可以自定义以上任意一个Bean，来覆盖默认的配置，配置是否全局生效取决于是否添加`@Configuration`注解
 
 ```java
-public class FirstInterceptor implements RequestInterceptor {
-    @Override
-    public void apply(RequestTemplate requestTemplate) {
-        // 在这里添加额外的处理逻辑，添加请求头
-        requestTemplate.header("Token", "value");
-    }
-}
-```
-
-#### 注册拦截器
-
-```java
-@Configuration
+// @Configuration
 public class FeignConfiguration {
+    public final ObjectMapper objectMapper = new ObjectMapper();
+
+    /** 注解解码器 */
+    @Bean
+    public Decoder jsonDecoder() {
+        return new JsonDecoder(objectMapper);
+    }
+
+    /** 注册拦截器 (多个拦截器可以通过@Order注解决定执行顺序) **/
     @Bean
     public FirstInterceptor firstInterceptor() {
         return new FirstInterceptor();
     }
     
-    /** 注册多个拦截器 可以通过Order注解决定执行顺序 **/
     @Bean
     public SecondInterceptor secondInterceptor() {
         return new SecondInterceptor();
     }
+    
+    /** 自定义解码器 */
+    public static class JsonDecoder implements Decoder {
+        public ObjectMapper objectMapper;
+
+        public JsonDecoder(ObjectMapper objectMapper) {
+            this.objectMapper = objectMapper;
+        }
+
+        @Override
+        public Object decode(Response response, Type type) throws IOException {
+            String jsonData = response.body().toString();
+            TypeFactory typeFactory = objectMapper.getTypeFactory();
+            JavaType rawType = typeFactory.constructType(type);
+            return objectMapper.readValue(jsonData, rawType);
+        }
+    }
+    
+    /** 自定义拦截器配置 用来在请求和响应前后进行一些额外的处理 */
+    public static class FirstInterceptor implements RequestInterceptor {
+        @Override
+        public void apply(RequestTemplate requestTemplate) {
+            // 在这里添加额外的处理逻辑，添加请求头
+            requestTemplate.header("Token", "value");
+        }
+    }
+}
+```
+
+#### 覆盖配置
+
+```java
+@FeignClient(value = "user-service", configuration = FeignConfiguration.class)
+public interface UserService {
 }
 ```
 
