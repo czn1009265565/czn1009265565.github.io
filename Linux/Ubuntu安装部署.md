@@ -33,3 +33,12 @@
 
 注意点:  
 如果出现 `[FAILED] Failed unmounting /cdrom`报错，重启服务并移除U盘，否则将会尝试重新安装
+
+
+### 扩展逻辑卷
+Ubuntu server 默认使用LVM进行磁盘管理,安装后只使用了硬盘一部分空间
+
+1. 查看现有的卷组 `sudo vgdisplay`
+2. 扩展现有的逻辑卷 `sudo lvextend -l +100%FREE /dev/mapper/ubuntu--vg-ubuntu--lv`
+3. 重新计算逻辑卷大小 `sudo resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv`
+4. 再次查看磁盘使用情况 `df -h`
