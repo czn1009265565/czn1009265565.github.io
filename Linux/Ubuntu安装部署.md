@@ -42,3 +42,30 @@ Ubuntu server 默认使用LVM进行磁盘管理,安装后只使用了硬盘一�
 2. 扩展现有的逻辑卷 `sudo lvextend -l +100%FREE /dev/mapper/ubuntu--vg-ubuntu--lv`
 3. 重新计算逻辑卷大小 `sudo resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv`
 4. 再次查看磁盘使用情况 `df -h`
+
+### 静态IP
+
+1. 查看网络配置文件 `ls /etc/netplan`
+2. 默认配置文件可能如下
+   ```yml
+   network:
+     version: 2
+     ethernets:
+       enp3s0:
+         dhcp4: true
+   ```
+3. 查看网关地址 `ifconfig | grep broadcast`
+4. 配置静态IP为 `192.168.1.100`
+    ```yml
+    network:
+      ethernets:
+        enp3s0:
+          dhcp4: false
+          addresses: [192.168.1.100/24]
+          gateway4: 192.168.1.255
+      version: 2
+    ```
+5. 应用配置更改
+    ```shell
+    sudo netplan apply
+    ```
