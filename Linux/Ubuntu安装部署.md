@@ -44,27 +44,33 @@ Ubuntu server 默认使用LVM进行磁盘管理,安装后只使用了硬盘一�
 4. 再次查看磁盘使用情况 `df -h`
 
 ### 静态IP
-
-1. 查看网络配置文件 `ls /etc/netplan`
-2. 默认配置文件可能如下
-   ```yml
+1. 查看主机网络信息`ifconfig`，其中IP地址为inet，子网掩码为netmask
+2. 查看网关地址 `route -n`
+3. 查看配置文件
+   ```shell
+   cd /etc/netplan
+   cat 00-installer-config.yaml
+   # 原始配置如下
    network:
-     version: 2
      ethernets:
        enp3s0:
          dhcp4: true
+     version: 2
    ```
-3. 查看网关地址 `ifconfig | grep broadcast`
-4. 配置静态IP为 `192.168.1.100`
-    ```yml
-    network:
-      ethernets:
-        enp3s0:
-          dhcp4: false
-          addresses: [192.168.1.100/24]
-          gateway4: 192.168.1.255
-      version: 2
-    ```
+4. 修改配置文件
+   ```yml
+   network:
+     ethernets:
+       enp3s0:
+         addresses: [192.168.1.100/24]          # 设置静态IP地址(192.168.1.100)和掩码
+         routes:                                 # 设置网关地址
+          - to: default
+            via: 192.168.1.254
+         dhcp4: false                            # 禁用dhcp
+         nameservers:
+           addresses: [114.114.114.114, 8.8.8.8] # 设置主、备DNS
+     version: 2
+   ```
 5. 应用配置更改
     ```shell
     sudo netplan apply
