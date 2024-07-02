@@ -39,3 +39,5 @@ SERVICE_PASSWORD=$ADMIN_PASSWORD
 ./stack.sh
 ```
 这个过程等待15-30分钟即可。
+
+访问 `http://192.168.1.100/dashboard/`
