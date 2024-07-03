@@ -63,7 +63,23 @@ pip install apache-airflow
 ```shell
 airflow initdb
 ```
+### 启动Web服务
+
+```shell
+airflow webserver -p 8080 -D
+```
+
+### 启动调度任务
+
+```shell
+airflow scheduler -D
+```
 
 ### 配置数据库
 由于Airflow是使用优秀的SqlAlchemy库与其元数据进行交互而构建的，因此您可以使用任何SqlAlchemy所支持的数据库作为后端数据库。
 推荐使用MySQL或Postgres。
+
+这里以MySQL为例
+1. 创建数据库`CREATE DATABASE airflow_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`
+2. 修改airflow配置文件 `sql_alchemy_conn = mysql+mysqlconnector://root:password@localhost:3306/airflow_db`
+3. 杀死并重启服务 `airflow webserver -p 8080 -D`
