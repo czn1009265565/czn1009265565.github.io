@@ -1,6 +1,6 @@
 # PostgreSQL操作手册
 
-## 数据库操作
+## 登录
 
 运行PostgreSQL的交互式终端程序，它被称为psql， 它允许你交互地输入、编辑和执行SQL命令。
 
@@ -65,44 +65,128 @@ psql -U postgre -d postgres
 | integer[]	 | 数组        |
 | varchar[]  | 数组        |
 
-### 数据库查看
+## DDL
 
-```sql
--- 查看单个数据库大小
-select pg_database_size('dbname');
+### 数据库
 
--- 查看所有数据库大小
-select pg_database.datname, pg_database_size(pg_database.datname) AS size
-from pg_database
-order by size desc;
+#### schema
+schema是数据库内部的一个"文件夹"或"命名空间"，用于逻辑上组织和隔离数据，以实现更好的数据管理和安全控制
 
--- 以KB，MB，GB的方式来查看数据库大小
-select pg_size_pretty(pg_database_size('dbname'));
+#### 查询数据库
+```
+-- 仅命令行客户端支持
+-- 查看所有数据库
+\l
+-- 查看所有schema
+\dn
 
--- 查看表大小
-select pg_relation_size('tb_name');
+-- 可视化客户端
+-- 查看所有数据库名称
+select datname from pg_database;
 
--- 以KB，MB，GB的方式来查看表大小
-select pg_size_pretty(pg_relation_size('tb_name'));
+-- 查看数据库大小
+select
+	pg_database.datname,
+	pg_size_pretty(pg_database_size(pg_database.datname)) as size
+from
+	pg_database
+order by
+	pg_database_size(pg_database.datname) desc;
+	
 
--- 查看表的总大小，包括索引大小
-select pg_size_pretty(pg_total_relation_size('tb_name'));
+-- 查询schema 
+SELECT schema_name FROM information_schema.schemata;
 ```
 
-### 创建数据库
+#### 创建数据库
 
 ```sql
--- 当前角色自动成为该新数据库的拥有者
-create
-database dbname;
+-- 创建数据库
+CREATE DATABASE dbname;
+       
+-- 创建schema
+CREATE SCHEMA schema_name;
+```
 
--- 为其他人创建一个数据库，并且使其成为新数据库的拥有者
-CREATE
-DATABASE dbname OWNER rolename;
+#### 切换数据库
 
--- 删除数据库
-drop
-database dbname;
+```
+-- 仅命令行客户端支持
+\c dbname
+```
+
+#### 删除数据库
+
+```sql
+DROP DATABASE IF EXISTS dbname;
+```
+
+### 表
+
+#### 查询表
+
+```
+-- 仅命令行客户端支持
+-- 查看所有表
+\d
+
+-- 可视化客户端
+-- 查看当前数据库下所有表名称
+select
+	tablename
+from
+	pg_catalog.pg_tables
+where
+	schemaname != 'pg_catalog'
+	and schemaname != 'information_schema';
+	
+-- 查看表大小
+select
+	table_schema || '.' || table_name as table_name,
+	pg_size_pretty(pg_total_relation_size('"' || table_schema || '"."' || table_name || '"')) as size
+from
+	information_schema.tables
+order by
+	pg_total_relation_size('"' || table_schema || '"."' || table_name || '"') desc
+```
+
+#### 创建表
+
+```sql
+CREATE TABLE table_name(
+   column1 datatype NOT NULL PRIMRAY KEY,
+   column2 datatype,
+   column3 datatype,
+   columnN datatype
+);
+```
+
+#### 修改表
+
+```sql
+-- 重命名表名
+ALTER TABLE table_name RENAME TO new_table_name;
+
+-- 新增列
+ALTER TABLE table_name ADD COLUMN column_name [column_type];
+-- 删除列
+ALTER TABLE table_name DROP COLUMN column_name;
+-- 修改列名
+ALTER TABLE table_name RENAME column_name TO new_column_name;
+-- 修改列类型
+ALTER TABLE table_name ALTER COLUMN column_name TYPE column_type;
+```
+
+#### 删除表
+
+```sql
+DROP TABLE table_name;
+```
+
+#### 清除表
+
+```sql
+TRUNCATE TABLE table_name;
 ```
 
 ### 数据更新
@@ -188,6 +272,10 @@ psql -U username -h localhost -p 5432 -d dbname -f table_name.sql
 4. -f 参数指定导出数据的文件名
 
 注意点：在还原中往往会遇到异常，例如缺少postgis插件，缺少函数方法等，根据报错日志配置环境即可。
+
+## DDL
+
+
 
 ## 存储过程
 
