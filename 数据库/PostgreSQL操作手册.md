@@ -22,20 +22,20 @@ psql -U postgre -d postgres
 - -d, --dbname=DBNAME
 - -c, --command=COMMAND
 
-## 数据类型
+## 基本数据类型
 
 ### 数值类型
 
-| 类型             | 存储大小 | 描述           | 范围                                         |
-|----------------|------|--------------|--------------------------------------------|
-| smallint(int2) | 2字节  | 小范围整数        | -32768 ～ +32767                            |
-| integer(int4)	 | 4字节	 | 整数的典型存储	     | -2147483648 ～ +2147483647                  |
-| bigint(int8)	  | 8字节	 | 大范围整数	       | -9223372036854775808 ～ 9223372036854775807 |
-| decimal	       | 可变	  | 用户指定的精度，精确	  | 小数点前最多为131072个数字; 小数点后最多为16383个数字。         |
-| numeric        | 	可变  | 	用户指定的精度，精确	 | 小数点前最多为131072个数字; 小数点后最多为16383个数字。         |
-| smallserial	   | 2字节	 | 自动增加的小整数     | 	1～32767                                   |
-| serial	        | 4字节  | 	自动增加的整数     | 	1～2147483647                              |
-| bigserial	     | 8字节	 | 自动增加的大整数     | 	1～9223372036854775807                     |
+| 类型            | 存储大小 | 描述           | 范围                                         |
+|---------------|------|--------------|--------------------------------------------|
+| smallint/int2 | 2字节  | 小范围整数        | -32768 ～ +32767                            |
+| integer/int4	 | 4字节	 | 整数的典型存储	     | -2147483648 ～ +2147483647                  |
+| bigint/int8	  | 8字节	 | 大范围整数	       | -9223372036854775808 ～ 9223372036854775807 |
+| decimal	      | 可变	  | 用户指定的精度，精确	  | 小数点前最多为131072个数字; 小数点后最多为16383个数字。         |
+| numeric       | 	可变  | 	用户指定的精度，精确	 | 小数点前最多为131072个数字; 小数点后最多为16383个数字。         |
+| smallserial	  | 2字节	 | 自动增加的小整数     | 	1～32767                                   |
+| serial	       | 4字节  | 	自动增加的整数     | 	1～2147483647                              |
+| bigserial	    | 8字节	 | 自动增加的大整数     | 	1～9223372036854775807                     |
 
 ### 字符串类型
 
@@ -45,25 +45,118 @@ psql -U postgre -d postgres
 | varchar(size)/character varying(size)	 | size是要存储的字符数。 可变长度字符串。                |
 | text                                   | 可变长度字符串。                              |
 
-### 日期
+### 日期类型
 
 | 类型	                          | 存储大小	 | 描述	           |
 |------------------------------|-------|---------------|
-| timestamp [ (p) ] [不带时区 ]    | 	8字节  | 	日期和时间(无时区)   |
-| timestamp [ (p) ]带时区	        | 8字节   | 	包括日期和时间，带时区	 |	 
-| date	                        | 4字节	  | 日期(没有时间)      |	
-| time [ (p) ] [ 不带时区 ]        | 	8字节  | 	时间(无日期)      |	
-| time [ (p) ] 带时区	            | 12字节  | 	仅限时间，带时区	    |
-| interval [ fields ] [ (p) ]	 | 12字节  | 	时间间隔         |	
+| timestamp                    | 	8字节  | 	日期和时间(无时区)   |
+| timestamp with time zone	    | 8字节   | 	包括日期和时间，带时区	 |	 
+| date	                        | 4字节	  | 日期(没有时间)      |
 
-### 其他类型
+### 布尔类型
+| 类型	     | 存储大小	 | 描述	         |
+|---------|-------|-------------|
+| boolean | 	1字节  | 	true/false |
 
-| 类型         | 描述        |
-|------------|-----------|
-| json	      | 文本json数据  |
-| jsonb	     | 二进制json数据 |
-| integer[]	 | 数组        |
-| varchar[]  | 数组        |
+## 复杂数据类型
+
+### 枚举类型
+枚举类型是一个包含静态和值的有序集合的数据类型
+```sql
+-- 创建枚举类型
+create type weeks as enum('Mon','Tue','Wed','Thu','Fri','Sat','Sun');
+-- 建表字段使用枚举类型
+create table user_schedule (
+    user_name varchar(100),
+    available_day weeks
+);
+-- 插入数据
+insert into user_schedule (user_name, available_day) values ('Alice', 'Mon');
+```
+
+### 几何类型
+几何数据类型表示二维的平面物体  
+
+| 类型	      | 大小	       | 描述	        | 表现形式              |
+|----------|-----------|------------|-------------------|
+| point	   | 16字节	     | 平面中的点      | 	(x,y)            |
+| line	    | 32字节	     | 直线	        | ((x1,y1),(x2,y2)) |
+| lseg	    | 32字节	     | 线段	        | ((x1,y1),(x2,y2)) |
+| box	     | 32字节	     | 矩形	        | ((x1,y1),(x2,y2)) |
+| path	    | 16+16n字节	 | 路径（与多边形相似） | 	((x1,y1),...)    |
+| polygon	 | 40+16n字节	 | 多边形        | 	((x1,y1),...)    |
+| circle	  | 24字节	     | 圆	         | <(x,y),r> (圆心和半径) |
+
+```sql
+-- 建表 创建一个表 geometric_shapes，它包含点、线和多边形类型的列。
+create table geometric_shapes (
+    id serial primary key,
+    point_col point,
+    lseg_col lseg,
+    polygon_col polygon
+);
+
+-- 插入数据
+insert into geometric_shapes (point_col, lseg_col, polygon_col)
+values
+(point(1, 2), lseg '[(0,0),(1,1)]', polygon '((0,0),(1,0),(1,1),(0,1))');
+```
+
+### JSON类型
+
+```sql
+-- 创建一个新表，名为 json_demo，包含一个 json 类型的列
+create table json_demo (
+    id serial primary key,
+    data json
+);
+
+-- 向 json_demo 表插入 json 数据，注意 json 数据必须是单引号的字符串
+-- 并且遵循 json 格式
+insert into json_demo (data) values ('{"name": "张三", "age": 28, "city": "北京"}');
+
+-- 使用 ->> 运算符来提取 json 对象中的 name 字段
+select data->>'name' as name from json_demo;
+```
+
+### 数组类型
+
+```sql
+-- 创建一个新表，名为 array_demo，包含一个 int 类型的数组列
+create table array_demo (
+    id serial primary key,
+    numbers int[]  -- int 数组类型列
+);
+
+-- 向 array_demo 表插入数组数据
+-- 数组使用花括号{}并且元素由逗号分隔
+insert into array_demo (numbers) values ('{1,2,3,4,5}');
+
+-- 使用 unnest 函数来展开数组为一系列行
+select unnest(numbers) as expanded_numbers from array_demo;
+```
+
+### 复合类型
+
+```sql
+-- 定义一个复合类型，名为 person_type，包含姓名、年龄和城市
+create type person_type as (
+    name text,
+    age int,
+    city text
+);
+
+-- 创建一个新表，名为 composite_demo，包含一个复合类型的列
+create table composite_demo (
+    id serial primary key,
+    person_info person_type  -- 使用之前定义的复合类型作为列类型
+);
+
+-- 向 composite_demo 表插入复合类型数据
+-- 复合类型数据使用括号，并且属性值由逗号分隔
+insert into composite_demo (person_info) values (ROW('张三', 28, '北京'));
+```
+
 
 ## DDL
 
@@ -189,67 +282,9 @@ DROP TABLE table_name;
 TRUNCATE TABLE table_name;
 ```
 
-### 数据更新
+## DML
 
-```sql
--- 全表更新
-update tb_name
-set column_a=value_a;
-
--- 条件更新
-update tb_name
-set column_a=value_a
-where id = 1;
-
--- 连表更新
-update tb_name_1 t1
-set column_a=t2.column_a from tb_name_2 t2
-where t1.column_b=t2.column_b;
-```
-
-### 数据格式类型转换
-
-| 函数                              | 返回类型                     | 描述           | 例子                                           |
-|---------------------------------|--------------------------|--------------|----------------------------------------------|
-| to_char(timestamp, text)        | text                     | 把时间戳转成字符串    | to_char(current_timestamp, 'HH12:MI:SS')     |
-| to_char(interval, text)         | text                     | 把间隔转成字符串     | to_char(interval '15h 2m 12s', 'HH24:MI:SS') |
-| to_char(int, text)              | text                     | 把整数转成字符串     | to_char(125, '999')                          |
-| to_char(double precision, text) | text                     | 把实数或双精度转成字符串 | to_char(125.8::real, '999D9')                |
-| to_char(numeric, text)          | text                     | 把数字转成字符串     | to_char(-125.8, '999D99S')                   |
-| to_date(text, text)             | date                     | 把字符串转成日期     | to_date('05 Dec 2000', 'DD Mon YYYY')        |
-| to_number(text, text)           | numeric                  | 把字符串转成数字     | to_number('12,454.8-', '99G999D9S')          |
-| to_timestamp(text, text)        | timestamp with time zone | 把字符串转成时间戳    | to_timestamp('05 Dec 2000', 'DD Mon YYYY')   |
-
-#### to_number
-
-这里详细介绍下数值转换的用法
-
-| 模式       | 描述                    |
-|----------|-----------------------|
-| 9        | 数位（如果无意义可以被删除）        |
-| 0        | 数位（即便没有意义也不会被删除）      |
-| .        | (period)  小数点         |
-| ,        | (comma) 分组（千）分隔符      |
-| PR       | 尖括号内的负值               |
-| S        | 带符号的数字（使用区域）          |
-| L        | 货币符号（使用区域）            |
-| D        | 小数点（使用区域）             |
-| G        | 分组分隔符（使用区域）           |
-| MI       | 在指定位置的负号（如果数字 < 0）    |
-| PL       | 在指定位置的正号（如果数字 > 0）    |
-| SG       | 在指定位置的正/负号            |
-| RN       | 罗马数字（输入在 1 和 3999 之间） |
-| TH or th | 序数后缀                  |
-| V        | 移动指定位数（参阅注解）          |
-| EEEE     | 科学记数的指数               |
-
-这里主要介绍0和9和小数点，相信已经满足绝大多数情况了
-
-- 0指定一个总是被打印的数位，即便它包含前导的零。
-- 9也指定一个数位，但是如果它是前导零则会被空格替换，而如果是拖尾零并且指定了填充模式则它会被删除（对于to_number()
-  来说，这两种模式字符等效）。
-
-### 备份与恢复
+### 导入导出
 
 ```shell
 # 备份数据库
@@ -259,7 +294,7 @@ pg_dump -U username -h localhost -p 5432 -d dbname -f dbname.bak
 psql -U username -h localhost -p 5432 -d dbname -f dbname.bak
 
 # 备份表数据
-pg_dump -U username -d dbname -p 5432 -t table_name -a -f table_name.sql
+pg_dump -U username -h localhost  -p 5432 -d dbname -t table_name -a -f table_name.sql
 # 恢复表数据
 psql -U username -h localhost -p 5432 -d dbname -f table_name.sql
 ```
@@ -272,10 +307,6 @@ psql -U username -h localhost -p 5432 -d dbname -f table_name.sql
 4. -f 参数指定导出数据的文件名
 
 注意点：在还原中往往会遇到异常，例如缺少postgis插件，缺少函数方法等，根据报错日志配置环境即可。
-
-## DDL
-
-
 
 ## 存储过程
 
