@@ -195,7 +195,11 @@ SELECT schema_name FROM information_schema.schemata;
 
 ```sql
 -- 创建数据库
-CREATE DATABASE dbname;
+CREATE DATABASE name [ [WITH] [OWNER [=] dbowner]
+[TEMPLATE [=] template]
+[ENCODING [=] encoding]
+[TABLESPAC [=] tablespace]
+[CONNECTIONE LIMIT [=] connlimit ] ]
        
 -- 创建schema
 CREATE SCHEMA schema_name;
