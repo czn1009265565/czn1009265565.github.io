@@ -1,9 +1,5 @@
 ## Spring Boot 获取 Bean
 
-
-### SpringUtils
-
-
 ```java
 @Component
 public class SpringUtils implements ApplicationContextAware {
@@ -19,6 +15,7 @@ public class SpringUtils implements ApplicationContextAware {
 
     /** 获取applicationContext */
     public static ApplicationContext getApplicationContext() {
+        Assert.notNull(applicationContext, "ApplicationContext is null!");
         return applicationContext;
     }
 
@@ -35,6 +32,23 @@ public class SpringUtils implements ApplicationContextAware {
     /** 通过name,以及Clazz返回指定的Bean */
     public static <T> T getBean(String name, Class<T> clazz) {
         return getApplicationContext().getBean(name, clazz);
+    }
+
+
+    public static String getProperty(String key) {
+        return getApplicationContext().getEnvironment().getProperty(key);
+    }
+
+    public static String getProperty(String key, String defaultValue) {
+        return getApplicationContext().getEnvironment().getProperty(key, defaultValue);
+    }
+
+    public static <T> T getProperty(String key, Class<T> targetType) {
+        return getApplicationContext().getEnvironment().getProperty(key, targetType);
+    }
+
+    public static <T> T getProperty(String name, Class<T> clazz, T defaultValue) {
+        return getApplicationContext().getEnvironment().getProperty(name, clazz, defaultValue);
     }
 }
 ```
