@@ -26,37 +26,6 @@ export AIRFLOW_HOME = ~/airflow
 pip install apache-airflow
 ```
 
-### 扩展包
-
-| 包名           | 	安装命令                                     | 	说明                                                       |
-|--------------|-------------------------------------------|-----------------------------------------------------------|
-| all          | 	pip install apache-airflow[all]          | 	所有Airflow功能                                              |
-| all_dbs      | 	pip install apache-airflow[all_dbs]      | 	所有集成的数据库                                                 |
-| async        | 	pip install apache-airflow[async]	       | Gunicorn的异步worker classes                                 |
-| devel        | 	pip install apache-airflow[devel]	       | 最小开发工具要求                                                  |
-| devel_hadoop | 	pip install apache-airflow[devel_hadoop] | 	Airflow + Hadoop stack 的依赖                               |
-| celery       | 	pip install apache-airflow[celery]	      | CeleryExecutor                                            |
-| crypto	      | pip install apache-airflow[crypto]        | 	加密元数据db中的连接密码                                            |
-| druid        | 	pip install apache-airflow[druid]	       | Druid.io 相关的 operators 和 hooks                            |
-| gcp_api      | 	pip install apache-airflow[gcp_api]      | 	Google 云平台 hooks 和operators（使用google-api-python-client ） |
-| jdbc	        | pip install apache-airflow[jdbc]	         | JDBC hooks 和 operators                                    |
-| hdfs         | 	pip install apache-airflow[hdfs]	        | HDFS hooks 和 operators                                    |
-| hive         | 	pip install apache-airflow[hive]	        | 所有Hive相关的 operators                                       |
-| kerberos     | 	pip install apache-airflow[kerberos]     | 	Kerberos集成Kerberized Hadoop                              |
-| ldap	        | pip install apache-airflow[ldap]	         | 用户的LDAP身份验证                                               |
-| mssql        | 	pip install apache-airflow[mssql]	       | Microsoft SQL Server operators 和 hook，作为Airflow后端支持       |
-| mysql        | 	pip install apache-airflow[mysql]        | 	MySQL operators 和 hook，支持作为Airflow后端。                    |
-| password     | 	pip install apache-airflow[password]	    | 用户密码验证                                                    |
-| postgres     | 	pip install apache-airflow[postgres]	    | Postgres operators 和 hook，作为Airflow后端支持                   |
-| qds	         | pip install apache-airflow[qds]	          | 启用QDS（Qubole数据服务）支持                                       |
-| rabbitmq	    | pip install apache-airflow[rabbitmq]	     | rabbitmq作为Celery后端支持                                      |
-| s3           | 	pip install apache-airflow[s3]	          | S3KeySensor ， S3PrefixSensor                              |
-| samba	       | pip install apache-airflow[samba]         | 	Hive2SambaOperator                                       |
-| slack	       | pip install apache-airflow[slack]         | 	SlackAPIPostOperator                                     |
-| vertica      | 	pip install apache-airflow[vertica]      | 	做为Airflow后端的 Vertica hook 支持                             |
-| cloudant     | 	pip install apache-airflow[cloudant]	    | Cloudant hook                                             |
-| redis	       | pip install apache-airflow[redis]	        | Redis hooks 和 sensors                                     |
-
 ### 初始化数据库
 在运行任务之前，Airflow需要初始化数据库。默认数据库为SQLite，可自行修改。
 
@@ -83,3 +52,60 @@ airflow scheduler -D
 1. 创建数据库`CREATE DATABASE airflow_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`
 2. 修改airflow配置文件 `sql_alchemy_conn = mysql+mysqlconnector://root:password@localhost:3306/airflow_db`
 3. 杀死并重启服务 `airflow webserver -p 8080 -D`
+
+## 调度脚本
+
+```shell
+from airflow import DAG
+from airflow.operators.bash_operator import BashOperator
+from datetime import datetime, timedelta
+
+default_args = {
+    # 用户
+    'owner': 'airflow',
+    # 是否开启任务依赖
+    'depends_on_past': True, 
+    # 邮箱
+    'email': ['1@1.com'],
+    # 启动时间 (UTC时间)
+    'start_date':datetime(2022,11,28),
+    # 重试次数
+    'retries': 1,
+    # 重试时间间隔
+    'retry_delay': timedelta(minutes=5),
+}
+# 声明任务图
+dag = DAG('dag_id', default_args=default_args, schedule_interval=timedelta(days=1))
+ 
+# 创建单个任务
+t1 = BashOperator(
+    # 任务id
+    task_id='dwd',
+    # 任务命令
+    bash_command='ssh hadoop102 "/opt/module/spark-yarn/bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn /opt/module/spark-yarn/examples/jars/spark-examples_2.12-3.1.3.jar 10 "',
+    # 重试次数
+    retries=3,
+    # 把任务添加进图中
+    dag=dag)
+
+t2 = BashOperator(
+    task_id='dws',
+    bash_command='ssh hadoop102 "/opt/module/spark-yarn/bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn /opt/module/spark-yarn/examples/jars/spark-examples_2.12-3.1.3.jar 10 "',
+    retries=3,
+    dag=dag)
+
+t3 = BashOperator(
+    task_id='ads',
+    bash_command='ssh hadoop102 "/opt/module/spark-yarn/bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn /opt/module/spark-yarn/examples/jars/spark-examples_2.12-3.1.3.jar 10 "',
+    retries=3,
+    dag=dag)
+
+# 设置任务依赖(不能出现环形链路)
+t2.set_upstream(t1)
+t3.set_upstream(t2)
+```
+
+airflow.cfg配置调度任务目录，放置调度脚本  
+```
+dags_folder=/home/app/airflow/dags
+```
