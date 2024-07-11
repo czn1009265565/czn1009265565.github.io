@@ -32,7 +32,7 @@
 13. 等待安装完成...
 
 注意点:  
-如果出现 `[FAILED] Failed unmounting /cdrom`报错，重启服务并移除U盘，否则将会尝试重新安装
+如果出现 `[FAILED] Failed unmounting /cdrom`报错，移除U盘并重启服务，否则将会尝试重新安装
 
 
 ### 扩展逻辑卷
