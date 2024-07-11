@@ -24,6 +24,31 @@
 7. ROOT PASSWORD 输入root账号密码
 8. 等待安装完成...
 
+
+### 配置阿里云yum源
+
+1. 打开centos的yum文件夹 `cd /etc/yum.repos.d/`
+2. 下载repo文件 `curl http://mirrors.aliyun.com/repo/Centos-7.repo -o Centos-7.repo`
+3. 备份系统原来的repo文件 `mv CentOS-Base.repo CentOS-Base.repo.bak`
+4. 替换系统repo文件 `mv Centos-7.repo CentOS-Base.repo`
+5. 执行yum源更新命令
+   ```shell
+   yum clean all
+   yum macache
+   yum update
+   ```
+
 ### 设置静态IP
-
-
+1. 查看主机网络信息`ifconfig`，其中IP地址为inet，子网掩码为netmask
+2. 查看网关地址 `route -n`
+3. 设置静态IP `vim /etc/sysconfig/network-scripts/ifcfg-ens33`
+   ```shell
+   BOOTPROTO=static
+   ONBOOT=yes
+   IPADDR=192.168.1.100
+   NETMASK=255.255.255.0
+   GATEWAY=192.168.1.1
+   DNS1=114.114.114.114
+   DNS2=8.8.8.8
+   ```
+4. 重启网卡 `systemctl restart network`
