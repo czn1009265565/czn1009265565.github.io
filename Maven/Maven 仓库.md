@@ -1,8 +1,18 @@
 # Maven 仓库
 
-Maven仓库分为本地仓库，中央仓库和远程仓库，本文重点介绍远程仓库的搭建及使用
+Maven 仓库分为：
+
+- **本地仓库**：运行 Maven 的计算机上的一个目录，它缓存远程下载的构件并包含尚未发布的临时构件。`settings.xml` 文件中可以看到 Maven 的本地仓库路径配置，默认本地仓库路径是在 `${user.home}/.m2/repository`。
+- **远程仓库**：官方或者其他组织维护的 Maven 仓库。
+
+Maven 远程仓库可以分为：
+
+- **中央仓库**：这个仓库是由 Maven 社区来维护的，里面存放了绝大多数开源软件的包，并且是作为 Maven 的默认配置，不需要开发者额外配置。另外为了方便查询，还提供了一个[查询地址](https://search.maven.org/)，开发者可以通过这个地址更快的搜索需要构件的坐标。
+- **私服**：私服是一种特殊的远程 Maven 仓库，它是架设在局域网内的仓库服务，私服一般被配置为互联网远程仓库的镜像，供局域网内的 Maven 用户使用。
+- **其他的公共仓库**：有一些公共仓库是为了加速访问（比如阿里云 Maven 镜像仓库）或者部分构件不存在于中央仓库中。
  
 ## 仓库搭建
+
 这里我采用docker的方式启动
 
 ```bash
@@ -13,7 +23,7 @@ docker run -d -p 8081:8081 --name nexus --restart=always sonatype/nexus3
 
 ## 基本认识
 管理员登录后，可以在设置页面管理角色、用户、仓库等其他一系列的操作。
-通常我们需要设置proxy代理中央仓库为aliyun中央仓库`http://maven.aliyun.com/nexus/content/groups/public`。
+通常我们需要设置proxy代理中央仓库为aliyun中央仓库 `http://maven.aliyun.com/nexus/content/groups/public`
 默认有如下几个仓库:
 
 |name|type|format|mean|
