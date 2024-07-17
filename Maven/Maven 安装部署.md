@@ -17,25 +17,16 @@ java -version
 5. 测试 `mvn -version`
 6. 配置阿里云镜像仓库 `~/.m2/settings.xml`文件  
    ```xml
-   <?xml version="1.0" encoding="UTF-8"?>
-   <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
-   <pluginGroups></pluginGroups>
-   <proxies></proxies>
-   <servers></servers>
-   
-     <mirrors>
-       <mirror>
-           <id>nexus-aliyun</id>
-           <mirrorOf>central</mirrorOf>
-           <name>Nexus aliyun</name>
-           <url>http://maven.aliyun.com/nexus/content/groups/public</url>
-       </mirror>
-     </mirrors>
-   
-   <profiles></profiles>
-   </settings>
+   <mirror>
+       <id>nexus-aliyun</id>
+       <mirrorOf>central</mirrorOf>
+       <name>Nexus aliyun</name>
+       <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+   </mirror>
+   ```
+7. 指定下载资源路径
+   ```xml
+   <localRepository>D:/maven/repository</localRepository>
    ```
 
 ## Linux安装部署
