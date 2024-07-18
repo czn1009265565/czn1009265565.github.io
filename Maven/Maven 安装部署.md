@@ -17,16 +17,37 @@ java -version
 5. 测试 `mvn -version`
 6. 配置阿里云镜像仓库 `~/.m2/settings.xml`文件  
    ```xml
-   <mirror>
-       <id>nexus-aliyun</id>
-       <mirrorOf>central</mirrorOf>
-       <name>Nexus aliyun</name>
-       <url>http://maven.aliyun.com/nexus/content/groups/public</url>
-   </mirror>
+   <mirrors>
+     <mirror>
+         <id>nexus-aliyun</id>
+         <mirrorOf>central</mirrorOf>
+         <name>Nexus aliyun</name>
+         <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+     </mirror>
+   </mirrors>
    ```
 7. 指定下载资源路径
    ```xml
    <localRepository>D:/maven/repository</localRepository>
+   ```
+8. 代理配置
+   ```xml
+   <proxies>
+     <proxy>
+         <id>httpproxy</id>
+         <active>true</active>
+         <protocol>http</protocol>
+         <host>localhost</host>
+         <port>10809</port>
+     </proxy>
+     <proxy>
+         <id>httpsproxy</id>
+         <active>true</active>
+         <protocol>https</protocol>
+         <host>localhost</host>
+         <port>10809</port>
+     </proxy>
+   </proxies>
    ```
 
 ## Linux安装部署
@@ -47,10 +68,12 @@ java -version
 5. 配置阿里云镜像仓库 `vim /usr/local/apache-maven/conf/settings.xml`  
    在`<mirrors></mirrors>`之间新增
    ```xml
-   <mirror>
-       <id>nexus-aliyun</id>
-       <mirrorOf>central</mirrorOf>
-       <name>Nexus aliyun</name>
-       <url>http://maven.aliyun.com/nexus/content/groups/public</url>
-   </mirror>
+   <mirrors>
+     <mirror>
+         <id>nexus-aliyun</id>
+         <mirrorOf>central</mirrorOf>
+         <name>Nexus aliyun</name>
+         <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+     </mirror>
+   </mirrors>
    ```
