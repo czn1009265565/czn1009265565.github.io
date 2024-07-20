@@ -61,6 +61,32 @@ docker container start container_name
 - `-d` 以后台的方式运行
 - `-p` 设置端口映射 主机端口:容器端口
 
+### 导出镜像
+
+```shell
+docker image ls
+
+REPOSITORY                 TAG              IMAGE ID       CREATED        SIZE
+ubuntu                     22.04            52882761a72a   2 months ago   77.9MB
+
+docker save 52882761a72a > ubuntu.tar
+```
+
+### 导入镜像
+
+```shell
+# 导入镜像
+docker load < image.tar
+
+docker image ls
+
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+<none>       <none>    52882761a72a   2 months ago   77.9MB
+
+# 重命名标签
+docker tag a9bd596c9448 ubuntu:22.04
+```
+
 ## 容器操作
 
 ### 终止容器
