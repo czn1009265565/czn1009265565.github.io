@@ -54,12 +54,14 @@ pip3 list
 ### 扩展包
 
 ```shell
+# 升级pip
+pip3 install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple
 # 安装扩展包
-pip install -i https://pypi.tuna.tsinghua.edu.cn/simple numpy pandas matplotlib jupyter
-pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
+pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple numpy pandas matplotlib jupyter
+pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
 
 # 输出扩展包依赖
-pip freeze > requirements.txt
+pip3 freeze > requirements.txt
 ```
 扩展包与Python版本兼容情况可以访问 `https://pypi.org/` 扩展包详情页 `Download files`查看
 
@@ -72,7 +74,7 @@ pip freeze > requirements.txt
 
 安装扩展包
 ```shell
-pip install -i https://pypi.tuna.tsinghua.edu.cn/simple virtualenv
+pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple virtualenv
 ```
 
 创建虚拟环境
