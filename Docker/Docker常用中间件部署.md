@@ -54,3 +54,69 @@ docker run --name kafka -p 9092:9092 \
 -d wurstmeister/kafka
 ```
 3.Kafka Tool 连接使用
+
+## Nginx
+Nginx反向代理示例
+
+```yaml
+services:
+  nginx:
+    image: nginx
+    container_name: nginx
+    volumes:
+      - /home/app/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - /home/app/nginx/nginx.key:/etc/nginx/cert/nginx.key
+      - /home/app/nginx/nginx.crt:/etc/nginx/cert/nginx.crt
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - nginx
+    restart: always
+networks:
+  nginx:
+```
+
+nginx.conf
+
+```
+#user  nobody;
+worker_processes  1;
+
+#pid        logs/nginx.pid;
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    server {
+        server_name localhost;
+        listen 80;
+        return 301 https://172.30.1.101$request_uri;
+    }
+
+    server {
+        listen 443;#监听的端口
+        server_name localhost;#你的域名
+        ssl on;
+
+        ssl_certificate   /etc/nginx/cert/nginx.crt;
+        ssl_certificate_key  /etc/nginx/cert/nginx.key;
+        ssl_session_timeout 5m;
+        ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+        ssl_prefer_server_ciphers on;
+
+        location / {
+            proxy_redirect     off;
+            proxy_set_header   Host             $host;
+            proxy_set_header   X-Real-IP        $remote_addr;
+            proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+
+            proxy_pass https://192.168.1.100;
+        }
+    }
+}
+```
