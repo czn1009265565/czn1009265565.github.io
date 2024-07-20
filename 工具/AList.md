@@ -3,13 +3,13 @@
 docker-compose.yml
 
 ```yaml
-version: '3.3'
 services:
   alist:
     image: 'xhofe/alist-aria2:latest'
     container_name: alist
     volumes:
-      - '/etc/alist:/opt/alist/data'
+      - '/home/app/alist/meta:/opt/alist/data'
+      - '/home/app/alist/data:/root/data'
     ports:
       - '5244:5244'
     environment:
