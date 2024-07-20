@@ -21,7 +21,18 @@ services:
 
 默认账号admin
 
-获取密码`docker exec -it alist ./alist admin`
+#### 获取密码
+
+```shell
+# 低于v3.25.0版本
+docker exec -it alist ./alist admin
+
+# 高于v3.25.0版本
+# 随机生成一个密码
+docker exec -it alist ./alist admin random
+# 手动设置一个密码,`NEW_PASSWORD`是指你需要设置的密码
+docker exec -it alist ./alist admin set NEW_PASSWORD
+```
 
 官方文档: `https://alist.nn.ci/zh/guide/`
 
