@@ -101,28 +101,28 @@ http {
   5. `location /uri` 　　　　不带任何修饰符，也表示前缀匹配
   6. `location /` 　　　　　通用匹配，任何未匹配到其它location的请求都会匹配到，相当于switch中的default。
 - root: 指定web根目录
-```
-location /static/ {
-    root /data/w3;
-}
-```
+    ```
+    location /static/ {
+        root /data/w3;
+    }
+    ```
 访问 `http://domain.com/static/fac.ico` 对应服务器资源地址: `/data/w3/static/fac.ico`
 
 - alias，定义只能作用在location中，且后面必须要用 “/” 结束
-```
-location /static/ {
-    alias /data/w3/;
-}
-```
+    ```
+    location /static/ {
+        alias /data/w3/;
+    }
+    ```
 访问`http://domain.com/static/fac.ico` 对应服务器资源地址: `/data/w3/fac.ico`
 - deny/allow: 控制对特定IP地址的访问
-```
-location / {
-    allow   192.168.1.0/24;
-    allow   10.1.1.0/16;
-    deny    all;
-}
-```
+    ```
+    location / {
+        allow   192.168.1.0/24;
+        allow   10.1.1.0/16;
+        deny    all;
+    }
+    ```
 在上面的例子中,仅允许网段 10.1.1.0/16 和 192.168.1.0/24 ip访问
 
 
@@ -172,6 +172,20 @@ http {
 - max_fails: 表示尝试出错最大次数，超过后则会标记故障，不会再去请求
 - fail_timeout: 表示故障等待超时时间，server被标记为故障时，经过fail_timeout等待时间之后会被重新标记为正常状态
 - weight: 负载均衡权重策略
+- proxy_pass: 代理转发，注意点: proxy_pass的url以`/`结尾代表绝对路径，反之则代表相对路径  
+  请求示例: http://192.168.1.100/static/favicon.ico
+  ```
+  location /static/ {
+      proxy_pass http://127.0.0.1;
+  }
+  ```
+  代理URL: http://127.0.0.1/static/favicon.ico  
+  ```
+  location /static/ {
+      proxy_pass http://127.0.0.1/;
+  }
+  ```
+  代理URL: http://127.0.0.1/favicon.ico
 
 ### Https
 
