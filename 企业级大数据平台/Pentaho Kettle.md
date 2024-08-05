@@ -4,11 +4,12 @@ Kettle是一款由纯Java语言开发的免费开源的ETL工具,ETL即是Extrac
 
 ## 安装和部署
 Github地址: https://github.com/pentaho/pentaho-kettle
+下载地址: https://sourceforge.net/projects/pentaho/
 
 1. JDK11 安装部署
-2. Kettle 安装部署 (源码编译，分支选择9.4)
+2. Kettle 安装部署
 
-编译完成后,我们需要关注Kettle的几个关键目录和文件
+安装完成后,我们需要关注Kettle的几个关键目录和文件
 
 - Spoon：图形界面工具，快速设计和维护复杂的ETL工作流。
 - Kitchen：运行作业的命令行工具。
