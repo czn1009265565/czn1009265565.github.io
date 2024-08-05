@@ -2,7 +2,7 @@
 
 * [Introduction](README.md)
 * [Python](Python/README.md)
-    * [Python 环境搭建](Python/Python 环境搭建.md)
+    * [Python 环境搭建](Python/Python环境搭建.md)
     * [Scrapy](Python/Scrapy.md)
     * [Flask](Python/Flask.md)
     * [Windows自动化](Python/Windows自动化.md)
