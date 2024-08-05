@@ -22,7 +22,7 @@ virtualenv airflow
 ### 安装基础包
 
 ```shell
-export AIRFLOW_HOME = ~/airflow
+export AIRFLOW_HOME=~/airflow
 pip install apache-airflow
 ```
 
@@ -31,6 +31,15 @@ pip install apache-airflow
 
 ```shell
 airflow initdb
+
+
+airflow users create \
+          --username admin \
+          --firstname FIRST_NAME \
+          --lastname LAST_NAME \
+          --role Admin \
+          --email admin@example.org \
+          --password password
 ```
 ### 启动Web服务
 
@@ -50,7 +59,11 @@ airflow scheduler -D
 
 这里以MySQL为例
 1. 创建数据库`CREATE DATABASE airflow_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`
-2. 修改airflow配置文件 `sql_alchemy_conn = mysql+mysqlconnector://root:password@localhost:3306/airflow_db`
+2. 修改airflow配置文件 `${AIRFLOW_HOME}/airflow.cfg`  
+   ```shell
+   sql_alchemy_conn = mysql+mysqlconnector://root:password@localhost:3306/airflow_db
+   ```
+   
 3. 杀死并重启服务 `airflow webserver -p 8080 -D`
 
 ## 调度脚本
