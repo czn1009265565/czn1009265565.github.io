@@ -52,3 +52,22 @@
    DNS2=8.8.8.8
    ```
 4. 重启网卡 `systemctl restart network`
+
+### 设置主机名
+
+```shell
+vim /etc/hosts
+
+127.0.0.1 localhost localhost.localdomain
+192.168.1.101 hadoop101
+192.168.1.102 hadoop102
+192.168.1.103 hadoop103
+```
+
+### 关闭防火墙
+
+```shell
+systemctl stop firewalld
+
+systemctl disable firewalld
+```
