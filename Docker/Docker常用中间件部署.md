@@ -94,7 +94,7 @@ http {
     server {
         server_name localhost;
         listen 80;
-        return 301 https://172.30.1.101$request_uri;
+        return 301 https://$server_name$request_uri;
     }
 
     server {

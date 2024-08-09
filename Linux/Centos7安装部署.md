@@ -35,17 +35,17 @@
    ```shell
    yum clean all
    yum macache
-   yum update
+   yum -y update
    ```
 
 ### 设置静态IP
 1. 查看主机网络信息`ifconfig`，其中IP地址为inet，子网掩码为netmask
 2. 查看网关地址 `route -n`
-3. 设置静态IP `vim /etc/sysconfig/network-scripts/ifcfg-ens33`
+3. 设置静态IP `vim /etc/sysconfig/network-scripts/ifcfg-ens192`
    ```shell
    BOOTPROTO=static
    ONBOOT=yes
-   IPADDR=192.168.1.100
+   IPADDR=192.168.1.101
    NETMASK=255.255.255.0
    GATEWAY=192.168.1.1
    DNS1=114.114.114.114
