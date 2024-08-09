@@ -202,16 +202,16 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx
 server {
     server_name localhost;
     listen 80;
-    return 301 https://your.domain.com$request_uri;
+    return 301 https://$host$request_uri;
 }
 
 server {
     listen 443;#监听的端口
-    server_name your.domain.com;#你的域名
+    server_name localhost;#你的域名
     ssl on;
 
-    ssl_certificate   /etc/nginx/cert/nginx.crt;
-    ssl_certificate_key  /etc/nginx/cert/nginx.key;
+    ssl_certificate   /etc/nginx/ssl/nginx.crt;
+    ssl_certificate_key  /etc/nginx/ssl/nginx.key;
     ssl_session_timeout 5m;
     ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
     ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
