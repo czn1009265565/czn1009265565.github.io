@@ -14,7 +14,7 @@ JDK 默认安装位置：`/usr/lib/jvm`
 
 ```shell
 # JDK1.8
-yum install -y java-1.8.0-openjdk.x86_64
+yum install -y java-1.8.0-openjdk-devel.x86_64
 # JDK11
 yum install -y java-11-openjdk.x86_64
 ```

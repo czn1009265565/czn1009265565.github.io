@@ -71,3 +71,13 @@ systemctl stop firewalld
 
 systemctl disable firewalld
 ```
+
+### 配置免密登录
+
+```shell
+# 生成公钥和私钥
+ssh-keygen -t rsa
+
+# 拷贝公钥到需要免密登录的目标机器上
+ssh-copy-id user@ip
+```
