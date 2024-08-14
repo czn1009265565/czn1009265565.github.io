@@ -1,49 +1,65 @@
 # IDEA 远程开发
 
-## 远程部署
+## 背景
+1. 远程服务器部署应用需手动上传jar包、Dockerfile文件等
+2. 远程服务器环境无法Debug
 
-远程部署的思路是在本地编写代码，然后把本地的代码文件定期同步到 `Linux` 服务器，再用本地电脑操作远程服务器完成部署和运行。
+## 远程连接
 
-### 文件同步
+目的: 在IDEA中创建远程服务器连接
+### 连接配置
+菜单路径: File => Settings => Tools => SSH Configurations  
+![SSH](imgs/SSH.png)  
+填写对应远程服务器Host、Port、用户名、密码，连接测试成功后点击Apply保存连接信息。
 
-1. 菜单路径: Tools => Development => Configuration
-2. 新增SFTP连接，输入Server Name(推荐以服务器IP命名)
-3. 配置SSH连接，输入IP，端口，用户名及密码，点击Test Connection进行验证
-4. 配置路径映射，点击Mappings，填写本地及远程服务器路径映射  
-   - Local Path 本地代码文件路径，例如 `D:\github\spring-boot-examples`
-   - Deployment Path 远程服务器文件路径，例如 `/home/app/spring-boot-examples`
-5. 点击OK，完成保存
+### 远程终端
+菜单路径: Terminal => 下选框 => 选择对应的远程服务器连接  
+即可在IDEA完成远程服务器终端创建，启动服务。
+```shell
+nohup java -jar ./target/spring-boot-examples-0.0.1-SNAPSHOT.jar &
+```
+
+## 远程SFTP
+目的: 在IDEA中上传文件至远程服务器
+
+### 连接配置
+菜单路径: File => Settings => Build, Execution, Deployment => Deployment  
+![SFTP](imgs/SFTP.png)  
+
+#### Connection
+配置连接信息
+- SSH configuration: 选择我们刚刚配置好的 SSH 信息
+- Root Path（选填）: 访问服务器文件的根目录
+
+#### Mappings
+配置路径映射
+- Local Path: 本地项目路径
+- Deployment Path: 远程服务器项目路径
 
 ### 查看远程文件列表
 
 菜单路径: Tools => Development => Browse Remote Host
 
-### 开启自动同步
+### 手动上传
+
+右键文件或目录，选择 `Deployment => Upload to <Server Name>`
+
+### 开启自动上传(选配)
 
 菜单路径: Tools => Development => Automatic Upload
 
-### 同步删除文件
+### 开启自动删除 (选配)
 到目前为止，如果我们删除了本地电脑的文件，远程 Linux 服务器的对应文件并不会删除
 
 1. 菜单路径: Tools => Development => Options
-2. 勾选 `Delete target items when source ones do not exist` (手动同步)
-3. 勾选 `Delete remote files when local are deleted`
+2. 勾选 `Delete target items when source ones do not exist` (手动同步生效)
+3. 勾选 `Delete remote files when local are deleted` (自动同步生效)
 
-### 手动同步
-
-右键左侧文件或目录，选择 `Deployment => Upload to <Server Name>`
-
-### 远程终端
-
-菜单路径: Terminal => v => <远程服务地址>
-
-启动服务: `java -jar ./target/spring-boot-examples-0.0.1-SNAPSHOT.jar`
-
-### 远程调试
+## 远程调试
 
 1. IDEA 右上角编辑配置 `Edit Configurations`
 2. 新建远程 JVM Debug 配置 `Remote JVM Debug`
-3. 修改自己虚拟机的 IP、希望占用的远程调试端口、JDK 版本等，IDEA 会自动生成一段远程调试参数
+3. 设置Host为远程Java服务器的IP地址或主机名、Port为占用的远程调试端口、选择对应的JDK 版本，IDEA 会自动生成一段远程调试参数
    ![img.png](imgs/IDEA.png)
 4. 在远程终端启动服务(注意点：调试参数需要放在`-jar`前面)  
    ```shell
