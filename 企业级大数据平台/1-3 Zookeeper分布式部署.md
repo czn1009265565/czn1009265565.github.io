@@ -1,6 +1,8 @@
 # Zookeeper分布式部署
 
 ### 解压安装
+下载地址: https://zookeeper.apache.org/releases.html#download
+
 ```shell
 tar -zxvf apache-zookeeper-3.7.1-bin.tar.gz -C /opt/module/
 
@@ -45,9 +47,9 @@ mv /opt/module/apache-zookeeper-3.7.1-bin/ /opt/module/zookeeper
 
 ```shell
 # hadoop101
-bin/zkServer.sh start
+/opt/module/zookeeper/bin/zkServer.sh start
 # hadoop102
-bin/zkServer.sh start
+/opt/module/zookeeper/bin/zkServer.sh start
 # hadoop103
-bin/zkServer.sh start
+/opt/module/zookeeper/bin/zkServer.sh start
 ```

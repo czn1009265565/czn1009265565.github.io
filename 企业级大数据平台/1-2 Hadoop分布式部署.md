@@ -2,7 +2,7 @@
 
 ## 前置准备
 
-1. 安装JDK
+1. JDK安装部署
 2. 静态IP配置
 3. 设置主机名
    ```shell
@@ -302,16 +302,25 @@ scp -r /opt/module/hadoop hadoop@hadoop103:/opt/module/hadoop
 ```shell
 cd /opt/module/hadoop/
 bin/hdfs namenode -format
-# 启动hdfs
-sbin/start-dfs.sh
 ```
 
+**启动集群**  
 ```shell
+# 在hadoop101启动hdfs
+sbin/start-dfs.sh
 # 在hadoop102启动yarn
 sbin/start-yarn.sh
 ```
 
-查看进程
+**关闭集群**
+```shell
+# 在hadoop101关闭hdfs
+sbin/stop-dfs.sh
+# 在hadoop102关闭yarn
+sbin/stop-yarn.sh
+```
+
+**查看进程**  
 ```shell
 --------- hadoop101 ----------
 3074 Jps

@@ -10,6 +10,10 @@
 ## 集群部署
 下载地址: http://kafka.apache.org/downloads.html
 
+### 前置准备
+
+Zookeeper集群安装部署
+
 ### 解压
 ```shell
 tar -zxvf kafka_2.12-3.3.1.tgz -C /opt/module/
@@ -91,11 +95,18 @@ source /etc/profile
 ### 启动集群
 
 ```shell
-# 先在hadoop101启动Kafka集群
-/opt/module/kafka/zk.sh start
+# 依次在hadoop101、hadoop102、hadoop103启动zookeeper
+/opt/module/zookeeper/bin/zkServer.sh start
 
-# 再依次在hadoop101、hadoop102、hadoop103启动Kafka
-/opt/module/kafka/bin/kafka-server-start.sh -daemon config/server.properties
+# 依次在hadoop101、hadoop102、hadoop103启动Kafka
+/opt/module/kafka/bin/kafka-server-start.sh -daemon /opt/module/kafka/config/server.properties
+```
+
+### 关闭集群
+
+```shell
+# 依次在hadoop101、hadoop102、hadoop103关闭Kafka集群
+/opt/module/kafka/bin/kafka-server-stop.sh 
 ```
 
 ### 查看进程
