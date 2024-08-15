@@ -23,7 +23,7 @@ mv /opt/module/kafka_2.12-3.3.1 /opt/module/kafka
 
 ### 修改配置文件
 ```shell
-vim /opt/module/kafka/server.properties
+vim /opt/module/kafka/config/server.properties
 ```
 
 ```properties
@@ -124,15 +124,4 @@ source /etc/profile
 3298 Jps
 3206 Kafka
 2719 QuorumPeerMain
-```
-
-### 关闭集群
-
-```shell
-# hadoop101
-bin/kafka-server-stop.sh
-# hadoop102
-bin/kafka-server-stop.sh
-# hadoop103
-bin/kafka-server-stop.sh
 ```
