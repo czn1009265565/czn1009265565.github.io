@@ -5,16 +5,19 @@ Apache Superset是一个现代的数据探索和可视化平台。它功能强�
 ## 安装部署
 
 ### 前置准备
-
-**依赖安装**  
-```shell
-yum install -y gcc gcc-c++ libffi-devel python-devel python-pip python-wheel python-setuptools openssl-devel cyrus-sasl-devel openldap-devel
-```
-
-**升级pip**  
-```shell
-pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple
-```
+1. 安装Miniconda
+   ```shell
+   # 创建虚拟环境
+   conda create --name superset python=3.10
+   ```
+2. 依赖安装
+   ```shell
+   yum install -y gcc gcc-c++ libffi-devel python-devel python-pip python-wheel python-setuptools openssl-devel cyrus-sasl-devel openldap-devel
+   ```
+3. 升级pip  
+   ```shell
+   pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple
+   ```
 
 ### 安装依赖包
 ```shell
@@ -37,7 +40,7 @@ pip install apache-superset -i https://pypi.tuna.tsinghua.edu.cn/simple
 3. 修改配置文件
    ```shell
    # 这里使用miniconda作为python环境管理
-   vim /opt/module/miniconda/envs/superset/lib/python3.8/site-packages/superset/config.py
+   vim ./miniconda3/envs/superset/lib/python3.8/site-packages/superset/config.py
    
    # SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(DATA_DIR, "superset.db")
    SQLALCHEMY_DATABASE_URI = 'mysql://superset:superset@localhost:3306/superset?charset=utf8'

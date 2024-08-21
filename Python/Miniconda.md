@@ -7,7 +7,7 @@ Conda 是一个开源的软件包管理系统和环境管理系统，用于安�
 
 ```shell
 # 下载并执行安装脚本(一路yes)
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+wget https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-x86_64.sh
 bash Miniconda3-latest-Linux-x86_64.sh
 
 # 加载环境变量
