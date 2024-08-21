@@ -1,4 +1,5 @@
 # Miniconda
+Conda 是一个开源的软件包管理系统和环境管理系统，用于安装多个版本的软件包及其依赖关系，并在它们之间轻松切换。
 
 下载地址: https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 
