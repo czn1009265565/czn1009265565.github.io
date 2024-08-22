@@ -49,6 +49,10 @@ pip install apache-superset -i https://pypi.tuna.tsinghua.edu.cn/simple
 4. 安装mysql驱动
    ```shell
    pip install mysqlclient -i https://pypi.tuna.tsinghua.edu.cn/simple
+   
+   # 安装异常
+   yum install pkg-config
+   yum install mysql-devel
    ```
 
 5. 初始化Superset元数据
