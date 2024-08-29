@@ -34,7 +34,7 @@ source /etc/profile.d/hadoop_env.sh
        <!--配置Hive保存元数据信息所需的 MySQL URL地址-->
        <property>
            <name>javax.jdo.option.ConnectionURL</name>
-           <value>jdbc:mysql://localhost:3306/metastore?useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;allowPublicKeyRetrieval=true</value>
+           <value>jdbc:mysql://localhost:3306/hive?serverTimezone=Asia/Shanghai</value>
        </property>
    
        <!--配置Hive连接MySQL的驱动全类名-->
@@ -93,7 +93,7 @@ source /etc/profile.d/hadoop_env.sh
    ```
 3. 创建数据库
    ```shell
-   mysql> CREATE DATABASE metastore CHARACTER SET utf8 COLLATE utf8_general_ci;
+   mysql> CREATE DATABASE hive CHARACTER SET utf8 COLLATE utf8_general_ci;
    ```
 4. 初始化Hive元数据库
    ```shell
