@@ -48,9 +48,19 @@ mysql_secure_installation
 5. 重新加载授权表
 
 ### 创建远程连接用户
+
+```shell
+# 创建数据库用户,并授予远程连接权限
+mysql> create user 'username'@'%' identified by 'password';
+# 为用户授权数据库所有权限
+mysql> grant all privileges on *.* to 'username'@'%';
+# 刷新权限
+mysql> flush privileges;
 ```
-mysql> create user 'username'@'%' identified by 'password'; #创建数据库用户,并授予远程连接权限。
-mysql> grant all privileges on *.* to 'username'@'%'; #为用户授权数据库所有权限。
-mysql> flush privileges; #刷新权限。
-mysql> drop user 'username'; # 删除远程用户 
+
+### 删除用户
+
+```shell
+# 删除用户 
+mysql> drop user 'username'; 
 ```
