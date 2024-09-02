@@ -43,7 +43,7 @@ pip install apache-superset -i https://pypi.tuna.tsinghua.edu.cn/simple
    vim ./miniconda3/envs/superset/lib/python3.10/site-packages/superset/config.py
    
    # SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(DATA_DIR, "superset.db")
-   SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://username:password@hostname/superset'
+   SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://username:password@hostname:port/superset'
    
    # 生成 SECRET_KEY
    openssl rand -base64 42
@@ -59,6 +59,7 @@ pip install apache-superset -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 5. 初始化Superset元数据
    ```shell
+   export FLASK_APP=superset
    superset db upgrade
    ```
 
@@ -66,7 +67,6 @@ pip install apache-superset -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 1. 创建管理员用户  
    ```shell
-   export FLASK_APP=superset
    superset fab create-admin
    ```
 2. 初始化数据  
@@ -75,7 +75,7 @@ pip install apache-superset -i https://pypi.tuna.tsinghua.edu.cn/simple
    ```
 3. 启动Superset
    ```shell
-   superset run -p 8080 --with-threads --reload --debugger
+   superset run -p 8888 --with-threads --reload --debugger
    ```
 4. 部署Superset  
    `gunicorn` 是一个 `Python Web Server`，类似 `Tomcat`  
@@ -83,7 +83,7 @@ pip install apache-superset -i https://pypi.tuna.tsinghua.edu.cn/simple
    # 安装gunicorn
    pip install gunicorn -i https://pypi.tuna.tsinghua.edu.cn/simple
    # 启动服务
-   gunicorn --workers 5 --timeout 120 --bind localhost:8080  "superset.app:create_app()" --daemon
+   gunicorn --workers 5 --timeout 120 --bind 192.168.1.101:8888  "superset.app:create_app()" --daemon
    ```
    - --workers：指定进程个数
    - --timeout：worker 进程超时时间，超时会自动重启

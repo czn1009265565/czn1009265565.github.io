@@ -58,6 +58,16 @@ mysql> grant all privileges on *.* to 'username'@'%';
 mysql> flush privileges;
 ```
 
+### 允许用户远程登录
+
+```shell
+mysql -u root -p
+
+mysql> use mysql;
+mysql> update user set host = '%' where user = 'root';
+mysql> FLUSH PRIVILEGES;
+```
+
 ### 删除用户
 
 ```shell
