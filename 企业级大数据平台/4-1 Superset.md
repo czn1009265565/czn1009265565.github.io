@@ -32,7 +32,7 @@ pip install apache-superset -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 2. 创建superset用户
    ```shell
-   mysql> create user superset@'%' identified WITH mysql_native_password BY 'superset';
+   mysql> create user superset@'%' identified WITH mysql_native_password BY 'password';
    mysql> grant all privileges on *.* to superset@'%' with grant option;
    mysql> flush privileges;
    ```
@@ -40,24 +40,25 @@ pip install apache-superset -i https://pypi.tuna.tsinghua.edu.cn/simple
 3. 修改配置文件
    ```shell
    # 这里使用miniconda作为python环境管理
-   vim ./miniconda3/envs/superset/lib/python3.8/site-packages/superset/config.py
+   vim ./miniconda3/envs/superset/lib/python3.10/site-packages/superset/config.py
    
    # SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(DATA_DIR, "superset.db")
-   SQLALCHEMY_DATABASE_URI = 'mysql://superset:superset@localhost:3306/superset?charset=utf8'
+   SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://username:password@hostname/superset'
+   
+   # 生成 SECRET_KEY
+   openssl rand -base64 42
+   # 配置 SECRET_KEY
+   SECRET_KEY = 'QDj/23oRQc9uzIKxomTZ85BHbtusTZ9OX0OAfIHRS8yMPIu0IdgS1GiC'
    ```
 
 4. 安装mysql驱动
    ```shell
-   pip install mysqlclient -i https://pypi.tuna.tsinghua.edu.cn/simple
-   
-   # 安装异常
-   yum install pkg-config
-   yum install mysql-devel
+   # 这里选择兼容性更好的pymysql
+   pip install pymysql -i https://pypi.tuna.tsinghua.edu.cn/simple
    ```
 
 5. 初始化Superset元数据
    ```shell
-   export FLASK_APP=superset
    superset db upgrade
    ```
 
@@ -65,6 +66,7 @@ pip install apache-superset -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 1. 创建管理员用户  
    ```shell
+   export FLASK_APP=superset
    superset fab create-admin
    ```
 2. 初始化数据  
@@ -87,3 +89,10 @@ pip install apache-superset -i https://pypi.tuna.tsinghua.edu.cn/simple
    - --timeout：worker 进程超时时间，超时会自动重启
    - --bind：绑定本机地址，即为 Superset 访问地址
    - --daemon：后台运行
+5. 关闭服务  
+   ```shell
+   # ‌寻找master PID
+   pstree -ap|grep gunicorn
+   
+   kill -9 <Master PID>
+   ```
