@@ -1,0 +1,2794 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Spring Boot 定时任务 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-toggle-chapters/toggle.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Spring Boot 文件上传下载.html" />
+    
+    
+    <link rel="prev" href="Spring Boot 多模块管理.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../Python/">
+            
+                <a href="../Python/">
+            
+                    
+                    Python
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../Python/Python环境搭建.html">
+            
+                <a href="../Python/Python环境搭建.html">
+            
+                    
+                    Python 环境搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../Python/Scrapy.html">
+            
+                <a href="../Python/Scrapy.html">
+            
+                    
+                    Scrapy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../Python/Flask.html">
+            
+                <a href="../Python/Flask.html">
+            
+                    
+                    Flask
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../Python/Windows自动化.html">
+            
+                <a href="../Python/Windows自动化.html">
+            
+                    
+                    Windows自动化
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../Java/">
+            
+                <a href="../Java/">
+            
+                    
+                    Java
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../Java/JVM/">
+            
+                <a href="../Java/JVM/">
+            
+                    
+                    JVM
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1.1" data-path="../Java/JVM/JVM调优.md">
+            
+                <span>
+            
+                    
+                    JVM调优
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../Java/Java 注解.html">
+            
+                <a href="../Java/Java 注解.html">
+            
+                    
+                    Java 注解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../Java/Java反射.html">
+            
+                <a href="../Java/Java反射.html">
+            
+                    
+                    Java反射
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../Java/Java动态代理.html">
+            
+                <a href="../Java/Java动态代理.html">
+            
+                    
+                    Java动态代理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../Java/IO基础.html">
+            
+                <a href="../Java/IO基础.html">
+            
+                    
+                    IO基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../Java/IO模型.html">
+            
+                <a href="../Java/IO模型.html">
+            
+                    
+                    IO模型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="../Java/Java单例.html">
+            
+                <a href="../Java/Java单例.html">
+            
+                    
+                    Java单例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="../Java/Java线程池.html">
+            
+                <a href="../Java/Java线程池.html">
+            
+                    
+                    Java线程池
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="../Java/Java高并发核心编程.html">
+            
+                <a href="../Java/Java高并发核心编程.html">
+            
+                    
+                    Java高并发核心编程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../Netty/">
+            
+                <a href="../Netty/">
+            
+                    
+                    Netty
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../Netty/Netty.html">
+            
+                <a href="../Netty/Netty.html">
+            
+                    
+                    Netty
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../Netty/Netty TCP粘包、拆包.html">
+            
+                <a href="../Netty/Netty TCP粘包、拆包.html">
+            
+                    
+                    Netty TCP粘包、拆包
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../Netty/Netty 实现简单Http服务器.html">
+            
+                <a href="../Netty/Netty 实现简单Http服务器.html">
+            
+                    
+                    Netty 实现简单Http服务器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../Netty/Netty 实现简单WebSocket服务器.html">
+            
+                <a href="../Netty/Netty 实现简单WebSocket服务器.html">
+            
+                    
+                    Netty 实现简单WebSocket服务器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../Netty/Netty 心跳机制.html">
+            
+                <a href="../Netty/Netty 心跳机制.html">
+            
+                    
+                    Netty 心跳机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Spring Boot
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="Spring Boot Actuator.html">
+            
+                <a href="Spring Boot Actuator.html">
+            
+                    
+                    Spring Boot Actuator
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="Spring Boot AOP.html">
+            
+                <a href="Spring Boot AOP.html">
+            
+                    
+                    Spring Boot AOP
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="Spring Boot Async.html">
+            
+                <a href="Spring Boot Async.html">
+            
+                    
+                    Spring Boot Async
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="Spring Boot Batch.html">
+            
+                <a href="Spring Boot Batch.html">
+            
+                    
+                    Spring Boot Batch
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="Spring Boot Data Jpa.html">
+            
+                <a href="Spring Boot Data Jpa.html">
+            
+                    
+                    Spring Boot Data Jpa
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.6" data-path="Spring Boot EasyExcel.html">
+            
+                <a href="Spring Boot EasyExcel.html">
+            
+                    
+                    Spring Boot EasyExcel
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.7" data-path="Spring Boot Elasticsearch.html">
+            
+                <a href="Spring Boot Elasticsearch.html">
+            
+                    
+                    Spring Boot Elasticsearch
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.8" data-path="Spring Boot Freemarker.html">
+            
+                <a href="Spring Boot Freemarker.html">
+            
+                    
+                    Spring Boot Freemarker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.9" data-path="Spring Boot Kafka.html">
+            
+                <a href="Spring Boot Kafka.html">
+            
+                    
+                    Spring Boot Kafka
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.10" data-path="Spring Boot Logback.html">
+            
+                <a href="Spring Boot Logback.html">
+            
+                    
+                    Spring Boot Logback
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.11" data-path="Spring Boot MapStruct.html">
+            
+                <a href="Spring Boot MapStruct.html">
+            
+                    
+                    Spring Boot MapStruct
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.12" data-path="Spring Boot MinIO.html">
+            
+                <a href="Spring Boot MinIO.html">
+            
+                    
+                    Spring Boot MinIO
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.13" data-path="Spring Boot MyBatis.html">
+            
+                <a href="Spring Boot MyBatis.html">
+            
+                    
+                    Spring Boot MyBatis
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.14" data-path="Spring Boot Mybatis 拦截器.html">
+            
+                <a href="Spring Boot Mybatis 拦截器.html">
+            
+                    
+                    Spring Boot Mybatis 拦截器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.15" data-path="Spring Boot Mybatis 类型转换.html">
+            
+                <a href="Spring Boot Mybatis 类型转换.html">
+            
+                    
+                    Spring Boot Mybatis 类型转换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.16" data-path="Spring Boot MybatisPlus.html">
+            
+                <a href="Spring Boot MybatisPlus.html">
+            
+                    
+                    Spring Boot MybatisPlus
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.17" data-path="Spring Boot POI Excel.html">
+            
+                <a href="Spring Boot POI Excel.html">
+            
+                    
+                    Spring Boot POI Excel
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.18" data-path="Spring Boot PostgreSQL.html">
+            
+                <a href="Spring Boot PostgreSQL.html">
+            
+                    
+                    Spring Boot PostgreSQL
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.19" data-path="Spring Boot RabbitMQ.html">
+            
+                <a href="Spring Boot RabbitMQ.html">
+            
+                    
+                    Spring Boot RabbitMQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.20" data-path="Spring Boot Redis.html">
+            
+                <a href="Spring Boot Redis.html">
+            
+                    
+                    Spring Boot Redis
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.21" data-path="Spring Boot RestTemplate.html">
+            
+                <a href="Spring Boot RestTemplate.html">
+            
+                    
+                    Spring Boot RestTemplate
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.22" data-path="Spring Boot Screw.html">
+            
+                <a href="Spring Boot Screw.html">
+            
+                    
+                    Spring Boot Screw
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.23" data-path="Spring Boot SpringDoc.html">
+            
+                <a href="Spring Boot SpringDoc.html">
+            
+                    
+                    Spring Boot SpringDoc
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.24" data-path="Spring Boot Swagger UI.html">
+            
+                <a href="Spring Boot Swagger UI.html">
+            
+                    
+                    Spring Boot Swagger UI
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.25" data-path="Spring Boot Xxl-Job.html">
+            
+                <a href="Spring Boot Xxl-Job.html">
+            
+                    
+                    Spring Boot Xxl-Job
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.26" data-path="Spring Boot 任务管理.html">
+            
+                <a href="Spring Boot 任务管理.html">
+            
+                    
+                    Spring Boot 任务管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.27" data-path="Spring Boot 分布式事务.html">
+            
+                <a href="Spring Boot 分布式事务.html">
+            
+                    
+                    Spring Boot 分布式事务
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.28" data-path="Spring Boot 分布式锁.html">
+            
+                <a href="Spring Boot 分布式锁.html">
+            
+                    
+                    Spring Boot 分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.29" data-path="Spring Boot 单元测试.html">
+            
+                <a href="Spring Boot 单元测试.html">
+            
+                    
+                    Spring Boot 单元测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.30" data-path="Spring Boot 参数校验.html">
+            
+                <a href="Spring Boot 参数校验.html">
+            
+                    
+                    Spring Boot 参数校验
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.31" data-path="Spring Boot 启动任务.html">
+            
+                <a href="Spring Boot 启动任务.html">
+            
+                    
+                    Spring Boot 启动任务
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.32" data-path="Spring Boot 基础配置.md">
+            
+                <span>
+            
+                    
+                    Spring Boot 基础配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.33" data-path="Spring Boot 多模块管理.html">
+            
+                <a href="Spring Boot 多模块管理.html">
+            
+                    
+                    Spring Boot 多模块管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.5.34" data-path="Spring Boot 定时任务.html">
+            
+                <a href="Spring Boot 定时任务.html">
+            
+                    
+                    Spring Boot 定时任务
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.35" data-path="Spring Boot 文件上传下载.html">
+            
+                <a href="Spring Boot 文件上传下载.html">
+            
+                    
+                    Spring Boot 文件上传下载
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.36" data-path="Spring Boot 统一异常处理.html">
+            
+                <a href="Spring Boot 统一异常处理.html">
+            
+                    
+                    Spring Boot 统一异常处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.37" data-path="Spring Boot 获取 Bean.html">
+            
+                <a href="Spring Boot 获取 Bean.html">
+            
+                    
+                    Spring Boot 获取 Bean
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.38" data-path="Spring Boot 限流.html">
+            
+                <a href="Spring Boot 限流.html">
+            
+                    
+                    Spring Boot 限流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../Apache Shiro/">
+            
+                <a href="../Apache Shiro/">
+            
+                    
+                    Apache Shiro
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../Apache Shiro/Spring Boot Shiro 用户认证.html">
+            
+                <a href="../Apache Shiro/Spring Boot Shiro 用户认证.html">
+            
+                    
+                    Spring Boot Shiro 用户认证
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../Apache Shiro/Spring Boot Shiro 手机号认证.html">
+            
+                <a href="../Apache Shiro/Spring Boot Shiro 手机号认证.html">
+            
+                    
+                    Spring Boot Shiro 手机号认证
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../Apache Shiro/Spring Boot Shiro 授权.html">
+            
+                <a href="../Apache Shiro/Spring Boot Shiro 授权.html">
+            
+                    
+                    Spring Boot Shiro 授权
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../Apache Shiro/Spring Boot Shiro Remember me.html">
+            
+                <a href="../Apache Shiro/Spring Boot Shiro Remember me.html">
+            
+                    
+                    Spring Boot Shiro Remember me
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../Apache Shiro/Spring Boot Shiro Redis.html">
+            
+                <a href="../Apache Shiro/Spring Boot Shiro Redis.html">
+            
+                    
+                    Spring Boot Shiro Redis
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.6" data-path="../Apache Shiro/Spring Boot Shiro JWT.html">
+            
+                <a href="../Apache Shiro/Spring Boot Shiro JWT.html">
+            
+                    
+                    Spring Boot Shiro JWT
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../Spring Security/">
+            
+                <a href="../Spring Security/">
+            
+                    
+                    Spring Security
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../Spring Security/Spring Security 表单认证.html">
+            
+                <a href="../Spring Security/Spring Security 表单认证.html">
+            
+                    
+                    Spring Security 表单认证
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../Spring Security/Spring Security 用户认证.html">
+            
+                <a href="../Spring Security/Spring Security 用户认证.html">
+            
+                    
+                    Spring Security 用户认证
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../Spring Security/Spring Security RBAC.html">
+            
+                <a href="../Spring Security/Spring Security RBAC.html">
+            
+                    
+                    Spring Security RBAC
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../Spring Security/Spring Security 图形验证码.html">
+            
+                <a href="../Spring Security/Spring Security 图形验证码.html">
+            
+                    
+                    Spring Security 图形验证码
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../Sharding Sphere/">
+            
+                <a href="../Sharding Sphere/">
+            
+                    
+                    Sharding Sphere
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../Sharding Sphere/分库分表一理论篇.html">
+            
+                <a href="../Sharding Sphere/分库分表一理论篇.html">
+            
+                    
+                    分库分表一理论篇
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../Sharding Sphere/Spring Boot 实现读写分离.html">
+            
+                <a href="../Sharding Sphere/Spring Boot 实现读写分离.html">
+            
+                    
+                    Spring Boot 实现读写分离
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="../Sharding Sphere/Spring Boot 实现分表.html">
+            
+                <a href="../Sharding Sphere/Spring Boot 实现分表.html">
+            
+                    
+                    Spring Boot 实现分表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="../Sharding Sphere/Spring Boot 实现分库分表.html">
+            
+                <a href="../Sharding Sphere/Spring Boot 实现分库分表.html">
+            
+                    
+                    Spring Boot 实现分库分表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5" data-path="../Sharding Sphere/Spring Boot 实现分表+读写分离.html">
+            
+                <a href="../Sharding Sphere/Spring Boot 实现分表+读写分离.html">
+            
+                    
+                    Spring Boot 实现分表+读写分离
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6" data-path="../Sharding Sphere/Spring Boot 实现分表分库+读写分离.html">
+            
+                <a href="../Sharding Sphere/Spring Boot 实现分表分库+读写分离.html">
+            
+                    
+                    Spring Boot 实现分表分库+读写分离
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.7" data-path="../Sharding Sphere/Spring Boot 实现分布式事务.html">
+            
+                <a href="../Sharding Sphere/Spring Boot 实现分布式事务.html">
+            
+                    
+                    Spring Boot 实现分布式事务
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../Spring Cloud/">
+            
+                <a href="../Spring Cloud/">
+            
+                    
+                    Spring Cloud
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../Spring Cloud/Spring Cloud 概览.html">
+            
+                <a href="../Spring Cloud/Spring Cloud 概览.html">
+            
+                    
+                    Spring Cloud 概览
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../Spring Cloud/Spring Cloud Admin.html">
+            
+                <a href="../Spring Cloud/Spring Cloud Admin.html">
+            
+                    
+                    Spring Cloud Admin
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../Spring Cloud/Spring Cloud Gateway.html">
+            
+                <a href="../Spring Cloud/Spring Cloud Gateway.html">
+            
+                    
+                    Spring Cloud Gateway
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../Spring Cloud/Spring Cloud OpenFeign.html">
+            
+                <a href="../Spring Cloud/Spring Cloud OpenFeign.html">
+            
+                    
+                    Spring Cloud OpenFeign
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../Spring Cloud/Spring Cloud Alibaba 概览.html">
+            
+                <a href="../Spring Cloud/Spring Cloud Alibaba 概览.html">
+            
+                    
+                    Spring Cloud Alibaba 概览
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6" data-path="../Spring Cloud/Spring Cloud Alibaba Nacos.html">
+            
+                <a href="../Spring Cloud/Spring Cloud Alibaba Nacos.html">
+            
+                    
+                    Spring Cloud Alibaba Nacos
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../数据库/">
+            
+                <a href="../数据库/">
+            
+                    
+                    数据库
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../数据库/Redis设计与实现.html">
+            
+                <a href="../数据库/Redis设计与实现.html">
+            
+                    
+                    Redis设计与实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../数据库/MySQL 操作手册.html">
+            
+                <a href="../数据库/MySQL 操作手册.html">
+            
+                    
+                    MySQL 操作手册
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../数据库/PostgreSQL操作手册.html">
+            
+                <a href="../数据库/PostgreSQL操作手册.html">
+            
+                    
+                    PostgreSQL操作手册
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.4" data-path="../数据库/PostGIS 操作手册.html">
+            
+                <a href="../数据库/PostGIS 操作手册.html">
+            
+                    
+                    PostGIS 操作手册
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="../企业级大数据平台/">
+            
+                <a href="../企业级大数据平台/">
+            
+                    
+                    企业级大数据平台
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../企业级大数据平台/数据仓库.html">
+            
+                <a href="../企业级大数据平台/数据仓库.html">
+            
+                    
+                    数据仓库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../企业级大数据平台/Hive基本概念.html">
+            
+                <a href="../企业级大数据平台/Hive基本概念.html">
+            
+                    
+                    初识 Hive
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../企业级大数据平台/数据采集.html">
+            
+                <a href="../企业级大数据平台/数据采集.html">
+            
+                    
+                    数据采集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.4" data-path="../企业级大数据平台/Pentaho Kettle.html">
+            
+                <a href="../企业级大数据平台/Pentaho Kettle.html">
+            
+                    
+                    Pentaho Kettle
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.5" data-path="../企业级大数据平台/数据治理.html">
+            
+                <a href="../企业级大数据平台/数据治理.html">
+            
+                    
+                    数据治理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.6" data-path="../企业级大数据平台/任务调度.html">
+            
+                <a href="../企业级大数据平台/任务调度.html">
+            
+                    
+                    任务调度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.7" data-path="../企业级大数据平台/Azkaban Job.html">
+            
+                <a href="../企业级大数据平台/Azkaban Job.html">
+            
+                    
+                    Azkaban Job
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.8" data-path="../企业级大数据平台/Azkaban Flow.html">
+            
+                <a href="../企业级大数据平台/Azkaban Flow.html">
+            
+                    
+                    Azkaban Flow
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.9" data-path="../企业级大数据平台/Spark RDD.html">
+            
+                <a href="../企业级大数据平台/Spark RDD.html">
+            
+                    
+                    Spark RDD
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.10" data-path="../企业级大数据平台/Spark Java Word Count.html">
+            
+                <a href="../企业级大数据平台/Spark Java Word Count.html">
+            
+                    
+                    Spark Java Word Count
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.11" data-path="../企业级大数据平台/Spark SQL.html">
+            
+                <a href="../企业级大数据平台/Spark SQL.html">
+            
+                    
+                    Spark SQL
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="../量化交易/">
+            
+                <a href="../量化交易/">
+            
+                    
+                    量化交易
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../量化交易/数据篇.html">
+            
+                <a href="../量化交易/数据篇.html">
+            
+                    
+                    数据篇
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.2" data-path="../量化交易/交易指标.html">
+            
+                <a href="../量化交易/交易指标.html">
+            
+                    
+                    交易指标
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.3" data-path="../量化交易/择时策略.html">
+            
+                <a href="../量化交易/择时策略.html">
+            
+                    
+                    择时策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.4" data-path="../量化交易/选股策略.html">
+            
+                <a href="../量化交易/选股策略.html">
+            
+                    
+                    选股策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.5" data-path="../量化交易/数据回测.html">
+            
+                <a href="../量化交易/数据回测.html">
+            
+                    
+                    数据回测
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.6" data-path="../量化交易/实盘交易.html">
+            
+                <a href="../量化交易/实盘交易.html">
+            
+                    
+                    实盘交易
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.7" data-path="../量化交易/量化交易基本概念.html">
+            
+                <a href="../量化交易/量化交易基本概念.html">
+            
+                    
+                    量化交易基本概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.8" data-path="../量化交易/股票基本概念.html">
+            
+                <a href="../量化交易/股票基本概念.html">
+            
+                    
+                    股票基本概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="../工具/">
+            
+                <a href="../工具/">
+            
+                    
+                    工具
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.13.1" data-path="../工具/AList.html">
+            
+                <a href="../工具/AList.html">
+            
+                    
+                    AList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.2" data-path="../工具/Aria2.html">
+            
+                <a href="../工具/Aria2.html">
+            
+                    
+                    Aria2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.3" data-path="../工具/Charles.html">
+            
+                <a href="../工具/Charles.html">
+            
+                    
+                    Charles
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.4" data-path="../工具/Code View.html">
+            
+                <a href="../工具/Code View.html">
+            
+                    
+                    Code View
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.5" data-path="../工具/GitBook.html">
+            
+                <a href="../工具/GitBook.html">
+            
+                    
+                    GitBook
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.6" data-path="../工具/Jetbrains全家桶.html">
+            
+                <a href="../工具/Jetbrains全家桶.html">
+            
+                    
+                    Jetbrains全家桶
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.7" data-path="../工具/Microsoft全家桶.html">
+            
+                <a href="../工具/Microsoft全家桶.html">
+            
+                    
+                    Microsoft全家桶
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.8" data-path="../工具/Zerotier.html">
+            
+                <a href="../工具/Zerotier.html">
+            
+                    
+                    Zerotier
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.9" data-path="../工具/Zotero.html">
+            
+                <a href="../工具/Zotero.html">
+            
+                    
+                    Zotero
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.10" data-path="../工具/百度网盘.html">
+            
+                <a href="../工具/百度网盘.html">
+            
+                    
+                    百度网盘
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.11" data-path="../工具/阿里云盘.html">
+            
+                <a href="../工具/阿里云盘.html">
+            
+                    
+                    阿里云盘
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="../环境部署/">
+            
+                <a href="../环境部署/">
+            
+                    
+                    环境部署
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../环境部署/Java 环境搭建.html">
+            
+                <a href="../环境部署/Java 环境搭建.html">
+            
+                    
+                    Java 环境搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.2" data-path="../环境部署/Maven 环境搭建.md">
+            
+                <span>
+            
+                    
+                    Maven 环境搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.3" data-path="../环境部署/MySQL 安装部署.html">
+            
+                <a href="../环境部署/MySQL 安装部署.html">
+            
+                    
+                    MySQL 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.4" data-path="../Nginx/Nginx%20安装部署.md">
+            
+                <span>
+            
+                    
+                    Nginx 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.5" data-path="../环境部署/MinIO 环境搭建.html">
+            
+                <a href="../环境部署/MinIO 环境搭建.html">
+            
+                    
+                    MinIO 环境搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.6" data-path="../环境部署/Hadoop 安装部署.md">
+            
+                <span>
+            
+                    
+                    Hadoop 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.7" data-path="../环境部署/Hive 安装部署.html">
+            
+                <a href="../环境部署/Hive 安装部署.html">
+            
+                    
+                    Hive 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.8" data-path="../环境部署/Spark 安装部署.html">
+            
+                <a href="../环境部署/Spark 安装部署.html">
+            
+                    
+                    Spark 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.9" data-path="../环境部署/Zookeeper 集群搭建.html">
+            
+                <a href="../环境部署/Zookeeper 集群搭建.html">
+            
+                    
+                    Zookeeper 集群搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.10" data-path="../环境部署/Kafka 集群搭建.html">
+            
+                <a href="../环境部署/Kafka 集群搭建.html">
+            
+                    
+                    Kafka 集群搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.11" data-path="../环境部署/Hbase 集群搭建.html">
+            
+                <a href="../环境部署/Hbase 集群搭建.html">
+            
+                    
+                    Hbase 集群搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.12" data-path="../环境部署/Sqoop 安装部署.html">
+            
+                <a href="../环境部署/Sqoop 安装部署.html">
+            
+                    
+                    Sqoop 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.13" data-path="../环境部署/Flume 安装部署.html">
+            
+                <a href="../环境部署/Flume 安装部署.html">
+            
+                    
+                    Flume 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.14" data-path="../环境部署/Azkaban 安装部署.html">
+            
+                <a href="../环境部署/Azkaban 安装部署.html">
+            
+                    
+                    Azkaban 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.15" data-path="../环境部署/DataX 安装部署.html">
+            
+                <a href="../环境部署/DataX 安装部署.html">
+            
+                    
+                    DataX 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="../Maven/">
+            
+                <a href="../Maven/">
+            
+                    
+                    Maven
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../Maven/Maven 仓库.html">
+            
+                <a href="../Maven/Maven 仓库.html">
+            
+                    
+                    Maven 仓库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.2" data-path="../Maven/Maven 引入本地jar包.md">
+            
+                <span>
+            
+                    
+                    Maven 引入本地jar包
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="../Docker/">
+            
+                <a href="../Docker/">
+            
+                    
+                    Docker
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="../Docker/Docker安装部署.html">
+            
+                <a href="../Docker/Docker安装部署.html">
+            
+                    
+                    Docker安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="../Docker/Docker基础命令.html">
+            
+                <a href="../Docker/Docker基础命令.html">
+            
+                    
+                    Docker基础命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.3" data-path="../Docker/Dockerfile构建镜像.html">
+            
+                <a href="../Docker/Dockerfile构建镜像.html">
+            
+                    
+                    Dockerfile构建镜像
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.4" data-path="../Docker/Docker常用中间件部署.html">
+            
+                <a href="../Docker/Docker常用中间件部署.html">
+            
+                    
+                    Docker常用中间件部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.5" data-path="../Docker/Docker Compose.html">
+            
+                <a href="../Docker/Docker Compose.html">
+            
+                    
+                    Docker Compose
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.6" data-path="../Docker/Kubernetes安装部署.html">
+            
+                <a href="../Docker/Kubernetes安装部署.html">
+            
+                    
+                    Kubernetes安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="../Nginx/">
+            
+                <a href="../Nginx/">
+            
+                    
+                    Nginx
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.17.1" data-path="../Nginx/Nginx最佳实践.md">
+            
+                <span>
+            
+                    
+                    Nginx最佳实践
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Spring Boot 定时任务</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="spring-task">Spring Task</h1>
+<p><code>@Scheduled</code>&#x6CE8;&#x89E3;&#x662F;Spring Boot&#x63D0;&#x4F9B;&#x7684;&#x7528;&#x4E8E;&#x5B9A;&#x65F6;&#x4EFB;&#x52A1;&#x63A7;&#x5236;&#x7684;&#x6CE8;&#x89E3;&#xFF0C;&#x4E3B;&#x8981;&#x7528;&#x4E8E;&#x63A7;&#x5236;&#x4EFB;&#x52A1;&#x5728;&#x67D0;&#x4E2A;&#x6307;&#x5B9A;&#x65F6;&#x95F4;&#x6267;&#x884C;&#xFF0C;&#x6216;&#x8005;&#x6BCF;&#x9694;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#x6267;&#x884C;&#x3002;</p>
+<h2 id="&#x5E38;&#x7528;&#x5C5E;&#x6027;">&#x5E38;&#x7528;&#x5C5E;&#x6027;</h2>
+<ul>
+<li><code>cron</code></li>
+<li><code>fixedRate</code></li>
+<li><code>fixedDelay</code></li>
+<li><code>initialDelay</code></li>
+</ul>
+<h3 id="cron-&#x8868;&#x8FBE;&#x5F0F;">Cron &#x8868;&#x8FBE;&#x5F0F;</h3>
+<p><code>cron</code>&#x662F;<code>@Scheduled</code>&#x7684;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#xFF0C;&#x662F;&#x4E00;&#x4E2A;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x4EE5;5&#x4E2A;&#x7A7A;&#x683C;&#x9694;&#x5F00;&#xFF0C;&#x53EA;&#x5141;&#x8BB8;6&#x4E2A;&#x57DF;&#xFF08;&#x6CE8;&#x610F;&#x4E0D;&#x662F;7&#x4E2A;&#xFF0C;7&#x4E2A;&#x76F4;&#x63A5;&#x4F1A;&#x62A5;&#x9519;&#xFF09;&#xFF0C;&#x5206;&#x522B;&#x8868;&#x793A;&#x79D2;&#x3001;&#x5206;&#x3001;&#x65F6;&#x3001;&#x65E5;&#x3001;&#x6708;&#x3001;&#x5468;&#x3002;</p>
+<table>
+<thead>
+<tr>
+<th>&#x57DF;</th>
+<th>&#x662F;&#x5426;&#x5FC5;&#x987B;</th>
+<th>&#x53D6;&#x503C;&#x8303;&#x56F4;</th>
+<th>&#x7279;&#x6B8A;&#x5B57;&#x7B26;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&#x79D2;</td>
+<td>&#x662F;</td>
+<td>[0, 59]</td>
+<td>* , - /</td>
+</tr>
+<tr>
+<td>&#x5206;&#x949F;</td>
+<td>&#x662F;</td>
+<td>[0, 59]</td>
+<td>* , - /</td>
+</tr>
+<tr>
+<td>&#x5C0F;&#x65F6;</td>
+<td>&#x662F;</td>
+<td>[0, 23]</td>
+<td>* , - /</td>
+</tr>
+<tr>
+<td>&#x65E5;&#x671F;</td>
+<td>&#x662F;</td>
+<td>[1, 31]</td>
+<td>* , - / ? L W</td>
+</tr>
+<tr>
+<td>&#x6708;&#x4EFD;</td>
+<td>&#x662F;</td>
+<td>[1, 12]&#x6216;[JAN, DEC]</td>
+<td>* , - /</td>
+</tr>
+<tr>
+<td>&#x661F;&#x671F;</td>
+<td>&#x662F;</td>
+<td>[1, 7]&#x6216;[MON, SUN]&#x3002;&#x82E5;&#x60A8;&#x4F7F;&#x7528;[1, 7]&#x8868;&#x8FBE;&#x65B9;&#x5F0F;&#xFF0C;1&#x4EE3;&#x8868;&#x661F;&#x671F;&#x4E00;&#xFF0C;7&#x4EE3;&#x8868;&#x661F;&#x671F;&#x65E5;&#x3002;</td>
+<td>* , - / ? L #</td>
+</tr>
+<tr>
+<td>&#x5E74;</td>
+<td>&#x5426;</td>
+<td>[&#x5F53;&#x524D;&#x5E74;&#x4EFD;&#xFF0C;2099]</td>
+<td>* , - /</td>
+</tr>
+</tbody>
+</table>
+<h3 id="fixedrate">fixedRate</h3>
+<p>fixedRate&#x8868;&#x793A;&#x81EA;&#x4E0A;&#x4E00;&#x6B21;&#x6267;&#x884C;&#x65F6;&#x95F4;&#x4E4B;&#x540E;&#x591A;&#x957F;&#x65F6;&#x95F4;&#x6267;&#x884C;&#xFF0C;&#x4EE5;&#x6BEB;&#x79D2;&#x4E3A;&#x5355;&#x4F4D;&#x3002;</p>
+<pre><code class="lang-java"><span class="hljs-comment">// fixedRate &#x5373;&#x4F7F;&#x4E0A;&#x4E00;&#x6B21;&#x8C03;&#x7528;&#x8FD8;&#x5728;&#x8FD0;&#x884C;&#xFF0C;&#x4E5F;&#x4F7F;Spring&#x8FD0;&#x884C;&#x4EFB;&#x52A1;</span>
+<span class="hljs-meta">@Scheduled</span>(fixedRate=<span class="hljs-number">1000</span> * <span class="hljs-number">2</span>)
+</code></pre>
+<h3 id="fixeddelay">fixedDelay</h3>
+<p>fixedDelay&#x4E0E;fixedRate&#x6709;&#x70B9;&#x7C7B;&#x4F3C;&#xFF0C;&#x4E0D;&#x8FC7;fixedRate&#x662F;&#x4E0A;&#x4E00;&#x6B21;&#x5F00;&#x59CB;&#x4E4B;&#x540E;&#x8BA1;&#x65F6;&#xFF0C;fixedDelay&#x662F;&#x4E0A;&#x4E00;&#x6B21;&#x7ED3;&#x675F;&#x4E4B;&#x540E;&#x8BA1;&#x65F6;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#xFF0C;fixedDelay&#x8868;&#x793A;&#x4E0A;&#x4E00;&#x6B21;&#x6267;&#x884C;&#x5B8C;&#x6BD5;&#x4E4B;&#x540E;&#x591A;&#x957F;&#x65F6;&#x95F4;&#x6267;&#x884C;&#xFF0C;&#x5355;&#x4F4D;&#x4E5F;&#x662F;&#x6BEB;&#x79D2;&#x3002;</p>
+<pre><code class="lang-java"><span class="hljs-comment">// fixedDelay &#x8DDD;&#x79BB;&#x4E0A;&#x4E00;&#x6B21;&#x4EFB;&#x52A1;&#x6267;&#x884C;&#x5B8C;&#x6210;&#x95F4;&#x9694;&#x65F6;&#x95F4;</span>
+<span class="hljs-meta">@Scheduled</span>(fixedDelay=<span class="hljs-number">1000</span> * <span class="hljs-number">2</span>)
+</code></pre>
+<h3 id="initialdelay">initialDelay</h3>
+<p>initialDelay&#x8868;&#x793A;&#x9996;&#x6B21;&#x5EF6;&#x8FDF;&#x591A;&#x957F;&#x65F6;&#x95F4;&#x540E;&#x6267;&#x884C;&#xFF0C;&#x5355;&#x4F4D;&#x6BEB;&#x79D2;&#xFF0C;&#x4E4B;&#x540E;&#x6309;&#x7167;fixedRate/fixedDelay&#x6307;&#x5B9A;&#x7684;&#x89C4;&#x5219;&#x6267;&#x884C;&#xFF0C;&#x9700;&#x8981;&#x6307;&#x5B9A;&#x5176;&#x4E2D;&#x4E00;&#x4E2A;&#x89C4;&#x5219;&#x3002;</p>
+<pre><code class="lang-java"><span class="hljs-comment">//&#x9996;&#x6B21;&#x8FD0;&#x884C;&#x5EF6;&#x8FDF;1s</span>
+<span class="hljs-meta">@Scheduled</span>(initialDelay=<span class="hljs-number">1000</span>,fixedRate=<span class="hljs-number">1000</span>)
+</code></pre>
+<h2 id="scheduleconfiguration">ScheduleConfiguration</h2>
+<pre><code class="lang-java"><span class="hljs-meta">@Configuration</span>
+<span class="hljs-meta">@EnableScheduling</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ScheduleConfiguration</span> </span>{
+}
+</code></pre>
+<h2 id="scheduled">@Scheduled</h2>
+<pre><code class="lang-java"><span class="hljs-meta">@Slf</span>4j
+<span class="hljs-meta">@Component</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">JobScheduler</span> </span>{
+
+    <span class="hljs-meta">@Scheduled</span>(cron=<span class="hljs-string">&quot;${scheduler.cron:0 0 0 * * ?}&quot;</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">cronJob</span><span class="hljs-params">()</span> </span>{
+        log.info(<span class="hljs-string">&quot;cron job&quot;</span>);
+    }
+
+    <span class="hljs-meta">@Scheduled</span>(fixedRate = <span class="hljs-number">3000</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">fixedRateJob</span><span class="hljs-params">()</span> </span>{
+        log.info(<span class="hljs-string">&quot;fixedRate job&quot;</span>);
+    }
+
+    <span class="hljs-meta">@Scheduled</span>(fixedDelay = <span class="hljs-number">3000</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">fixedDelayJob</span><span class="hljs-params">()</span> </span>{
+        log.info(<span class="hljs-string">&quot;fixedDelay job&quot;</span>);
+    }
+}
+</code></pre>
+<h1 id="quartz">Quartz</h1>
+<h2 id="&#x4F53;&#x7CFB;&#x7ED3;&#x6784;">&#x4F53;&#x7CFB;&#x7ED3;&#x6784;</h2>
+<ol>
+<li><code>Job</code> &#x8868;&#x793A;&#x4E00;&#x4E2A;&#x5DE5;&#x4F5C;&#xFF0C;&#x8981;&#x6267;&#x884C;&#x7684;&#x5177;&#x4F53;&#x5185;&#x5BB9;&#x3002;</li>
+<li><code>JobDetail</code> &#x8868;&#x793A;&#x4E00;&#x4E2A;&#x5177;&#x4F53;&#x7684;&#x53EF;&#x6267;&#x884C;&#x7684;&#x8C03;&#x5EA6;&#x7A0B;&#x5E8F;&#xFF0C;<code>Job</code> &#x662F;&#x8FD9;&#x4E2A;&#x53EF;&#x6267;&#x884C;&#x7A0B;&#x8C03;&#x5EA6;&#x7A0B;&#x5E8F;&#x6240;&#x8981;&#x6267;&#x884C;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x53E6;&#x5916; <code>JobDetail</code> &#x8FD8;&#x5305;&#x542B;&#x4E86;&#x8FD9;&#x4E2A;&#x4EFB;&#x52A1;&#x8C03;&#x5EA6;&#x7684;&#x65B9;&#x6848;&#x548C;&#x7B56;&#x7565;&#x3002;</li>
+<li><code>Trigger</code> &#x4EE3;&#x8868;&#x4E00;&#x4E2A;&#x8C03;&#x5EA6;&#x53C2;&#x6570;&#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x4EC0;&#x4E48;&#x65F6;&#x5019;&#x53BB;&#x8C03;&#x3002;</li>
+<li><code>Scheduler</code> &#x4EE3;&#x8868;&#x4E00;&#x4E2A;&#x8C03;&#x5EA6;&#x5BB9;&#x5668;&#xFF0C;&#x4E00;&#x4E2A;&#x8C03;&#x5EA6;&#x5BB9;&#x5668;&#x4E2D;&#x53EF;&#x4EE5;&#x6CE8;&#x518C;&#x591A;&#x4E2A; <code>JobDetail</code> &#x548C; <code>Trigger</code>&#x3002;&#x5F53; <code>Trigger</code> &#x4E0E; <code>JobDetail</code> &#x7EC4;&#x5408;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x88AB; <code>Scheduler</code> &#x5BB9;&#x5668;&#x8C03;&#x5EA6;&#x4E86;&#x3002;</li>
+</ol>
+<h2 id="&#x6301;&#x4E45;&#x5316;">&#x6301;&#x4E45;&#x5316;</h2>
+<ol>
+<li><p>RAMJobStore</p>
+<p> &#x5728;&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;Quartz&#x5C06;&#x4EFB;&#x52A1;&#x8C03;&#x5EA6;&#x7684;&#x8FD0;&#x884C;&#x4FE1;&#x606F;&#x4FDD;&#x5B58;&#x5728;&#x5185;&#x5B58;&#x4E2D;&#xFF0C;&#x8FD9;&#x79CD;&#x65B9;&#x6CD5;&#x63D0;&#x4F9B;&#x4E86;&#x6700;&#x4F73;&#x7684;&#x6027;&#x80FD;&#xFF0C;&#x56E0;&#x4E3A;&#x5185;&#x5B58;&#x4E2D;&#x6570;&#x636E;&#x8BBF;&#x95EE;&#x6700;&#x5FEB;&#x3002;
+ &#x4E0D;&#x8DB3;&#x4E4B;&#x5904;&#x662F;&#x7F3A;&#x4E4F;&#x6570;&#x636E;&#x7684;&#x6301;&#x4E45;&#x6027;&#xFF0C;&#x5F53;&#x7A0B;&#x5E8F;&#x8DEF;&#x9014;&#x505C;&#x6B62;&#x6216;&#x7CFB;&#x7EDF;&#x5D29;&#x6E83;&#x65F6;&#xFF0C;&#x6240;&#x6709;&#x8FD0;&#x884C;&#x7684;&#x4FE1;&#x606F;&#x90FD;&#x4F1A;&#x4E22;&#x5931;&#x3002;</p>
+</li>
+<li><p>JobStoreTX</p>
+<p> &#x6240;&#x6709;&#x7684;&#x4EFB;&#x52A1;&#x4FE1;&#x606F;&#x90FD;&#x4F1A;&#x4FDD;&#x5B58;&#x5230;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#xFF0C;&#x53EF;&#x4EE5;&#x63A7;&#x5236;&#x4E8B;&#x7269;&#xFF0C;&#x8FD8;&#x6709;&#x5C31;&#x662F;&#x5982;&#x679C;&#x5E94;&#x7528;&#x670D;&#x52A1;&#x5668;&#x5173;&#x95ED;&#x6216;&#x8005;&#x91CD;&#x542F;&#xFF0C;
+ &#x4EFB;&#x52A1;&#x4FE1;&#x606F;&#x90FD;&#x4E0D;&#x4F1A;&#x4E22;&#x5931;&#xFF0C;&#x5E76;&#x4E14;&#x53EF;&#x4EE5;&#x6062;&#x590D;&#x56E0;&#x670D;&#x52A1;&#x5668;&#x5173;&#x95ED;&#x6216;&#x8005;&#x91CD;&#x542F;&#x800C;&#x5BFC;&#x81F4;&#x6267;&#x884C;&#x5931;&#x8D25;&#x7684;&#x4EFB;&#x52A1;&#x3002;</p>
+</li>
+</ol>
+<h2 id="&#x5355;&#x673A;&#x6A21;&#x5F0F;">&#x5355;&#x673A;&#x6A21;&#x5F0F;</h2>
+<h3 id="&#x5F15;&#x5165;&#x4F9D;&#x8D56;">&#x5F15;&#x5165;&#x4F9D;&#x8D56;</h3>
+<pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-quartz<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+</code></pre>
+<h3 id="application&#x914D;&#x7F6E;">application&#x914D;&#x7F6E;</h3>
+<pre><code class="lang-yaml"><span class="hljs-attr">spring:</span>
+  <span class="hljs-comment"># Quartz &#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x5BF9;&#x5E94; QuartzProperties &#x914D;&#x7F6E;&#x7C7B;</span>
+<span class="hljs-attr">  quartz:</span>
+<span class="hljs-attr">    job-store-type:</span> memory <span class="hljs-comment"># Job &#x5B58;&#x50A8;&#x5668;&#x7C7B;&#x578B;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A; memory &#x8868;&#x793A;&#x5185;&#x5B58;&#xFF0C;&#x53EF;&#x9009; jdbc &#x4F7F;&#x7528;&#x6570;&#x636E;&#x5E93;&#x3002;</span>
+<span class="hljs-attr">    auto-startup:</span> <span class="hljs-literal">true</span> <span class="hljs-comment"># Quartz &#x662F;&#x5426;&#x81EA;&#x52A8;&#x542F;&#x52A8;</span>
+<span class="hljs-attr">    startup-delay:</span> <span class="hljs-number">0</span> <span class="hljs-comment"># &#x5EF6;&#x8FDF; N &#x79D2;&#x542F;&#x52A8;</span>
+<span class="hljs-attr">    wait-for-jobs-to-complete-on-shutdown:</span> <span class="hljs-literal">true</span> <span class="hljs-comment"># &#x5E94;&#x7528;&#x5173;&#x95ED;&#x65F6;&#xFF0C;&#x662F;&#x5426;&#x7B49;&#x5F85;&#x5B9A;&#x65F6;&#x4EFB;&#x52A1;&#x6267;&#x884C;&#x5B8C;&#x6210;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A; false &#xFF0C;&#x5EFA;&#x8BAE;&#x8BBE;&#x7F6E;&#x4E3A; true</span>
+<span class="hljs-attr">    overwrite-existing-jobs:</span> <span class="hljs-literal">false</span> <span class="hljs-comment"># &#x662F;&#x5426;&#x8986;&#x76D6;&#x5DF2;&#x6709; Job &#x7684;&#x914D;&#x7F6E;</span>
+<span class="hljs-attr">    properties:</span> <span class="hljs-comment"># &#x6DFB;&#x52A0; Quartz Scheduler &#x9644;&#x52A0;&#x5C5E;&#x6027;&#xFF0C;&#x66F4;&#x591A;&#x53EF;&#x4EE5;&#x770B; http://www.quartz-scheduler.org/documentation/2.4.0-SNAPSHOT/configuration.html &#x6587;&#x6863;</span>
+<span class="hljs-attr">      org:</span>
+<span class="hljs-attr">        quartz:</span>
+<span class="hljs-attr">          threadPool:</span>
+<span class="hljs-attr">            threadCount:</span> <span class="hljs-number">25</span> <span class="hljs-comment"># &#x7EBF;&#x7A0B;&#x6C60;&#x5927;&#x5C0F;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A; 10 &#x3002;</span>
+<span class="hljs-attr">            threadPriority:</span> <span class="hljs-number">5</span> <span class="hljs-comment"># &#x7EBF;&#x7A0B;&#x4F18;&#x5148;&#x7EA7;</span>
+<span class="hljs-attr">            class:</span> org.quartz.simpl.SimpleThreadPool <span class="hljs-comment"># &#x7EBF;&#x7A0B;&#x6C60;&#x7C7B;&#x578B;</span>
+<span class="hljs-comment">#    jdbc: # &#x8FD9;&#x91CC;&#x6682;&#x65F6;&#x4E0D;&#x8BF4;&#x660E;&#xFF0C;&#x4F7F;&#x7528; JDBC &#x7684; JobStore &#x7684;&#x65F6;&#x5019;&#xFF0C;&#x624D;&#x9700;&#x8981;&#x914D;&#x7F6E;</span>
+</code></pre>
+<h3 id="job&#x5B9E;&#x4F8B;">Job&#x5B9E;&#x4F8B;</h3>
+<p>&#x7EE7;&#x627F; <code>QuartzJobBean</code> &#x62BD;&#x8C61;&#x7C7B;&#xFF0C;&#x5B9E;&#x73B0; <code>executeInternal(JobExecutionContext context)</code> &#x65B9;&#x6CD5;&#xFF0C;&#x6267;&#x884C;&#x81EA;&#x5B9A;&#x4E49;&#x7684;&#x5B9A;&#x65F6;&#x4EFB;&#x52A1;&#x7684;&#x903B;&#x8F91;&#x3002;</p>
+<pre><code class="lang-java"><span class="hljs-meta">@Slf</span>4j
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DemoJob</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">QuartzJobBean</span> </span>{
+
+    <span class="hljs-meta">@Resource</span>
+    <span class="hljs-keyword">private</span> DemoService demoService;
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">executeInternal</span><span class="hljs-params">(JobExecutionContext context)</span> <span class="hljs-keyword">throws</span> JobExecutionException </span>{
+        demoService.test();
+        log.info(<span class="hljs-string">&quot;Quartz Job single&quot;</span>);
+    }
+}
+</code></pre>
+<p><code>QuartzJobBean</code> &#x5B9E;&#x73B0;&#x4E86; <code>org.quartz.Job</code> &#x63A5;&#x53E3;&#xFF0C;&#x63D0;&#x4F9B;&#x4E86; <code>Quartz</code> &#x6BCF;&#x6B21;&#x521B;&#x5EFA; <code>Job</code> &#x6267;&#x884C;&#x5B9A;&#x65F6;&#x903B;&#x8F91;&#x65F6;&#xFF0C;&#x5C06;&#x8BE5; <code>Job Bean</code> &#x7684;&#x4F9D;&#x8D56;&#x5C5E;&#x6027;&#x6CE8;&#x5165;&#xFF0C;&#x5BF9;&#x5E94;&#x4E0A;&#x6587;&#x7684; <code>DemoService</code> </p>
+<h3 id="scheduleconfiguration">ScheduleConfiguration</h3>
+<pre><code class="lang-java"><span class="hljs-meta">@Configuration</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ScheduleConfiguration</span> </span>{
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DemoJobConfiguration</span> </span>{
+
+        <span class="hljs-meta">@Bean</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> JobDetail <span class="hljs-title">demoJob</span><span class="hljs-params">()</span> </span>{
+            <span class="hljs-keyword">return</span> JobBuilder.newJob(DemoJob.class)
+                    .withIdentity(<span class="hljs-string">&quot;demoJob&quot;</span>) <span class="hljs-comment">// &#x540D;&#x5B57;&#x4E3A; demoJob</span>
+                    .storeDurably() <span class="hljs-comment">// &#x6CA1;&#x6709; Trigger &#x5173;&#x8054;&#x7684;&#x65F6;&#x5019;&#x4EFB;&#x52A1;&#x662F;&#x5426;&#x88AB;&#x4FDD;&#x7559;&#x3002;&#x56E0;&#x4E3A;&#x521B;&#x5EFA; JobDetail &#x65F6;&#xFF0C;&#x8FD8;&#x6CA1; Trigger &#x6307;&#x5411;&#x5B83;&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x8BBE;&#x7F6E;&#x4E3A; true &#xFF0C;&#x8868;&#x793A;&#x4FDD;&#x7559;&#x3002;</span>
+                    .build();
+        }
+
+        <span class="hljs-meta">@Bean</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> Trigger <span class="hljs-title">demoJobTrigger</span><span class="hljs-params">()</span> </span>{
+            <span class="hljs-comment">// &#x7B80;&#x5355;&#x7684;&#x8C03;&#x5EA6;&#x8BA1;&#x5212;&#x7684;&#x6784;&#x9020;&#x5668;</span>
+            SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.simpleSchedule()
+                    .withIntervalInSeconds(<span class="hljs-number">5</span>) <span class="hljs-comment">// &#x9891;&#x7387;&#x3002;</span>
+                    .repeatForever(); <span class="hljs-comment">// &#x6B21;&#x6570;&#x3002;</span>
+            <span class="hljs-comment">// Trigger &#x6784;&#x9020;&#x5668;</span>
+            <span class="hljs-keyword">return</span> TriggerBuilder.newTrigger()
+                    .forJob(demoJob()) <span class="hljs-comment">// &#x5BF9;&#x5E94; Job &#x4E3A; demoJob</span>
+                    .withIdentity(<span class="hljs-string">&quot;demoJobTrigger&quot;</span>) <span class="hljs-comment">// &#x540D;&#x5B57;&#x4E3A; demoJobTrigger</span>
+                    .withSchedule(scheduleBuilder) <span class="hljs-comment">// &#x5BF9;&#x5E94; Schedule &#x4E3A; scheduleBuilder</span>
+                    .build();
+        }
+    }
+}
+</code></pre>
+<h2 id="&#x96C6;&#x7FA4;&#x6A21;&#x5F0F;">&#x96C6;&#x7FA4;&#x6A21;&#x5F0F;</h2>
+<h3 id="&#x5F15;&#x5165;&#x4F9D;&#x8D56;">&#x5F15;&#x5165;&#x4F9D;&#x8D56;</h3>
+<pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-quartz<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-jdbc<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>mysql<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>mysql-connector-java<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>8.0.28<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span>
+</code></pre>
+<h3 id="application&#x914D;&#x7F6E;">application&#x914D;&#x7F6E;</h3>
+<pre><code class="lang-yaml"><span class="hljs-attr">spring:</span>
+<span class="hljs-attr">  datasource:</span>
+<span class="hljs-attr">    user:</span>
+<span class="hljs-attr">      url:</span> jdbc:mysql://<span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>:<span class="hljs-number">3306</span>/bussiness?useSSL=<span class="hljs-literal">false</span>&amp;useUnicode=<span class="hljs-literal">true</span>&amp;characterEncoding=UTF<span class="hljs-bullet">-8</span>
+<span class="hljs-attr">      driver-class-name:</span> com.mysql.jdbc.Driver
+<span class="hljs-attr">      username:</span> root
+<span class="hljs-attr">      password:</span> Admin123.
+<span class="hljs-attr">    quartz:</span>
+<span class="hljs-attr">      url:</span> jdbc:mysql://<span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>:<span class="hljs-number">3306</span>/quartz?useSSL=<span class="hljs-literal">false</span>&amp;useUnicode=<span class="hljs-literal">true</span>&amp;characterEncoding=UTF<span class="hljs-bullet">-8</span>
+<span class="hljs-attr">      driver-class-name:</span> com.mysql.jdbc.Driver
+<span class="hljs-attr">      username:</span> root
+<span class="hljs-attr">      password:</span> Admin123.
+
+  <span class="hljs-comment"># Quartz &#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x5BF9;&#x5E94; QuartzProperties &#x914D;&#x7F6E;&#x7C7B;</span>
+<span class="hljs-attr">  quartz:</span>
+<span class="hljs-attr">    scheduler-name:</span> clusteredScheduler <span class="hljs-comment"># Scheduler &#x540D;&#x5B57;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A; schedulerName</span>
+<span class="hljs-attr">    job-store-type:</span> jdbc <span class="hljs-comment"># Job &#x5B58;&#x50A8;&#x5668;&#x7C7B;&#x578B;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A; memory &#x8868;&#x793A;&#x5185;&#x5B58;&#xFF0C;&#x53EF;&#x9009; jdbc &#x4F7F;&#x7528;&#x6570;&#x636E;&#x5E93;&#x3002;</span>
+<span class="hljs-attr">    auto-startup:</span> <span class="hljs-literal">true</span> <span class="hljs-comment"># Quartz &#x662F;&#x5426;&#x81EA;&#x52A8;&#x542F;&#x52A8;</span>
+<span class="hljs-attr">    startup-delay:</span> <span class="hljs-number">0</span> <span class="hljs-comment"># &#x5EF6;&#x8FDF; N &#x79D2;&#x542F;&#x52A8;</span>
+<span class="hljs-attr">    wait-for-jobs-to-complete-on-shutdown:</span> <span class="hljs-literal">true</span> <span class="hljs-comment"># &#x5E94;&#x7528;&#x5173;&#x95ED;&#x65F6;&#xFF0C;&#x662F;&#x5426;&#x7B49;&#x5F85;&#x5B9A;&#x65F6;&#x4EFB;&#x52A1;&#x6267;&#x884C;&#x5B8C;&#x6210;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A; false &#xFF0C;&#x5EFA;&#x8BAE;&#x8BBE;&#x7F6E;&#x4E3A; true</span>
+<span class="hljs-attr">    overwrite-existing-jobs:</span> <span class="hljs-literal">false</span> <span class="hljs-comment"># &#x662F;&#x5426;&#x8986;&#x76D6;&#x5DF2;&#x6709; Job &#x7684;&#x914D;&#x7F6E;</span>
+<span class="hljs-attr">    properties:</span> <span class="hljs-comment"># &#x6DFB;&#x52A0; Quartz Scheduler &#x9644;&#x52A0;&#x5C5E;&#x6027;&#xFF0C;&#x66F4;&#x591A;&#x53EF;&#x4EE5;&#x770B; http://www.quartz-scheduler.org/documentation/2.4.0-SNAPSHOT/configuration.html &#x6587;&#x6863;</span>
+<span class="hljs-attr">      org:</span>
+<span class="hljs-attr">        quartz:</span>
+          <span class="hljs-comment"># JobStore &#x76F8;&#x5173;&#x914D;&#x7F6E;</span>
+<span class="hljs-attr">          jobStore:</span>
+            <span class="hljs-comment"># &#x6570;&#x636E;&#x6E90;&#x540D;&#x79F0;</span>
+<span class="hljs-attr">            dataSource:</span> quartzDataSource <span class="hljs-comment"># &#x4F7F;&#x7528;&#x7684;&#x6570;&#x636E;&#x6E90;</span>
+<span class="hljs-attr">            class:</span> org.quartz.impl.jdbcjobstore.JobStoreTX <span class="hljs-comment"># JobStore &#x5B9E;&#x73B0;&#x7C7B;</span>
+<span class="hljs-attr">            driverDelegateClass:</span> org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+<span class="hljs-attr">            tablePrefix:</span> QRTZ_ <span class="hljs-comment"># Quartz &#x8868;&#x524D;&#x7F00;</span>
+<span class="hljs-attr">            isClustered:</span> <span class="hljs-literal">true</span> <span class="hljs-comment"># &#x662F;&#x96C6;&#x7FA4;&#x6A21;&#x5F0F;</span>
+<span class="hljs-attr">            clusterCheckinInterval:</span> <span class="hljs-number">1000</span>
+<span class="hljs-attr">            useProperties:</span> <span class="hljs-literal">false</span>
+          <span class="hljs-comment"># &#x7EBF;&#x7A0B;&#x6C60;&#x76F8;&#x5173;&#x914D;&#x7F6E;</span>
+<span class="hljs-attr">          threadPool:</span>
+<span class="hljs-attr">            threadCount:</span> <span class="hljs-number">25</span> <span class="hljs-comment"># &#x7EBF;&#x7A0B;&#x6C60;&#x5927;&#x5C0F;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A; 10 &#x3002;</span>
+<span class="hljs-attr">            threadPriority:</span> <span class="hljs-number">5</span> <span class="hljs-comment"># &#x7EBF;&#x7A0B;&#x4F18;&#x5148;&#x7EA7;</span>
+<span class="hljs-attr">            class:</span> org.quartz.simpl.SimpleThreadPool <span class="hljs-comment"># &#x7EBF;&#x7A0B;&#x6C60;&#x7C7B;&#x578B;</span>
+<span class="hljs-attr">    jdbc:</span> <span class="hljs-comment"># &#x4F7F;&#x7528; JDBC &#x7684; JobStore &#x7684;&#x65F6;&#x5019;&#xFF0C;JDBC &#x7684;&#x914D;&#x7F6E;</span>
+<span class="hljs-attr">      initialize-schema:</span> never <span class="hljs-comment"># &#x662F;&#x5426;&#x81EA;&#x52A8;&#x4F7F;&#x7528; SQL &#x521D;&#x59CB;&#x5316; Quartz &#x8868;&#x7ED3;&#x6784;&#x3002;&#x8FD9;&#x91CC;&#x8BBE;&#x7F6E;&#x6210; never &#xFF0C;&#x6211;&#x4EEC;&#x624B;&#x52A8;&#x521B;&#x5EFA;&#x8868;&#x7ED3;&#x6784;&#x3002;</span>
+</code></pre>
+<h3 id="&#x521D;&#x59CB;&#x5316;quartz&#x8868;&#x7ED3;&#x6784;">&#x521D;&#x59CB;&#x5316;Quartz&#x8868;&#x7ED3;&#x6784;</h3>
+<p>&#x5728; <a href="http://www.quartz-scheduler.org/downloads/" target="_blank">Quartz Download</a> &#x5730;&#x5740;&#xFF0C;&#x4E0B;&#x8F7D;&#x5BF9;&#x5E94;&#x7248;&#x672C;&#x7684;&#x53D1;&#x5E03;&#x5305;&#x3002;
+&#x89E3;&#x538B;&#x540E;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728; <code>src/org/quartz/impl/jdbcjobstore/</code> &#x76EE;&#x5F55;&#xFF0C;&#x770B;&#x5230;&#x5404;&#x79CD;&#x6570;&#x636E;&#x5E93;&#x7684; <code>Quartz</code> &#x8868;&#x7ED3;&#x6784;&#x7684;&#x521D;&#x59CB;&#x5316;&#x811A;&#x672C;&#x3002;
+&#x8FD9;&#x91CC;&#xFF0C;&#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x4F7F;&#x7528; MySQL &#xFF0C;&#x6240;&#x4EE5;&#x4F7F;&#x7528; <code>tables_mysql_innodb.sql</code> &#x811A;&#x672C;&#x3002;</p>
+<h3 id="job&#x5B9E;&#x4F8B;">Job&#x5B9E;&#x4F8B;</h3>
+<p>&#x76F8;&#x8F83;&#x5355;&#x673A;&#x6A21;&#x5F0F;&#x591A;&#x4E86; <code>@DisallowConcurrentExecution</code> &#x6CE8;&#x89E3;&#xFF0C;&#x4FDD;&#x8BC1;&#x76F8;&#x540C; JobDetail &#x5728;&#x591A;&#x4E2A; JVM &#x8FDB;&#x7A0B;&#x4E2D;&#xFF0C;&#x6709;&#x4E14;&#x4EC5;&#x6709;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#x5728;&#x6267;&#x884C;&#x3002;</p>
+<pre><code class="lang-java"><span class="hljs-meta">@Slf</span>4j
+<span class="hljs-meta">@DisallowConcurrentExecution</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ClusterJob</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">QuartzJobBean</span> </span>{
+
+    <span class="hljs-meta">@Resource</span>
+    <span class="hljs-keyword">private</span> DemoService demoService;
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">executeInternal</span><span class="hljs-params">(JobExecutionContext context)</span> <span class="hljs-keyword">throws</span> JobExecutionException </span>{
+        demoService.test();
+        log.info(<span class="hljs-string">&quot;Quartz Job cluster&quot;</span>);
+    }
+}
+</code></pre>
+<h3 id="&#x521D;&#x59CB;&#x5316;&#x4EFB;&#x52A1;&#x542F;&#x52A8;">&#x521D;&#x59CB;&#x5316;&#x4EFB;&#x52A1;&#x542F;&#x52A8;</h3>
+<pre><code class="lang-java"><span class="hljs-meta">@Component</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ClusterJobInit</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">ApplicationListener</span>&lt;<span class="hljs-title">ContextRefreshedEvent</span>&gt; </span>{
+
+    <span class="hljs-meta">@Resource</span>
+    <span class="hljs-keyword">private</span> Scheduler scheduler;
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onApplicationEvent</span><span class="hljs-params">(ContextRefreshedEvent event)</span> </span>{
+        <span class="hljs-comment">// &#x521B;&#x5EFA; JobDetail</span>
+        JobDetail jobDetail = JobBuilder.newJob(ClusterJob.class)
+                .withIdentity(<span class="hljs-string">&quot;clusterJob&quot;</span>) <span class="hljs-comment">// &#x540D;&#x5B57;&#x4E3A; clusterJob</span>
+                .storeDurably() <span class="hljs-comment">// &#x6CA1;&#x6709; Trigger &#x5173;&#x8054;&#x7684;&#x65F6;&#x5019;&#x4EFB;&#x52A1;&#x662F;&#x5426;&#x88AB;&#x4FDD;&#x7559;&#x3002;&#x56E0;&#x4E3A;&#x521B;&#x5EFA; JobDetail &#x65F6;&#xFF0C;&#x8FD8;&#x6CA1; Trigger &#x6307;&#x5411;&#x5B83;&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x8BBE;&#x7F6E;&#x4E3A; true &#xFF0C;&#x8868;&#x793A;&#x4FDD;&#x7559;&#x3002;</span>
+                .build();
+        <span class="hljs-comment">// &#x521B;&#x5EFA; Trigger</span>
+        SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.simpleSchedule()
+                .withIntervalInSeconds(<span class="hljs-number">5</span>) <span class="hljs-comment">// &#x9891;&#x7387;&#x3002;</span>
+                .repeatForever(); <span class="hljs-comment">// &#x6B21;&#x6570;&#x3002;</span>
+        Trigger trigger = TriggerBuilder.newTrigger()
+                .forJob(jobDetail) <span class="hljs-comment">// &#x5BF9;&#x5E94; Job &#x4E3A; ClusterJob</span>
+                .withIdentity(<span class="hljs-string">&quot;clusterJobTrigger&quot;</span>) <span class="hljs-comment">// &#x540D;&#x5B57;&#x4E3A; clusterJobTrigger</span>
+                .withSchedule(scheduleBuilder) <span class="hljs-comment">// &#x5BF9;&#x5E94; Schedule &#x4E3A; scheduleBuilder</span>
+                .build();
+        <span class="hljs-comment">// &#x6DFB;&#x52A0;&#x8C03;&#x5EA6;&#x4EFB;&#x52A1;</span>
+        <span class="hljs-keyword">try</span> {
+            scheduler.scheduleJob(jobDetail, trigger);
+        } <span class="hljs-keyword">catch</span> (SchedulerException e) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(e);
+        }
+    }
+}
+</code></pre>
+<h3 id="schedulermanager">SchedulerManager</h3>
+<pre><code class="lang-java"><span class="hljs-comment">/**
+ * {<span class="hljs-doctag">@link</span> org.quartz.Scheduler} &#x7684;&#x7BA1;&#x7406;&#x5668;&#xFF0C;&#x8D1F;&#x8D23;&#x521B;&#x5EFA;&#x4EFB;&#x52A1;
+ *
+ * &#x8003;&#x8651;&#x5230;&#x5B9E;&#x73B0;&#x7684;&#x7B80;&#x6D01;&#x6027;&#xFF0C;&#x6211;&#x4EEC;&#x4F7F;&#x7528; jobName &#x4F5C;&#x4E3A;&#x552F;&#x4E00;&#x6807;&#x8BC6;&#xFF0C;&#x5373;&#xFF1A;
+ * 1. Job &#x7684; {<span class="hljs-doctag">@link</span> JobDetail#getKey()}
+ * 2. Trigger &#x7684; {<span class="hljs-doctag">@link</span> Trigger#getKey()}
+ *
+ * &#x53E6;&#x5916;&#xFF0C;jobName &#x5BF9;&#x5E94;&#x5230; Class.getSimpleName() &#x76F4;&#x63A5;&#x8C03;&#x7528;
+ */</span>
+<span class="hljs-meta">@Service</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SchedulerManager</span> </span>{
+
+    <span class="hljs-meta">@Resource</span>
+    <span class="hljs-keyword">private</span> Scheduler scheduler;
+
+    <span class="hljs-comment">/**
+     * &#x6DFB;&#x52A0; Job &#x5230; Quartz &#x4E2D;
+     *
+     * <span class="hljs-doctag">@param</span> jobId &#x4EFB;&#x52A1;&#x7F16;&#x53F7;
+     * <span class="hljs-doctag">@param</span> jobClass &#x4EFB;&#x52A1;&#x540D;&#x5B57;
+     * <span class="hljs-doctag">@param</span> jobParam &#x4EFB;&#x52A1;&#x53C2;&#x6570;
+     * <span class="hljs-doctag">@param</span> cronExpression CRON &#x8868;&#x8FBE;&#x5F0F;
+     * <span class="hljs-doctag">@throws</span> SchedulerException &#x6DFB;&#x52A0;&#x5F02;&#x5E38;
+     */</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addJob</span><span class="hljs-params">(Long jobId, Class&lt;? extends Job&gt; jobClass, String jobParam, String cronExpression)</span>
+            <span class="hljs-keyword">throws</span> SchedulerException </span>{
+        String jobName = jobClass.getSimpleName();
+        <span class="hljs-comment">// &#x521B;&#x5EFA; JobDetail &#x5BF9;&#x8C61;</span>
+        JobDetail jobDetail = JobBuilder.newJob(jobClass)
+                .usingJobData(JobDataKeyEnum.JOB_ID.name(), jobId)
+                .usingJobData(JobDataKeyEnum.JOB_HANDLER_NAME.name(), jobParam)
+                .withIdentity(jobName).build();
+        <span class="hljs-comment">// &#x521B;&#x5EFA; Trigger &#x5BF9;&#x8C61;</span>
+        Trigger trigger = <span class="hljs-keyword">this</span>.buildTrigger(jobName, jobParam, cronExpression);
+        <span class="hljs-comment">// &#x65B0;&#x589E;&#x8C03;&#x5EA6;</span>
+        scheduler.scheduleJob(jobDetail, trigger);
+    }
+
+    <span class="hljs-comment">/**
+     * &#x66F4;&#x65B0; Job &#x5230; Quartz
+     *
+     * <span class="hljs-doctag">@param</span> jobName &#x4EFB;&#x52A1;&#x5904;&#x7406;&#x5668;&#x7684;&#x540D;&#x5B57;
+     * <span class="hljs-doctag">@param</span> jobParam &#x4EFB;&#x52A1;&#x5904;&#x7406;&#x5668;&#x7684;&#x53C2;&#x6570;
+     * <span class="hljs-doctag">@param</span> cronExpression CRON &#x8868;&#x8FBE;&#x5F0F;
+     * <span class="hljs-doctag">@throws</span> SchedulerException &#x66F4;&#x65B0;&#x5F02;&#x5E38;
+     */</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">updateJob</span><span class="hljs-params">(String jobName, String jobParam, String cronExpression)</span>
+            <span class="hljs-keyword">throws</span> SchedulerException </span>{
+        <span class="hljs-comment">// &#x521B;&#x5EFA;&#x65B0; Trigger &#x5BF9;&#x8C61;</span>
+        Trigger newTrigger = <span class="hljs-keyword">this</span>.buildTrigger(jobName, jobParam, cronExpression);
+        <span class="hljs-comment">// &#x4FEE;&#x6539;&#x8C03;&#x5EA6;</span>
+        scheduler.rescheduleJob(<span class="hljs-keyword">new</span> TriggerKey(jobName), newTrigger);
+    }
+
+    <span class="hljs-comment">/**
+     * &#x5220;&#x9664; Quartz &#x4E2D;&#x7684; Job
+     *
+     * <span class="hljs-doctag">@param</span> jobName &#x4EFB;&#x52A1;&#x5904;&#x7406;&#x5668;&#x7684;&#x540D;&#x5B57;
+     * <span class="hljs-doctag">@throws</span> SchedulerException &#x5220;&#x9664;&#x5F02;&#x5E38;
+     */</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">deleteJob</span><span class="hljs-params">(String jobName)</span> <span class="hljs-keyword">throws</span> SchedulerException </span>{
+        scheduler.deleteJob(<span class="hljs-keyword">new</span> JobKey(jobName));
+    }
+
+    <span class="hljs-comment">/**
+     * &#x6682;&#x505C; Quartz &#x4E2D;&#x7684; Job
+     *
+     * <span class="hljs-doctag">@param</span> jobName &#x4EFB;&#x52A1;&#x5904;&#x7406;&#x5668;&#x7684;&#x540D;&#x5B57;
+     * <span class="hljs-doctag">@throws</span> SchedulerException &#x6682;&#x505C;&#x5F02;&#x5E38;
+     */</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">pauseJob</span><span class="hljs-params">(String jobName)</span> <span class="hljs-keyword">throws</span> SchedulerException </span>{
+        scheduler.pauseJob(<span class="hljs-keyword">new</span> JobKey(jobName));
+    }
+
+    <span class="hljs-comment">/**
+     * &#x542F;&#x52A8; Quartz &#x4E2D;&#x7684; Job
+     *
+     * <span class="hljs-doctag">@param</span> jobName &#x4EFB;&#x52A1;&#x5904;&#x7406;&#x5668;&#x7684;&#x540D;&#x5B57;
+     * <span class="hljs-doctag">@throws</span> SchedulerException &#x542F;&#x52A8;&#x5F02;&#x5E38;
+     */</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">resumeJob</span><span class="hljs-params">(String jobName)</span> <span class="hljs-keyword">throws</span> SchedulerException </span>{
+        scheduler.resumeJob(<span class="hljs-keyword">new</span> JobKey(jobName));
+        scheduler.resumeTrigger(<span class="hljs-keyword">new</span> TriggerKey(jobName));
+    }
+
+    <span class="hljs-comment">/**
+     * &#x7ACB;&#x5373;&#x89E6;&#x53D1;&#x4E00;&#x6B21; Quartz &#x4E2D;&#x7684; Job
+     *
+     * <span class="hljs-doctag">@param</span> jobId &#x4EFB;&#x52A1;&#x7F16;&#x53F7;
+     * <span class="hljs-doctag">@param</span> jobName &#x4EFB;&#x52A1;&#x5904;&#x7406;&#x5668;&#x7684;&#x540D;&#x5B57;
+     * <span class="hljs-doctag">@param</span> jobParam &#x4EFB;&#x52A1;&#x5904;&#x7406;&#x5668;&#x7684;&#x53C2;&#x6570;
+     * <span class="hljs-doctag">@throws</span> SchedulerException &#x89E6;&#x53D1;&#x5F02;&#x5E38;
+     */</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">triggerJob</span><span class="hljs-params">(Long jobId, String jobName, String jobParam)</span>
+            <span class="hljs-keyword">throws</span> SchedulerException </span>{
+        JobDataMap data = <span class="hljs-keyword">new</span> JobDataMap();
+        data.put(JobDataKeyEnum.JOB_ID.name(), jobId);
+        data.put(JobDataKeyEnum.JOB_HANDLER_NAME.name(), jobName);
+        data.put(JobDataKeyEnum.JOB_HANDLER_PARAM.name(), jobParam);
+        <span class="hljs-comment">// &#x89E6;&#x53D1;&#x4EFB;&#x52A1;</span>
+        scheduler.triggerJob(<span class="hljs-keyword">new</span> JobKey(jobName), data);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> Trigger <span class="hljs-title">buildTrigger</span><span class="hljs-params">(String jobName, String jobParam, String cronExpression)</span> </span>{
+        <span class="hljs-keyword">return</span> TriggerBuilder.newTrigger()
+                .withIdentity(jobName)
+                .withSchedule(CronScheduleBuilder.cronSchedule(cronExpression))
+                .usingJobData(JobDataKeyEnum.JOB_HANDLER_PARAM.name(), jobParam)
+                .build();
+    }
+}
+</code></pre>
+<p>&#x679A;&#x4E3E;&#x7C7B;</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> JobDataKeyEnum {
+    JOB_ID,
+    JOB_HANDLER_NAME,
+    JOB_HANDLER_PARAM,
+}
+</code></pre>
+<h3 id="job&#x8868;&#x7ED3;&#x6784;&#x53C2;&#x8003;">Job&#x8868;&#x7ED3;&#x6784;&#x53C2;&#x8003;</h3>
+<pre><code class="lang-java"><span class="hljs-meta">@Data</span>
+<span class="hljs-meta">@Builder</span>
+<span class="hljs-meta">@NoArgsConstructor</span>
+<span class="hljs-meta">@AllArgsConstructor</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">JobDO</span> </span>{
+    <span class="hljs-keyword">private</span> Long id;
+    <span class="hljs-comment">/** &#x4EFB;&#x52A1;&#x540D;&#x79F0; */</span>
+    <span class="hljs-keyword">private</span> String name;
+    <span class="hljs-comment">/** &#x4EFB;&#x52A1;&#x72B6;&#x6001; 0-&#x521D;&#x59CB;&#x5316; 1-&#x5F00;&#x542F; 2-&#x6682;&#x505C; */</span>
+    <span class="hljs-keyword">private</span> Integer status;
+    <span class="hljs-comment">/** &#x4EFB;&#x52A1;&#x53C2;&#x6570; */</span>
+    <span class="hljs-keyword">private</span> String jobParam;
+    <span class="hljs-comment">/** CRON &#x8868;&#x8FBE;&#x5F0F; */</span>
+    <span class="hljs-keyword">private</span> String cronExpression;
+    <span class="hljs-comment">/** &#x6700;&#x8FD1;&#x4E00;&#x6B21;&#x4EFB;&#x52A1;&#x5F00;&#x59CB;&#x65F6;&#x95F4; */</span>
+    <span class="hljs-keyword">private</span> LocalDateTime startTime;
+    <span class="hljs-comment">/** &#x6700;&#x8FD1;&#x4E00;&#x6B21;&#x4EFB;&#x52A1;&#x7ED3;&#x675F;&#x65F6;&#x95F4; */</span>
+    <span class="hljs-keyword">private</span> LocalDateTime endTime;
+}
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Spring Boot 多模块管理.html" class="navigation navigation-prev " aria-label="Previous page: Spring Boot 多模块管理">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Spring Boot 文件上传下载.html" class="navigation navigation-next " aria-label="Next page: Spring Boot 文件上传下载">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Spring Boot 定时任务","level":"1.5.34","depth":2,"next":{"title":"Spring Boot 文件上传下载","level":"1.5.35","depth":2,"path":"Spring Boot/Spring Boot 文件上传下载.md","ref":"Spring Boot/Spring Boot 文件上传下载.md","articles":[]},"previous":{"title":"Spring Boot 多模块管理","level":"1.5.33","depth":2,"path":"Spring Boot/Spring Boot 多模块管理.md","ref":"Spring Boot/Spring Boot 多模块管理.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toggle-chapters"],"pluginsConfig":{"toggle-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Spring Boot/Spring Boot 定时任务.md","mtime":"2024-09-04T15:17:07.932Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2024-09-07T13:11:00.723Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-toggle-chapters/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

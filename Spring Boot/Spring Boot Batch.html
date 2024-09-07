@@ -1,0 +1,2750 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Spring Boot Batch · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-toggle-chapters/toggle.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Spring Boot Data Jpa.html" />
+    
+    
+    <link rel="prev" href="Spring Boot Async.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../Python/">
+            
+                <a href="../Python/">
+            
+                    
+                    Python
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../Python/Python环境搭建.html">
+            
+                <a href="../Python/Python环境搭建.html">
+            
+                    
+                    Python 环境搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../Python/Scrapy.html">
+            
+                <a href="../Python/Scrapy.html">
+            
+                    
+                    Scrapy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../Python/Flask.html">
+            
+                <a href="../Python/Flask.html">
+            
+                    
+                    Flask
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../Python/Windows自动化.html">
+            
+                <a href="../Python/Windows自动化.html">
+            
+                    
+                    Windows自动化
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../Java/">
+            
+                <a href="../Java/">
+            
+                    
+                    Java
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../Java/JVM/">
+            
+                <a href="../Java/JVM/">
+            
+                    
+                    JVM
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1.1" data-path="../Java/JVM/JVM调优.md">
+            
+                <span>
+            
+                    
+                    JVM调优
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../Java/Java 注解.html">
+            
+                <a href="../Java/Java 注解.html">
+            
+                    
+                    Java 注解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../Java/Java反射.html">
+            
+                <a href="../Java/Java反射.html">
+            
+                    
+                    Java反射
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../Java/Java动态代理.html">
+            
+                <a href="../Java/Java动态代理.html">
+            
+                    
+                    Java动态代理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../Java/IO基础.html">
+            
+                <a href="../Java/IO基础.html">
+            
+                    
+                    IO基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../Java/IO模型.html">
+            
+                <a href="../Java/IO模型.html">
+            
+                    
+                    IO模型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="../Java/Java单例.html">
+            
+                <a href="../Java/Java单例.html">
+            
+                    
+                    Java单例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="../Java/Java线程池.html">
+            
+                <a href="../Java/Java线程池.html">
+            
+                    
+                    Java线程池
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="../Java/Java高并发核心编程.html">
+            
+                <a href="../Java/Java高并发核心编程.html">
+            
+                    
+                    Java高并发核心编程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../Netty/">
+            
+                <a href="../Netty/">
+            
+                    
+                    Netty
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../Netty/Netty.html">
+            
+                <a href="../Netty/Netty.html">
+            
+                    
+                    Netty
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../Netty/Netty TCP粘包、拆包.html">
+            
+                <a href="../Netty/Netty TCP粘包、拆包.html">
+            
+                    
+                    Netty TCP粘包、拆包
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../Netty/Netty 实现简单Http服务器.html">
+            
+                <a href="../Netty/Netty 实现简单Http服务器.html">
+            
+                    
+                    Netty 实现简单Http服务器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../Netty/Netty 实现简单WebSocket服务器.html">
+            
+                <a href="../Netty/Netty 实现简单WebSocket服务器.html">
+            
+                    
+                    Netty 实现简单WebSocket服务器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../Netty/Netty 心跳机制.html">
+            
+                <a href="../Netty/Netty 心跳机制.html">
+            
+                    
+                    Netty 心跳机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Spring Boot
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="Spring Boot Actuator.html">
+            
+                <a href="Spring Boot Actuator.html">
+            
+                    
+                    Spring Boot Actuator
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="Spring Boot AOP.html">
+            
+                <a href="Spring Boot AOP.html">
+            
+                    
+                    Spring Boot AOP
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="Spring Boot Async.html">
+            
+                <a href="Spring Boot Async.html">
+            
+                    
+                    Spring Boot Async
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.5.4" data-path="Spring Boot Batch.html">
+            
+                <a href="Spring Boot Batch.html">
+            
+                    
+                    Spring Boot Batch
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="Spring Boot Data Jpa.html">
+            
+                <a href="Spring Boot Data Jpa.html">
+            
+                    
+                    Spring Boot Data Jpa
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.6" data-path="Spring Boot EasyExcel.html">
+            
+                <a href="Spring Boot EasyExcel.html">
+            
+                    
+                    Spring Boot EasyExcel
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.7" data-path="Spring Boot Elasticsearch.html">
+            
+                <a href="Spring Boot Elasticsearch.html">
+            
+                    
+                    Spring Boot Elasticsearch
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.8" data-path="Spring Boot Freemarker.html">
+            
+                <a href="Spring Boot Freemarker.html">
+            
+                    
+                    Spring Boot Freemarker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.9" data-path="Spring Boot Kafka.html">
+            
+                <a href="Spring Boot Kafka.html">
+            
+                    
+                    Spring Boot Kafka
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.10" data-path="Spring Boot Logback.html">
+            
+                <a href="Spring Boot Logback.html">
+            
+                    
+                    Spring Boot Logback
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.11" data-path="Spring Boot MapStruct.html">
+            
+                <a href="Spring Boot MapStruct.html">
+            
+                    
+                    Spring Boot MapStruct
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.12" data-path="Spring Boot MinIO.html">
+            
+                <a href="Spring Boot MinIO.html">
+            
+                    
+                    Spring Boot MinIO
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.13" data-path="Spring Boot MyBatis.html">
+            
+                <a href="Spring Boot MyBatis.html">
+            
+                    
+                    Spring Boot MyBatis
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.14" data-path="Spring Boot Mybatis 拦截器.html">
+            
+                <a href="Spring Boot Mybatis 拦截器.html">
+            
+                    
+                    Spring Boot Mybatis 拦截器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.15" data-path="Spring Boot Mybatis 类型转换.html">
+            
+                <a href="Spring Boot Mybatis 类型转换.html">
+            
+                    
+                    Spring Boot Mybatis 类型转换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.16" data-path="Spring Boot MybatisPlus.html">
+            
+                <a href="Spring Boot MybatisPlus.html">
+            
+                    
+                    Spring Boot MybatisPlus
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.17" data-path="Spring Boot POI Excel.html">
+            
+                <a href="Spring Boot POI Excel.html">
+            
+                    
+                    Spring Boot POI Excel
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.18" data-path="Spring Boot PostgreSQL.html">
+            
+                <a href="Spring Boot PostgreSQL.html">
+            
+                    
+                    Spring Boot PostgreSQL
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.19" data-path="Spring Boot RabbitMQ.html">
+            
+                <a href="Spring Boot RabbitMQ.html">
+            
+                    
+                    Spring Boot RabbitMQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.20" data-path="Spring Boot Redis.html">
+            
+                <a href="Spring Boot Redis.html">
+            
+                    
+                    Spring Boot Redis
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.21" data-path="Spring Boot RestTemplate.html">
+            
+                <a href="Spring Boot RestTemplate.html">
+            
+                    
+                    Spring Boot RestTemplate
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.22" data-path="Spring Boot Screw.html">
+            
+                <a href="Spring Boot Screw.html">
+            
+                    
+                    Spring Boot Screw
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.23" data-path="Spring Boot SpringDoc.html">
+            
+                <a href="Spring Boot SpringDoc.html">
+            
+                    
+                    Spring Boot SpringDoc
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.24" data-path="Spring Boot Swagger UI.html">
+            
+                <a href="Spring Boot Swagger UI.html">
+            
+                    
+                    Spring Boot Swagger UI
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.25" data-path="Spring Boot Xxl-Job.html">
+            
+                <a href="Spring Boot Xxl-Job.html">
+            
+                    
+                    Spring Boot Xxl-Job
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.26" data-path="Spring Boot 任务管理.html">
+            
+                <a href="Spring Boot 任务管理.html">
+            
+                    
+                    Spring Boot 任务管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.27" data-path="Spring Boot 分布式事务.html">
+            
+                <a href="Spring Boot 分布式事务.html">
+            
+                    
+                    Spring Boot 分布式事务
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.28" data-path="Spring Boot 分布式锁.html">
+            
+                <a href="Spring Boot 分布式锁.html">
+            
+                    
+                    Spring Boot 分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.29" data-path="Spring Boot 单元测试.html">
+            
+                <a href="Spring Boot 单元测试.html">
+            
+                    
+                    Spring Boot 单元测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.30" data-path="Spring Boot 参数校验.html">
+            
+                <a href="Spring Boot 参数校验.html">
+            
+                    
+                    Spring Boot 参数校验
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.31" data-path="Spring Boot 启动任务.html">
+            
+                <a href="Spring Boot 启动任务.html">
+            
+                    
+                    Spring Boot 启动任务
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.32" data-path="Spring Boot 基础配置.md">
+            
+                <span>
+            
+                    
+                    Spring Boot 基础配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.33" data-path="Spring Boot 多模块管理.html">
+            
+                <a href="Spring Boot 多模块管理.html">
+            
+                    
+                    Spring Boot 多模块管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.34" data-path="Spring Boot 定时任务.html">
+            
+                <a href="Spring Boot 定时任务.html">
+            
+                    
+                    Spring Boot 定时任务
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.35" data-path="Spring Boot 文件上传下载.html">
+            
+                <a href="Spring Boot 文件上传下载.html">
+            
+                    
+                    Spring Boot 文件上传下载
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.36" data-path="Spring Boot 统一异常处理.html">
+            
+                <a href="Spring Boot 统一异常处理.html">
+            
+                    
+                    Spring Boot 统一异常处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.37" data-path="Spring Boot 获取 Bean.html">
+            
+                <a href="Spring Boot 获取 Bean.html">
+            
+                    
+                    Spring Boot 获取 Bean
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.38" data-path="Spring Boot 限流.html">
+            
+                <a href="Spring Boot 限流.html">
+            
+                    
+                    Spring Boot 限流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../Apache Shiro/">
+            
+                <a href="../Apache Shiro/">
+            
+                    
+                    Apache Shiro
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../Apache Shiro/Spring Boot Shiro 用户认证.html">
+            
+                <a href="../Apache Shiro/Spring Boot Shiro 用户认证.html">
+            
+                    
+                    Spring Boot Shiro 用户认证
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../Apache Shiro/Spring Boot Shiro 手机号认证.html">
+            
+                <a href="../Apache Shiro/Spring Boot Shiro 手机号认证.html">
+            
+                    
+                    Spring Boot Shiro 手机号认证
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../Apache Shiro/Spring Boot Shiro 授权.html">
+            
+                <a href="../Apache Shiro/Spring Boot Shiro 授权.html">
+            
+                    
+                    Spring Boot Shiro 授权
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../Apache Shiro/Spring Boot Shiro Remember me.html">
+            
+                <a href="../Apache Shiro/Spring Boot Shiro Remember me.html">
+            
+                    
+                    Spring Boot Shiro Remember me
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../Apache Shiro/Spring Boot Shiro Redis.html">
+            
+                <a href="../Apache Shiro/Spring Boot Shiro Redis.html">
+            
+                    
+                    Spring Boot Shiro Redis
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.6" data-path="../Apache Shiro/Spring Boot Shiro JWT.html">
+            
+                <a href="../Apache Shiro/Spring Boot Shiro JWT.html">
+            
+                    
+                    Spring Boot Shiro JWT
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../Spring Security/">
+            
+                <a href="../Spring Security/">
+            
+                    
+                    Spring Security
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../Spring Security/Spring Security 表单认证.html">
+            
+                <a href="../Spring Security/Spring Security 表单认证.html">
+            
+                    
+                    Spring Security 表单认证
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../Spring Security/Spring Security 用户认证.html">
+            
+                <a href="../Spring Security/Spring Security 用户认证.html">
+            
+                    
+                    Spring Security 用户认证
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../Spring Security/Spring Security RBAC.html">
+            
+                <a href="../Spring Security/Spring Security RBAC.html">
+            
+                    
+                    Spring Security RBAC
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../Spring Security/Spring Security 图形验证码.html">
+            
+                <a href="../Spring Security/Spring Security 图形验证码.html">
+            
+                    
+                    Spring Security 图形验证码
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../Sharding Sphere/">
+            
+                <a href="../Sharding Sphere/">
+            
+                    
+                    Sharding Sphere
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../Sharding Sphere/分库分表一理论篇.html">
+            
+                <a href="../Sharding Sphere/分库分表一理论篇.html">
+            
+                    
+                    分库分表一理论篇
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../Sharding Sphere/Spring Boot 实现读写分离.html">
+            
+                <a href="../Sharding Sphere/Spring Boot 实现读写分离.html">
+            
+                    
+                    Spring Boot 实现读写分离
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="../Sharding Sphere/Spring Boot 实现分表.html">
+            
+                <a href="../Sharding Sphere/Spring Boot 实现分表.html">
+            
+                    
+                    Spring Boot 实现分表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="../Sharding Sphere/Spring Boot 实现分库分表.html">
+            
+                <a href="../Sharding Sphere/Spring Boot 实现分库分表.html">
+            
+                    
+                    Spring Boot 实现分库分表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5" data-path="../Sharding Sphere/Spring Boot 实现分表+读写分离.html">
+            
+                <a href="../Sharding Sphere/Spring Boot 实现分表+读写分离.html">
+            
+                    
+                    Spring Boot 实现分表+读写分离
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6" data-path="../Sharding Sphere/Spring Boot 实现分表分库+读写分离.html">
+            
+                <a href="../Sharding Sphere/Spring Boot 实现分表分库+读写分离.html">
+            
+                    
+                    Spring Boot 实现分表分库+读写分离
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.7" data-path="../Sharding Sphere/Spring Boot 实现分布式事务.html">
+            
+                <a href="../Sharding Sphere/Spring Boot 实现分布式事务.html">
+            
+                    
+                    Spring Boot 实现分布式事务
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../Spring Cloud/">
+            
+                <a href="../Spring Cloud/">
+            
+                    
+                    Spring Cloud
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../Spring Cloud/Spring Cloud 概览.html">
+            
+                <a href="../Spring Cloud/Spring Cloud 概览.html">
+            
+                    
+                    Spring Cloud 概览
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../Spring Cloud/Spring Cloud Admin.html">
+            
+                <a href="../Spring Cloud/Spring Cloud Admin.html">
+            
+                    
+                    Spring Cloud Admin
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../Spring Cloud/Spring Cloud Gateway.html">
+            
+                <a href="../Spring Cloud/Spring Cloud Gateway.html">
+            
+                    
+                    Spring Cloud Gateway
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../Spring Cloud/Spring Cloud OpenFeign.html">
+            
+                <a href="../Spring Cloud/Spring Cloud OpenFeign.html">
+            
+                    
+                    Spring Cloud OpenFeign
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../Spring Cloud/Spring Cloud Alibaba 概览.html">
+            
+                <a href="../Spring Cloud/Spring Cloud Alibaba 概览.html">
+            
+                    
+                    Spring Cloud Alibaba 概览
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6" data-path="../Spring Cloud/Spring Cloud Alibaba Nacos.html">
+            
+                <a href="../Spring Cloud/Spring Cloud Alibaba Nacos.html">
+            
+                    
+                    Spring Cloud Alibaba Nacos
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../数据库/">
+            
+                <a href="../数据库/">
+            
+                    
+                    数据库
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../数据库/Redis设计与实现.html">
+            
+                <a href="../数据库/Redis设计与实现.html">
+            
+                    
+                    Redis设计与实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../数据库/MySQL 操作手册.html">
+            
+                <a href="../数据库/MySQL 操作手册.html">
+            
+                    
+                    MySQL 操作手册
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../数据库/PostgreSQL操作手册.html">
+            
+                <a href="../数据库/PostgreSQL操作手册.html">
+            
+                    
+                    PostgreSQL操作手册
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.4" data-path="../数据库/PostGIS 操作手册.html">
+            
+                <a href="../数据库/PostGIS 操作手册.html">
+            
+                    
+                    PostGIS 操作手册
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="../企业级大数据平台/">
+            
+                <a href="../企业级大数据平台/">
+            
+                    
+                    企业级大数据平台
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../企业级大数据平台/数据仓库.html">
+            
+                <a href="../企业级大数据平台/数据仓库.html">
+            
+                    
+                    数据仓库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../企业级大数据平台/Hive基本概念.html">
+            
+                <a href="../企业级大数据平台/Hive基本概念.html">
+            
+                    
+                    初识 Hive
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../企业级大数据平台/数据采集.html">
+            
+                <a href="../企业级大数据平台/数据采集.html">
+            
+                    
+                    数据采集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.4" data-path="../企业级大数据平台/Pentaho Kettle.html">
+            
+                <a href="../企业级大数据平台/Pentaho Kettle.html">
+            
+                    
+                    Pentaho Kettle
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.5" data-path="../企业级大数据平台/数据治理.html">
+            
+                <a href="../企业级大数据平台/数据治理.html">
+            
+                    
+                    数据治理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.6" data-path="../企业级大数据平台/任务调度.html">
+            
+                <a href="../企业级大数据平台/任务调度.html">
+            
+                    
+                    任务调度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.7" data-path="../企业级大数据平台/Azkaban Job.html">
+            
+                <a href="../企业级大数据平台/Azkaban Job.html">
+            
+                    
+                    Azkaban Job
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.8" data-path="../企业级大数据平台/Azkaban Flow.html">
+            
+                <a href="../企业级大数据平台/Azkaban Flow.html">
+            
+                    
+                    Azkaban Flow
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.9" data-path="../企业级大数据平台/Spark RDD.html">
+            
+                <a href="../企业级大数据平台/Spark RDD.html">
+            
+                    
+                    Spark RDD
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.10" data-path="../企业级大数据平台/Spark Java Word Count.html">
+            
+                <a href="../企业级大数据平台/Spark Java Word Count.html">
+            
+                    
+                    Spark Java Word Count
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.11" data-path="../企业级大数据平台/Spark SQL.html">
+            
+                <a href="../企业级大数据平台/Spark SQL.html">
+            
+                    
+                    Spark SQL
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="../量化交易/">
+            
+                <a href="../量化交易/">
+            
+                    
+                    量化交易
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../量化交易/数据篇.html">
+            
+                <a href="../量化交易/数据篇.html">
+            
+                    
+                    数据篇
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.2" data-path="../量化交易/交易指标.html">
+            
+                <a href="../量化交易/交易指标.html">
+            
+                    
+                    交易指标
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.3" data-path="../量化交易/择时策略.html">
+            
+                <a href="../量化交易/择时策略.html">
+            
+                    
+                    择时策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.4" data-path="../量化交易/选股策略.html">
+            
+                <a href="../量化交易/选股策略.html">
+            
+                    
+                    选股策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.5" data-path="../量化交易/数据回测.html">
+            
+                <a href="../量化交易/数据回测.html">
+            
+                    
+                    数据回测
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.6" data-path="../量化交易/实盘交易.html">
+            
+                <a href="../量化交易/实盘交易.html">
+            
+                    
+                    实盘交易
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.7" data-path="../量化交易/量化交易基本概念.html">
+            
+                <a href="../量化交易/量化交易基本概念.html">
+            
+                    
+                    量化交易基本概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.8" data-path="../量化交易/股票基本概念.html">
+            
+                <a href="../量化交易/股票基本概念.html">
+            
+                    
+                    股票基本概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="../工具/">
+            
+                <a href="../工具/">
+            
+                    
+                    工具
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.13.1" data-path="../工具/AList.html">
+            
+                <a href="../工具/AList.html">
+            
+                    
+                    AList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.2" data-path="../工具/Aria2.html">
+            
+                <a href="../工具/Aria2.html">
+            
+                    
+                    Aria2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.3" data-path="../工具/Charles.html">
+            
+                <a href="../工具/Charles.html">
+            
+                    
+                    Charles
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.4" data-path="../工具/Code View.html">
+            
+                <a href="../工具/Code View.html">
+            
+                    
+                    Code View
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.5" data-path="../工具/GitBook.html">
+            
+                <a href="../工具/GitBook.html">
+            
+                    
+                    GitBook
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.6" data-path="../工具/Jetbrains全家桶.html">
+            
+                <a href="../工具/Jetbrains全家桶.html">
+            
+                    
+                    Jetbrains全家桶
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.7" data-path="../工具/Microsoft全家桶.html">
+            
+                <a href="../工具/Microsoft全家桶.html">
+            
+                    
+                    Microsoft全家桶
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.8" data-path="../工具/Zerotier.html">
+            
+                <a href="../工具/Zerotier.html">
+            
+                    
+                    Zerotier
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.9" data-path="../工具/Zotero.html">
+            
+                <a href="../工具/Zotero.html">
+            
+                    
+                    Zotero
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.10" data-path="../工具/百度网盘.html">
+            
+                <a href="../工具/百度网盘.html">
+            
+                    
+                    百度网盘
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.11" data-path="../工具/阿里云盘.html">
+            
+                <a href="../工具/阿里云盘.html">
+            
+                    
+                    阿里云盘
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="../环境部署/">
+            
+                <a href="../环境部署/">
+            
+                    
+                    环境部署
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../环境部署/Java 环境搭建.html">
+            
+                <a href="../环境部署/Java 环境搭建.html">
+            
+                    
+                    Java 环境搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.2" data-path="../环境部署/Maven 环境搭建.md">
+            
+                <span>
+            
+                    
+                    Maven 环境搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.3" data-path="../环境部署/MySQL 安装部署.html">
+            
+                <a href="../环境部署/MySQL 安装部署.html">
+            
+                    
+                    MySQL 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.4" data-path="../Nginx/Nginx%20安装部署.md">
+            
+                <span>
+            
+                    
+                    Nginx 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.5" data-path="../环境部署/MinIO 环境搭建.html">
+            
+                <a href="../环境部署/MinIO 环境搭建.html">
+            
+                    
+                    MinIO 环境搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.6" data-path="../环境部署/Hadoop 安装部署.md">
+            
+                <span>
+            
+                    
+                    Hadoop 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.7" data-path="../环境部署/Hive 安装部署.html">
+            
+                <a href="../环境部署/Hive 安装部署.html">
+            
+                    
+                    Hive 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.8" data-path="../环境部署/Spark 安装部署.html">
+            
+                <a href="../环境部署/Spark 安装部署.html">
+            
+                    
+                    Spark 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.9" data-path="../环境部署/Zookeeper 集群搭建.html">
+            
+                <a href="../环境部署/Zookeeper 集群搭建.html">
+            
+                    
+                    Zookeeper 集群搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.10" data-path="../环境部署/Kafka 集群搭建.html">
+            
+                <a href="../环境部署/Kafka 集群搭建.html">
+            
+                    
+                    Kafka 集群搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.11" data-path="../环境部署/Hbase 集群搭建.html">
+            
+                <a href="../环境部署/Hbase 集群搭建.html">
+            
+                    
+                    Hbase 集群搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.12" data-path="../环境部署/Sqoop 安装部署.html">
+            
+                <a href="../环境部署/Sqoop 安装部署.html">
+            
+                    
+                    Sqoop 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.13" data-path="../环境部署/Flume 安装部署.html">
+            
+                <a href="../环境部署/Flume 安装部署.html">
+            
+                    
+                    Flume 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.14" data-path="../环境部署/Azkaban 安装部署.html">
+            
+                <a href="../环境部署/Azkaban 安装部署.html">
+            
+                    
+                    Azkaban 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.15" data-path="../环境部署/DataX 安装部署.html">
+            
+                <a href="../环境部署/DataX 安装部署.html">
+            
+                    
+                    DataX 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="../Maven/">
+            
+                <a href="../Maven/">
+            
+                    
+                    Maven
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../Maven/Maven 仓库.html">
+            
+                <a href="../Maven/Maven 仓库.html">
+            
+                    
+                    Maven 仓库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.2" data-path="../Maven/Maven 引入本地jar包.md">
+            
+                <span>
+            
+                    
+                    Maven 引入本地jar包
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="../Docker/">
+            
+                <a href="../Docker/">
+            
+                    
+                    Docker
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="../Docker/Docker安装部署.html">
+            
+                <a href="../Docker/Docker安装部署.html">
+            
+                    
+                    Docker安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="../Docker/Docker基础命令.html">
+            
+                <a href="../Docker/Docker基础命令.html">
+            
+                    
+                    Docker基础命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.3" data-path="../Docker/Dockerfile构建镜像.html">
+            
+                <a href="../Docker/Dockerfile构建镜像.html">
+            
+                    
+                    Dockerfile构建镜像
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.4" data-path="../Docker/Docker常用中间件部署.html">
+            
+                <a href="../Docker/Docker常用中间件部署.html">
+            
+                    
+                    Docker常用中间件部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.5" data-path="../Docker/Docker Compose.html">
+            
+                <a href="../Docker/Docker Compose.html">
+            
+                    
+                    Docker Compose
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.6" data-path="../Docker/Kubernetes安装部署.html">
+            
+                <a href="../Docker/Kubernetes安装部署.html">
+            
+                    
+                    Kubernetes安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="../Nginx/">
+            
+                <a href="../Nginx/">
+            
+                    
+                    Nginx
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.17.1" data-path="../Nginx/Nginx最佳实践.md">
+            
+                <span>
+            
+                    
+                    Nginx最佳实践
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Spring Boot Batch</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="spring-batch">Spring Batch</h1>
+<h2 id="&#x80CC;&#x666F;">&#x80CC;&#x666F;</h2>
+<p>&#x5728;&#x65E5;&#x5E38;&#x4F01;&#x4E1A;&#x9879;&#x76EE;&#x5F00;&#x53D1;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x5F80;&#x5F80;&#x4F1A;&#x9047;&#x5230; &#x6570;&#x636E;&#x5904;&#x7406;&#x3001;&#x6570;&#x636E;&#x5B9A;&#x65F6;&#x7EDF;&#x8BA1;&#x7B49;&#x6279;&#x5904;&#x7406;&#x9700;&#x6C42;&#xFF0C;&#x5982;&#x679C;&#x6E05;&#x6670;&#x7684;&#x5B9E;&#x73B0;&#x4EE3;&#x7801;&#x903B;&#x8F91;&#xFF0C;&#x4EE5;&#x53CA;&#x4EFB;&#x52A1;&#x8FC7;&#x7A0B;&#x4E2D;&#x7684;&#x5F02;&#x5E38;&#x5904;&#x7406;&#x65B9;&#x5F0F;&#x6210;&#x4E86;&#x6211;&#x4EEC;&#x9996;&#x5F53;&#x5176;&#x51B2;&#x9700;&#x8981;&#x89E3;&#x51B3;&#x7684;&#x95EE;&#x9898;&#x3002;</p>
+<h2 id="spring-batch-&#x662F;&#x4EC0;&#x4E48;">Spring Batch &#x662F;&#x4EC0;&#x4E48;</h2>
+<p>&#x7B80;&#x5355;&#x6765;&#x8BF4;&#xFF0C;SpringBatch&#x628A;&#x6279;&#x5904;&#x7406;&#x7B80;&#x5316;&#x4E3A;Job&#x548C;Step&#x4E24;&#x90E8;&#x5206;&#xFF0C;&#x5728;Step&#x4E2D;&#xFF0C;&#x628A;&#x6570;&#x636E;&#x5904;&#x7406;&#x5206;&#x4E3A;&#x8BFB;&#x6570;&#x636E;(Reader)&#x3001;&#x5904;&#x7406;&#x6570;&#x636E;(Processor)&#x3001;&#x5199;&#x6570;&#x636E;&#xFF08;Writer&#xFF09;&#x4E09;&#x4E2A;&#x6B65;&#x9AA4;&#xFF0C;
+&#x5F02;&#x5E38;&#x5904;&#x7406;&#x673A;&#x5236;&#x5206;&#x4E3A;&#x8DF3;&#x8FC7;&#x3001;&#x91CD;&#x8BD5;&#x3001;&#x91CD;&#x542F;&#x4E09;&#x79CD;&#xFF0C;&#x4F5C;&#x4E1A;&#x65B9;&#x5F0F;&#x5206;&#x4E3A;&#x591A;&#x7EBF;&#x7A0B;&#x3001;&#x5E76;&#x884C;&#x3001;&#x8FDC;&#x7A0B;&#x3001;&#x5206;&#x533A;&#x56DB;&#x79CD;&#x3002;&#x5F00;&#x53D1;&#x8005;&#x5728;&#x5F00;&#x53D1;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x5927;&#x90E8;&#x5206;&#x5DE5;&#x4F5C;&#x662F;&#x6839;&#x636E;&#x4E1A;&#x52A1;&#x8981;&#x6C42;&#x7F16;&#x5199;Reader&#x3001;Processor&#x548C;Writer&#x5373;&#x53EF;&#xFF0C;
+&#x63D0;&#x9AD8;&#x4E86;&#x6279;&#x5904;&#x7406;&#x5F00;&#x53D1;&#x7684;&#x6548;&#x7387;&#x3002;&#x540C;&#x65F6;SpringBatch&#x672C;&#x8EAB;&#x4E5F;&#x63D0;&#x4F9B;&#x4E86;&#x5F88;&#x591A;&#x9ED8;&#x8BA4;&#x7684;Reader&#x548C;Writer&#xFF0C;&#x5F00;&#x7BB1;&#x5373;&#x7528;.</p>
+<h2 id="&#x6846;&#x67B6;">&#x6846;&#x67B6;</h2>
+<p><img src="pictures/SpringBatch&#x6846;&#x67B6;.png" alt="Spring Batch&#x6846;&#x67B6;"></p>
+<ol>
+<li>JobRepository job&#x7684;&#x6CE8;&#x518C;/&#x5B58;&#x50A8;&#x5668;</li>
+<li>JobLauncher job&#x7684;&#x6267;&#x884C;&#x5668;</li>
+<li>Job job&#x4EFB;&#x52A1;&#xFF0C;&#x5305;&#x542B;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A;Step</li>
+<li>Step &#x5305;&#x542B;&#xFF08;ItemReader&#x3001;ItemProcessor&#x548C;ItemWriter)</li>
+<li>ItemReader &#x6570;&#x636E;&#x8BFB;&#x53D6;&#x5668;</li>
+<li>ItemProcessor &#x6570;&#x636E;&#x5904;&#x7406;&#x5668;</li>
+<li>ItemWriter &#x6570;&#x636E;&#x8F93;&#x51FA;&#x5668;</li>
+</ol>
+<p>Spring Batch&#x91CC;&#x6700;&#x57FA;&#x672C;&#x7684;&#x5355;&#x5143;&#x5C31;&#x662F;&#x4EFB;&#x52A1;Job&#xFF0C;&#x4E00;&#x4E2A;Job&#x7531;&#x82E5;&#x5E72;&#x4E2A;&#x6B65;&#x9AA4;Step&#x7EC4;&#x6210;&#x3002;&#x4EFB;&#x52A1;&#x542F;&#x52A8;&#x5668;Job Launcher&#x8D1F;&#x8D23;&#x8FD0;&#x884C;Job&#xFF0C;
+&#x4EFB;&#x52A1;&#x5B58;&#x50A8;&#x4ED3;&#x5E93;Job Repository&#x5B58;&#x50A8;&#x7740;Job&#x7684;&#x6267;&#x884C;&#x72B6;&#x6001;&#xFF0C;&#x53C2;&#x6570;&#x548C;&#x65E5;&#x5FD7;&#x7B49;&#x4FE1;&#x606F;&#x3002;
+Job&#x5904;&#x7406;&#x4EFB;&#x52A1;&#x53C8;&#x53EF;&#x4EE5;&#x5206;&#x4E3A;&#x4E09;&#x5927;&#x7C7B;&#xFF1A;&#x6570;&#x636E;&#x8BFB;&#x53D6;Item Reader&#x3001;&#x6570;&#x636E;&#x4E2D;&#x95F4;&#x5904;&#x7406;Item Processor&#x548C;&#x6570;&#x636E;&#x8F93;&#x51FA;Item Writer&#x3002;</p>
+<h2 id="spring-boot-&#x96C6;&#x6210;">Spring Boot &#x96C6;&#x6210;</h2>
+<h3 id="&#x5F15;&#x5165;&#x4F9D;&#x8D56;">&#x5F15;&#x5165;&#x4F9D;&#x8D56;</h3>
+<pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-batch<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>mysql<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>mysql-connector-java<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${mysql.version}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.mybatis.spring.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>mybatis-spring-boot-starter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${mybatis.version}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span>
+</code></pre>
+<h3 id="&#x914D;&#x7F6E;&#x6570;&#x636E;&#x5E93;&#x8FDE;&#x63A5;">&#x914D;&#x7F6E;&#x6570;&#x636E;&#x5E93;&#x8FDE;&#x63A5;</h3>
+<pre><code class="lang-yaml"><span class="hljs-attr">spring:</span>
+<span class="hljs-attr">  datasource:</span>
+<span class="hljs-attr">    url:</span> jdbc:mysql://localhost:<span class="hljs-number">3306</span>/blog
+<span class="hljs-attr">    username:</span> root
+<span class="hljs-attr">    password:</span> root
+<span class="hljs-attr">    driver-class-name:</span> com.mysql.jdbc.Driver
+<span class="hljs-attr">  batch:</span>
+<span class="hljs-attr">    jdbc:</span>
+      <span class="hljs-comment"># &#x81EA;&#x52A8;&#x751F;&#x6210;Spring Batch&#x6846;&#x67B6;&#x8868;</span>
+      <span class="hljs-comment"># &#x624B;&#x52A8;&#x521B;&#x5EFA;: &#x6570;&#x636E;&#x5E93;&#x4E2D;&#x6267;&#x884C;org.springframework.batch.core&#x76EE;&#x5F55;&#x4E0B;&#x7684;&#x5BF9;&#x5E94;schema-mysql.sql</span>
+<span class="hljs-attr">      initialize-schema:</span> always
+<span class="hljs-attr">    job:</span>
+      <span class="hljs-comment"># &#x81EA;&#x5DF1;&#x63A7;&#x5236;&#x4EFB;&#x52A1;&#x7684;&#x6267;&#x884C;&#xFF0C;&#x8BBE;&#x7F6E;&#x6210;false</span>
+<span class="hljs-attr">      enabled:</span> <span class="hljs-literal">false</span>
+</code></pre>
+<h3 id="&#x5F00;&#x542F;&#x6279;&#x5904;&#x7406;">&#x5F00;&#x542F;&#x6279;&#x5904;&#x7406;</h3>
+<p>&#x65B0;&#x589E; <code>@EnableBatchProcessing</code> &#x5F00;&#x542F;&#x6279;&#x5904;&#x7406;</p>
+<pre><code class="lang-java"><span class="hljs-meta">@EnableBatchProcessing</span>
+<span class="hljs-meta">@SpringBootApplication</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SpringBootBatchApplication</span> </span>{
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        SpringApplication.run(SpringBootBatchApplication.class, args);
+    }
+}
+</code></pre>
+<h3 id="&#x4EFB;&#x52A1;&#x793A;&#x4F8B;">&#x4EFB;&#x52A1;&#x793A;&#x4F8B;</h3>
+<h4 id="&#x5355;&#x6B65;&#x9AA4;&#x4EFB;&#x52A1;">&#x5355;&#x6B65;&#x9AA4;&#x4EFB;&#x52A1;</h4>
+<pre><code class="lang-java"><span class="hljs-meta">@Component</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SingleStepJobConfig</span> </span>{
+    <span class="hljs-meta">@Resource</span>
+    <span class="hljs-keyword">private</span> JobBuilderFactory jobBuilderFactory;
+    <span class="hljs-meta">@Resource</span>
+    <span class="hljs-keyword">private</span> StepBuilderFactory stepBuilderFactory;
+
+    <span class="hljs-meta">@Bean</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Job <span class="hljs-title">singleStepJob</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> jobBuilderFactory.get(<span class="hljs-string">&quot;singleStepJob&quot;</span>)
+                .start(step())
+                .build();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> Step <span class="hljs-title">step</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> stepBuilderFactory.get(<span class="hljs-string">&quot;step&quot;</span>)
+                .tasklet((contribution, chunkContext) -&gt; {
+                    System.out.println(<span class="hljs-string">&quot;&#x6267;&#x884C;&#x6B65;&#x9AA4;....&quot;</span>);
+                    <span class="hljs-keyword">return</span> RepeatStatus.FINISHED;
+                }).build();
+    }
+}
+</code></pre>
+<h4 id="&#x591A;&#x6B65;&#x9AA4;&#x4EFB;&#x52A1;">&#x591A;&#x6B65;&#x9AA4;&#x4EFB;&#x52A1;</h4>
+<pre><code class="lang-java"><span class="hljs-meta">@Component</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MultiStepJobConfig</span> </span>{
+    <span class="hljs-meta">@Resource</span>
+    <span class="hljs-keyword">private</span> JobBuilderFactory jobBuilderFactory;
+    <span class="hljs-meta">@Resource</span>
+    <span class="hljs-keyword">private</span> StepBuilderFactory stepBuilderFactory;
+
+    <span class="hljs-meta">@Bean</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Job <span class="hljs-title">multiStepJob</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> jobBuilderFactory.get(<span class="hljs-string">&quot;multiStepJob&quot;</span>)
+                .start(step1())
+                .next(step2())
+                .next(step3())
+                .build();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> Step <span class="hljs-title">step1</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> stepBuilderFactory.get(<span class="hljs-string">&quot;step1&quot;</span>)
+                .tasklet((stepContribution, chunkContext) -&gt; {
+                    System.out.println(<span class="hljs-string">&quot;&#x6267;&#x884C;&#x6B65;&#x9AA4;&#x4E00;&#x64CD;&#x4F5C;&#x3002;&#x3002;&#x3002;&quot;</span>);
+                    <span class="hljs-keyword">return</span> RepeatStatus.FINISHED;
+                }).build();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> Step <span class="hljs-title">step2</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> stepBuilderFactory.get(<span class="hljs-string">&quot;step2&quot;</span>)
+                .tasklet((stepContribution, chunkContext) -&gt; {
+                    System.out.println(<span class="hljs-string">&quot;&#x6267;&#x884C;&#x6B65;&#x9AA4;&#x4E8C;&#x64CD;&#x4F5C;&#x3002;&#x3002;&#x3002;&quot;</span>);
+                    <span class="hljs-keyword">return</span> RepeatStatus.FINISHED;
+                }).build();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> Step <span class="hljs-title">step3</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> stepBuilderFactory.get(<span class="hljs-string">&quot;step3&quot;</span>)
+                .tasklet((stepContribution, chunkContext) -&gt; {
+                    System.out.println(<span class="hljs-string">&quot;&#x6267;&#x884C;&#x6B65;&#x9AA4;&#x4E09;&#x64CD;&#x4F5C;&#x3002;&#x3002;&#x3002;&quot;</span>);
+                    <span class="hljs-keyword">return</span> RepeatStatus.FINISHED;
+                }).build();
+    }
+}
+</code></pre>
+<h4 id="flow&#x4EFB;&#x52A1;">Flow&#x4EFB;&#x52A1;</h4>
+<pre><code class="lang-java"><span class="hljs-meta">@Component</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FlowStepJobConfig</span> </span>{
+    <span class="hljs-meta">@Resource</span>
+    <span class="hljs-keyword">private</span> JobBuilderFactory jobBuilderFactory;
+    <span class="hljs-meta">@Resource</span>
+    <span class="hljs-keyword">private</span> StepBuilderFactory stepBuilderFactory;
+
+    <span class="hljs-meta">@Bean</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Job <span class="hljs-title">flowJob</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> jobBuilderFactory.get(<span class="hljs-string">&quot;flowJob&quot;</span>)
+                .start(flow())
+                .next(step3())
+                .end()
+                .build();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> Step <span class="hljs-title">step1</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> stepBuilderFactory.get(<span class="hljs-string">&quot;step1&quot;</span>)
+                .tasklet((stepContribution, chunkContext) -&gt; {
+                    System.out.println(<span class="hljs-string">&quot;&#x6267;&#x884C;&#x6B65;&#x9AA4;&#x4E00;&#x64CD;&#x4F5C;&#x3002;&#x3002;&#x3002;&quot;</span>);
+                    <span class="hljs-keyword">return</span> RepeatStatus.FINISHED;
+                }).build();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> Step <span class="hljs-title">step2</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> stepBuilderFactory.get(<span class="hljs-string">&quot;step2&quot;</span>)
+                .tasklet((stepContribution, chunkContext) -&gt; {
+                    System.out.println(<span class="hljs-string">&quot;&#x6267;&#x884C;&#x6B65;&#x9AA4;&#x4E8C;&#x64CD;&#x4F5C;&#x3002;&#x3002;&#x3002;&quot;</span>);
+                    <span class="hljs-keyword">return</span> RepeatStatus.FINISHED;
+                }).build();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> Step <span class="hljs-title">step3</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> stepBuilderFactory.get(<span class="hljs-string">&quot;step3&quot;</span>)
+                .tasklet((stepContribution, chunkContext) -&gt; {
+                    System.out.println(<span class="hljs-string">&quot;&#x6267;&#x884C;&#x6B65;&#x9AA4;&#x4E09;&#x64CD;&#x4F5C;&#x3002;&#x3002;&#x3002;&quot;</span>);
+                    <span class="hljs-keyword">return</span> RepeatStatus.FINISHED;
+                }).build();
+    }
+
+    <span class="hljs-comment">/**
+     * &#x521B;&#x5EFA;&#x4E00;&#x4E2A;flow&#x5BF9;&#x8C61;&#xFF0C;&#x5305;&#x542B;&#x82E5;&#x5E72;&#x4E2A;step
+     */</span>
+    <span class="hljs-function"><span class="hljs-keyword">private</span> Flow <span class="hljs-title">flow</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> FlowBuilder&lt;Flow&gt;(<span class="hljs-string">&quot;flow&quot;</span>)
+                .start(step1())
+                .next(step2())
+                .build();
+    }
+}
+</code></pre>
+<h3 id="&#x6700;&#x4F73;&#x5B9E;&#x8DF5;">&#x6700;&#x4F73;&#x5B9E;&#x8DF5;</h3>
+<h4 id="&#x5B9E;&#x4F53;&#x7C7B;&#x5B9A;&#x4E49;">&#x5B9E;&#x4F53;&#x7C7B;&#x5B9A;&#x4E49;</h4>
+<pre><code class="lang-java"><span class="hljs-meta">@Data</span>
+<span class="hljs-meta">@Builder</span>
+<span class="hljs-meta">@NoArgsConstructor</span>
+<span class="hljs-meta">@AllArgsConstructor</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ArticleDTO</span> </span>{
+    <span class="hljs-keyword">private</span> Integer id;
+
+    <span class="hljs-keyword">private</span> String title;
+
+    <span class="hljs-keyword">private</span> String summary;
+
+    <span class="hljs-keyword">private</span> Integer userId;
+
+    <span class="hljs-keyword">private</span> Integer viewCount;
+
+    <span class="hljs-keyword">private</span> Integer commentCount;
+
+    <span class="hljs-keyword">private</span> Integer status;
+
+    <span class="hljs-keyword">private</span> Date createTime;
+
+    <span class="hljs-keyword">private</span> Date updateTime;
+
+    <span class="hljs-keyword">private</span> String content;
+}
+</code></pre>
+<pre><code class="lang-java"><span class="hljs-meta">@Data</span>
+<span class="hljs-meta">@Builder</span>
+<span class="hljs-meta">@NoArgsConstructor</span>
+<span class="hljs-meta">@AllArgsConstructor</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ArticleVO</span> </span>{
+    <span class="hljs-keyword">private</span> Integer id;
+
+    <span class="hljs-keyword">private</span> String title;
+
+    <span class="hljs-keyword">private</span> String summary;
+
+    <span class="hljs-keyword">private</span> Integer userId;
+
+    <span class="hljs-keyword">private</span> Integer viewCount;
+
+    <span class="hljs-keyword">private</span> Integer commentCount;
+
+    <span class="hljs-keyword">private</span> Integer status;
+
+    <span class="hljs-keyword">private</span> Date createTime;
+
+    <span class="hljs-keyword">private</span> Date updateTime;
+
+    <span class="hljs-keyword">private</span> String content;
+}
+</code></pre>
+<h4 id="&#x4EFB;&#x52A1;&#x7F16;&#x6392;">&#x4EFB;&#x52A1;&#x7F16;&#x6392;</h4>
+<pre><code class="lang-java"><span class="hljs-meta">@Component</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DataSourceArticleJobConfig</span> </span>{
+
+    <span class="hljs-meta">@Resource</span>
+    <span class="hljs-keyword">private</span> JobBuilderFactory jobBuilderFactory;
+    <span class="hljs-meta">@Resource</span>
+    <span class="hljs-keyword">private</span> StepBuilderFactory stepBuilderFactory;
+    <span class="hljs-meta">@Resource</span>
+    <span class="hljs-keyword">private</span> DataSource dataSource;
+    <span class="hljs-meta">@Resource</span>
+    <span class="hljs-keyword">private</span> ArticleTransformItemProcessor articleTransformItemProcessor;
+    <span class="hljs-meta">@Resource</span>
+    <span class="hljs-keyword">private</span> LogJobExecutionListener logJobExecutionListener;
+
+    <span class="hljs-comment">/**
+     * &#x5B9A;&#x4E49;Job
+     */</span>
+    <span class="hljs-meta">@Bean</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Job <span class="hljs-title">dataSourceArticleJob</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>{
+        <span class="hljs-keyword">return</span> jobBuilderFactory.get(<span class="hljs-string">&quot;dataSourceArticleJob&quot;</span>)
+                .start(dataSourceArticleStep())
+                <span class="hljs-comment">// &#x914D;&#x7F6E;Job&#x76D1;&#x542C;&#x5668;</span>
+                .listener(logJobExecutionListener)
+                .build();
+    }
+
+    <span class="hljs-comment">/**
+     * &#x5B9A;&#x4E49;Step
+     */</span>
+    <span class="hljs-function"><span class="hljs-keyword">private</span> Step <span class="hljs-title">dataSourceArticleStep</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>{
+        <span class="hljs-keyword">return</span> stepBuilderFactory.get(<span class="hljs-string">&quot;dataSourceArticleStep&quot;</span>)
+                <span class="hljs-comment">// chunkSize &#x662F;&#x6700;&#x540E;&#x8C03;&#x7528;&#x5199;&#x5165;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4E00;&#x6B21;&#x6027;&#x5199;&#x5165;&#x591A;&#x5C11;&#x6761;&#x5DF2;&#x5904;&#x7406;&#x7684;&#x6570;&#x636E;</span>
+                .&lt;ArticleDTO, ArticleVO&gt;chunk(<span class="hljs-number">2</span>)
+                .reader(dataSourceArticleReader())
+                .processor(articleTransformItemProcessor)
+                .writer(dataSourceArticleWriter())
+
+                <span class="hljs-comment">// &#x5F02;&#x5E38;&#x5904;&#x7406;</span>
+<span class="hljs-comment">//                .faultTolerant() // &#x914D;&#x7F6E;&#x9519;&#x8BEF;&#x5BB9;&#x5FCD;</span>
+<span class="hljs-comment">//                .retry(Exception.class) // &#x914D;&#x7F6E;&#x91CD;&#x8BD5;&#x7684;&#x5F02;&#x5E38;&#x7C7B;&#x578B;</span>
+<span class="hljs-comment">//                .retryLimit(3) // &#x91CD;&#x8BD5;3&#x6B21;&#xFF0C;&#x4E09;&#x6B21;&#x8FC7;&#x540E;&#x8FD8;&#x662F;&#x5F02;&#x5E38;&#x7684;&#x8BDD;&#xFF0C;&#x5219;&#x4EFB;&#x52A1;&#x4F1A;&#x7ED3;&#x675F;</span>
+
+<span class="hljs-comment">//                .faultTolerant() // &#x914D;&#x7F6E;&#x9519;&#x8BEF;&#x5BB9;&#x5FCD;</span>
+<span class="hljs-comment">//                .skip(Exception.class) // &#x914D;&#x7F6E;&#x8DF3;&#x8FC7;&#x7684;&#x5F02;&#x5E38;&#x7C7B;&#x578B;</span>
+<span class="hljs-comment">//                .skipLimit(1) // &#x6700;&#x591A;&#x8DF3;&#x8FC7;1&#x6B21;&#xFF0C;1&#x6B21;&#x8FC7;&#x540E;&#x8FD8;&#x662F;&#x5F02;&#x5E38;&#x7684;&#x8BDD;&#xFF0C;&#x5219;&#x4EFB;&#x52A1;&#x4F1A;&#x7ED3;&#x675F;</span>
+                .build();
+    }
+
+    <span class="hljs-comment">/**
+     * &#x6570;&#x636E;&#x5E93;Reader
+     */</span>
+    <span class="hljs-function"><span class="hljs-keyword">private</span> ItemReader&lt;ArticleDTO&gt; <span class="hljs-title">dataSourceArticleReader</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>{
+        JdbcPagingItemReader&lt;ArticleDTO&gt; reader = <span class="hljs-keyword">new</span> JdbcPagingItemReader&lt;&gt;();
+        reader.setDataSource(dataSource); <span class="hljs-comment">// &#x8BBE;&#x7F6E;&#x6570;&#x636E;&#x6E90;</span>
+        reader.setFetchSize(<span class="hljs-number">10</span>); <span class="hljs-comment">// &#x6BCF;&#x6B21;&#x53D6;&#x591A;&#x5C11;&#x6761;&#x8BB0;&#x5F55;</span>
+        reader.setPageSize(<span class="hljs-number">10</span>); <span class="hljs-comment">// &#x8BBE;&#x7F6E;&#x6BCF;&#x9875;&#x6570;&#x636E;&#x91CF;</span>
+
+        <span class="hljs-comment">// &#x6307;&#x5B9A;sql&#x67E5;&#x8BE2;&#x8BED;&#x53E5; select id,title,summary,userId,viewCount,commentCount,status,createTime,updateTime,content from blog_article</span>
+        MySqlPagingQueryProvider provider = <span class="hljs-keyword">new</span> MySqlPagingQueryProvider();
+        <span class="hljs-comment">//&#x8BBE;&#x7F6E;&#x67E5;&#x8BE2;&#x5B57;&#x6BB5;</span>
+        provider.setSelectClause(<span class="hljs-string">&quot;id,title,summary,user_id,view_count,comment_count,status,content&quot;</span>);
+        <span class="hljs-comment">// &#x8BBE;&#x7F6E;&#x4ECE;&#x54EA;&#x5F20;&#x8868;&#x67E5;&#x8BE2;</span>
+        provider.setFromClause(<span class="hljs-string">&quot;from blog_article&quot;</span>);
+
+        <span class="hljs-comment">// &#x5C06;&#x8BFB;&#x53D6;&#x5230;&#x7684;&#x6570;&#x636E;&#x8F6C;&#x6362;&#x4E3A;ArticleDTO&#x5BF9;&#x8C61;</span>
+        reader.setRowMapper((resultSet, rowNum) -&gt; ArticleDTO.builder()
+                .id(resultSet.getInt(<span class="hljs-number">1</span>))
+                .title(resultSet.getString(<span class="hljs-number">2</span>))
+                .summary(resultSet.getString(<span class="hljs-number">3</span>))
+                .userId(resultSet.getInt(<span class="hljs-number">4</span>))
+                .viewCount(resultSet.getInt(<span class="hljs-number">5</span>))
+                .commentCount(resultSet.getInt(<span class="hljs-number">6</span>))
+                .status(resultSet.getInt(<span class="hljs-number">7</span>))
+                .content(resultSet.getString(<span class="hljs-number">8</span>))
+                .build());
+
+        Map&lt;String, Order&gt; sort = <span class="hljs-keyword">new</span> HashMap&lt;&gt;(<span class="hljs-number">1</span>);
+        sort.put(<span class="hljs-string">&quot;id&quot;</span>, Order.ASCENDING);
+        <span class="hljs-comment">// &#x8BBE;&#x7F6E;&#x6392;&#x5E8F;,&#x901A;&#x8FC7;id &#x5347;&#x5E8F;</span>
+        provider.setSortKeys(sort);
+        reader.setQueryProvider(provider);
+        <span class="hljs-comment">// &#x8BBE;&#x7F6E;namedParameterJdbcTemplate&#x7B49;&#x5C5E;&#x6027;</span>
+        reader.afterPropertiesSet();
+        <span class="hljs-keyword">return</span> reader;
+    }
+
+    <span class="hljs-comment">/**
+     * &#x6570;&#x636E;&#x5E93;Writer
+     */</span>
+    <span class="hljs-function"><span class="hljs-keyword">private</span> ItemWriter&lt;ArticleVO&gt; <span class="hljs-title">dataSourceArticleWriter</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-comment">// ItemWriter&#x7684;&#x5B9E;&#x73B0;&#x7C7B;&#x4E4B;&#x4E00;&#xFF0C;mysql&#x6570;&#x636E;&#x5E93;&#x6570;&#x636E;&#x5199;&#x5165;&#x4F7F;&#x7528;JdbcBatchItemWriter</span>
+        <span class="hljs-comment">// &#x5176;&#x4ED6;&#x5B9E;&#x73B0;&#xFF1A;MongoItemWriter,Neo4jItemWriter&#x7B49;</span>
+        JdbcBatchItemWriter&lt;ArticleVO&gt; writer = <span class="hljs-keyword">new</span> JdbcBatchItemWriter&lt;&gt;();
+        <span class="hljs-comment">// &#x8BBE;&#x7F6E;&#x6570;&#x636E;&#x6E90;</span>
+        writer.setDataSource(dataSource);
+
+        String sql = <span class="hljs-string">&quot;insert into blog_article_copy(id,title,summary,user_id,view_count,comment_count,status,content) &quot;</span> +
+                <span class="hljs-string">&quot;values (:id,:title,:summary,:userId,:viewCount,:commentCount,:status,:content)&quot;</span>;
+        <span class="hljs-comment">// &#x8BBE;&#x7F6E;&#x63D2;&#x5165;sql&#x811A;&#x672C;</span>
+        writer.setSql(sql);
+
+        <span class="hljs-comment">// &#x6620;&#x5C04;ArticleDTO&#x5BF9;&#x8C61;&#x5C5E;&#x6027;&#x5230;&#x5360;&#x4F4D;&#x7B26;&#x4E2D;&#x7684;&#x5C5E;&#x6027;</span>
+        BeanPropertyItemSqlParameterSourceProvider&lt;ArticleVO&gt; provider = <span class="hljs-keyword">new</span> BeanPropertyItemSqlParameterSourceProvider&lt;&gt;();
+        writer.setItemSqlParameterSourceProvider(provider);
+        <span class="hljs-comment">// &#x8BBE;&#x7F6E;&#x4E00;&#x4E9B;&#x989D;&#x5916;&#x5C5E;&#x6027;</span>
+        writer.afterPropertiesSet();
+        <span class="hljs-keyword">return</span> writer;
+    }
+}
+</code></pre>
+<h4 id="&#x81EA;&#x5B9A;&#x4E49;&#x5904;&#x7406;&#x5668;">&#x81EA;&#x5B9A;&#x4E49;&#x5904;&#x7406;&#x5668;</h4>
+<pre><code class="lang-java"><span class="hljs-meta">@Component</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ArticleTransformItemProcessor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">ItemProcessor</span>&lt;<span class="hljs-title">ArticleDTO</span>, <span class="hljs-title">ArticleVO</span>&gt; </span>{
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ArticleVO <span class="hljs-title">process</span><span class="hljs-params">(ArticleDTO articleDTO)</span> <span class="hljs-keyword">throws</span> Exception </span>{
+        <span class="hljs-comment">// &#x8FC7;&#x6EE4;</span>
+        Integer DELETE = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">if</span> (DELETE.equals(articleDTO.getStatus())) {
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+        }
+        <span class="hljs-comment">// &#x6570;&#x636E;&#x8F6C;&#x6362;</span>
+        ArticleVO articleVO = <span class="hljs-keyword">new</span> ArticleVO();
+        BeanUtils.copyProperties(articleDTO, articleVO);
+        <span class="hljs-keyword">return</span> articleVO;
+    }
+}
+</code></pre>
+<h4 id="job&#x76D1;&#x542C;&#x5668;">Job&#x76D1;&#x542C;&#x5668;</h4>
+<p>&#x5728;Job&#x5F00;&#x59CB;&#x4E4B;&#x524D;(beforeJob)&#x548C;&#x4E4B;&#x540E;(afterJob)&#x89E6;&#x53D1;</p>
+<pre><code class="lang-java"><span class="hljs-meta">@Slf</span>4j
+<span class="hljs-meta">@Component</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LogJobExecutionListener</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">JobExecutionListener</span> </span>{
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">beforeJob</span><span class="hljs-params">(JobExecution jobExecution)</span> </span>{
+        log.info(<span class="hljs-string">&quot;before job execute: {}&quot;</span>, jobExecution.getJobInstance().getJobName());
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterJob</span><span class="hljs-params">(JobExecution jobExecution)</span> </span>{
+        log.info(<span class="hljs-string">&quot;after job execute: {}&quot;</span>, jobExecution.getJobInstance().getJobName());
+    }
+}
+</code></pre>
+<h4 id="&#x4EFB;&#x52A1;&#x63A5;&#x53E3;&#x8C03;&#x7528;">&#x4EFB;&#x52A1;&#x63A5;&#x53E3;&#x8C03;&#x7528;</h4>
+<pre><code class="lang-java"><span class="hljs-meta">@RestController</span>
+<span class="hljs-meta">@RequestMapping</span>(<span class="hljs-string">&quot;job&quot;</span>)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">JobController</span> </span>{
+
+    <span class="hljs-meta">@Resource</span>
+    <span class="hljs-keyword">private</span> Job dataSourceArticleJob;
+
+    <span class="hljs-meta">@Resource</span>
+    <span class="hljs-keyword">private</span> JobLauncher jobLauncher;
+
+    <span class="hljs-meta">@GetMapping</span>(<span class="hljs-string">&quot;launcher&quot;</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">launcher</span><span class="hljs-params">(@RequestParam(<span class="hljs-string">&quot;timestamp&quot;</span>)</span> String timestamp) <span class="hljs-keyword">throws</span> Exception </span>{
+        JobParameters parameters = <span class="hljs-keyword">new</span> JobParametersBuilder()
+                .addString(<span class="hljs-string">&quot;timestamp&quot;</span>, timestamp)
+                .toJobParameters();
+        <span class="hljs-comment">// &#x5C06;&#x53C2;&#x6570;&#x4F20;&#x9012;&#x7ED9;&#x4EFB;&#x52A1;</span>
+        jobLauncher.run(dataSourceArticleJob, parameters);
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;success&quot;</span>;
+    }
+}
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Spring Boot Async.html" class="navigation navigation-prev " aria-label="Previous page: Spring Boot Async">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Spring Boot Data Jpa.html" class="navigation navigation-next " aria-label="Next page: Spring Boot Data Jpa">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Spring Boot Batch","level":"1.5.4","depth":2,"next":{"title":"Spring Boot Data Jpa","level":"1.5.5","depth":2,"path":"Spring Boot/Spring Boot Data Jpa.md","ref":"Spring Boot/Spring Boot Data Jpa.md","articles":[]},"previous":{"title":"Spring Boot Async","level":"1.5.3","depth":2,"path":"Spring Boot/Spring Boot Async.md","ref":"Spring Boot/Spring Boot Async.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toggle-chapters"],"pluginsConfig":{"toggle-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Spring Boot/Spring Boot Batch.md","mtime":"2024-09-04T15:17:07.790Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2024-09-07T13:11:00.723Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-toggle-chapters/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,2613 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>MySQL 操作手册 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-toggle-chapters/toggle.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="PostgreSQL操作手册.html" />
+    
+    
+    <link rel="prev" href="Redis设计与实现.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../Python/">
+            
+                <a href="../Python/">
+            
+                    
+                    Python
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../Python/Python环境搭建.html">
+            
+                <a href="../Python/Python环境搭建.html">
+            
+                    
+                    Python 环境搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../Python/Scrapy.html">
+            
+                <a href="../Python/Scrapy.html">
+            
+                    
+                    Scrapy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../Python/Flask.html">
+            
+                <a href="../Python/Flask.html">
+            
+                    
+                    Flask
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../Python/Windows自动化.html">
+            
+                <a href="../Python/Windows自动化.html">
+            
+                    
+                    Windows自动化
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../Java/">
+            
+                <a href="../Java/">
+            
+                    
+                    Java
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../Java/JVM/">
+            
+                <a href="../Java/JVM/">
+            
+                    
+                    JVM
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1.1" data-path="../Java/JVM/JVM调优.md">
+            
+                <span>
+            
+                    
+                    JVM调优
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../Java/Java 注解.html">
+            
+                <a href="../Java/Java 注解.html">
+            
+                    
+                    Java 注解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../Java/Java反射.html">
+            
+                <a href="../Java/Java反射.html">
+            
+                    
+                    Java反射
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../Java/Java动态代理.html">
+            
+                <a href="../Java/Java动态代理.html">
+            
+                    
+                    Java动态代理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../Java/IO基础.html">
+            
+                <a href="../Java/IO基础.html">
+            
+                    
+                    IO基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../Java/IO模型.html">
+            
+                <a href="../Java/IO模型.html">
+            
+                    
+                    IO模型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="../Java/Java单例.html">
+            
+                <a href="../Java/Java单例.html">
+            
+                    
+                    Java单例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="../Java/Java线程池.html">
+            
+                <a href="../Java/Java线程池.html">
+            
+                    
+                    Java线程池
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="../Java/Java高并发核心编程.html">
+            
+                <a href="../Java/Java高并发核心编程.html">
+            
+                    
+                    Java高并发核心编程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../Netty/">
+            
+                <a href="../Netty/">
+            
+                    
+                    Netty
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../Netty/Netty.html">
+            
+                <a href="../Netty/Netty.html">
+            
+                    
+                    Netty
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../Netty/Netty TCP粘包、拆包.html">
+            
+                <a href="../Netty/Netty TCP粘包、拆包.html">
+            
+                    
+                    Netty TCP粘包、拆包
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../Netty/Netty 实现简单Http服务器.html">
+            
+                <a href="../Netty/Netty 实现简单Http服务器.html">
+            
+                    
+                    Netty 实现简单Http服务器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../Netty/Netty 实现简单WebSocket服务器.html">
+            
+                <a href="../Netty/Netty 实现简单WebSocket服务器.html">
+            
+                    
+                    Netty 实现简单WebSocket服务器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../Netty/Netty 心跳机制.html">
+            
+                <a href="../Netty/Netty 心跳机制.html">
+            
+                    
+                    Netty 心跳机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../Spring Boot/">
+            
+                <a href="../Spring Boot/">
+            
+                    
+                    Spring Boot
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../Spring Boot/Spring Boot Actuator.html">
+            
+                <a href="../Spring Boot/Spring Boot Actuator.html">
+            
+                    
+                    Spring Boot Actuator
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../Spring Boot/Spring Boot AOP.html">
+            
+                <a href="../Spring Boot/Spring Boot AOP.html">
+            
+                    
+                    Spring Boot AOP
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../Spring Boot/Spring Boot Async.html">
+            
+                <a href="../Spring Boot/Spring Boot Async.html">
+            
+                    
+                    Spring Boot Async
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../Spring Boot/Spring Boot Batch.html">
+            
+                <a href="../Spring Boot/Spring Boot Batch.html">
+            
+                    
+                    Spring Boot Batch
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="../Spring Boot/Spring Boot Data Jpa.html">
+            
+                <a href="../Spring Boot/Spring Boot Data Jpa.html">
+            
+                    
+                    Spring Boot Data Jpa
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.6" data-path="../Spring Boot/Spring Boot EasyExcel.html">
+            
+                <a href="../Spring Boot/Spring Boot EasyExcel.html">
+            
+                    
+                    Spring Boot EasyExcel
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.7" data-path="../Spring Boot/Spring Boot Elasticsearch.html">
+            
+                <a href="../Spring Boot/Spring Boot Elasticsearch.html">
+            
+                    
+                    Spring Boot Elasticsearch
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.8" data-path="../Spring Boot/Spring Boot Freemarker.html">
+            
+                <a href="../Spring Boot/Spring Boot Freemarker.html">
+            
+                    
+                    Spring Boot Freemarker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.9" data-path="../Spring Boot/Spring Boot Kafka.html">
+            
+                <a href="../Spring Boot/Spring Boot Kafka.html">
+            
+                    
+                    Spring Boot Kafka
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.10" data-path="../Spring Boot/Spring Boot Logback.html">
+            
+                <a href="../Spring Boot/Spring Boot Logback.html">
+            
+                    
+                    Spring Boot Logback
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.11" data-path="../Spring Boot/Spring Boot MapStruct.html">
+            
+                <a href="../Spring Boot/Spring Boot MapStruct.html">
+            
+                    
+                    Spring Boot MapStruct
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.12" data-path="../Spring Boot/Spring Boot MinIO.html">
+            
+                <a href="../Spring Boot/Spring Boot MinIO.html">
+            
+                    
+                    Spring Boot MinIO
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.13" data-path="../Spring Boot/Spring Boot MyBatis.html">
+            
+                <a href="../Spring Boot/Spring Boot MyBatis.html">
+            
+                    
+                    Spring Boot MyBatis
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.14" data-path="../Spring Boot/Spring Boot Mybatis 拦截器.html">
+            
+                <a href="../Spring Boot/Spring Boot Mybatis 拦截器.html">
+            
+                    
+                    Spring Boot Mybatis 拦截器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.15" data-path="../Spring Boot/Spring Boot Mybatis 类型转换.html">
+            
+                <a href="../Spring Boot/Spring Boot Mybatis 类型转换.html">
+            
+                    
+                    Spring Boot Mybatis 类型转换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.16" data-path="../Spring Boot/Spring Boot MybatisPlus.html">
+            
+                <a href="../Spring Boot/Spring Boot MybatisPlus.html">
+            
+                    
+                    Spring Boot MybatisPlus
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.17" data-path="../Spring Boot/Spring Boot POI Excel.html">
+            
+                <a href="../Spring Boot/Spring Boot POI Excel.html">
+            
+                    
+                    Spring Boot POI Excel
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.18" data-path="../Spring Boot/Spring Boot PostgreSQL.html">
+            
+                <a href="../Spring Boot/Spring Boot PostgreSQL.html">
+            
+                    
+                    Spring Boot PostgreSQL
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.19" data-path="../Spring Boot/Spring Boot RabbitMQ.html">
+            
+                <a href="../Spring Boot/Spring Boot RabbitMQ.html">
+            
+                    
+                    Spring Boot RabbitMQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.20" data-path="../Spring Boot/Spring Boot Redis.html">
+            
+                <a href="../Spring Boot/Spring Boot Redis.html">
+            
+                    
+                    Spring Boot Redis
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.21" data-path="../Spring Boot/Spring Boot RestTemplate.html">
+            
+                <a href="../Spring Boot/Spring Boot RestTemplate.html">
+            
+                    
+                    Spring Boot RestTemplate
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.22" data-path="../Spring Boot/Spring Boot Screw.html">
+            
+                <a href="../Spring Boot/Spring Boot Screw.html">
+            
+                    
+                    Spring Boot Screw
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.23" data-path="../Spring Boot/Spring Boot SpringDoc.html">
+            
+                <a href="../Spring Boot/Spring Boot SpringDoc.html">
+            
+                    
+                    Spring Boot SpringDoc
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.24" data-path="../Spring Boot/Spring Boot Swagger UI.html">
+            
+                <a href="../Spring Boot/Spring Boot Swagger UI.html">
+            
+                    
+                    Spring Boot Swagger UI
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.25" data-path="../Spring Boot/Spring Boot Xxl-Job.html">
+            
+                <a href="../Spring Boot/Spring Boot Xxl-Job.html">
+            
+                    
+                    Spring Boot Xxl-Job
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.26" data-path="../Spring Boot/Spring Boot 任务管理.html">
+            
+                <a href="../Spring Boot/Spring Boot 任务管理.html">
+            
+                    
+                    Spring Boot 任务管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.27" data-path="../Spring Boot/Spring Boot 分布式事务.html">
+            
+                <a href="../Spring Boot/Spring Boot 分布式事务.html">
+            
+                    
+                    Spring Boot 分布式事务
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.28" data-path="../Spring Boot/Spring Boot 分布式锁.html">
+            
+                <a href="../Spring Boot/Spring Boot 分布式锁.html">
+            
+                    
+                    Spring Boot 分布式锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.29" data-path="../Spring Boot/Spring Boot 单元测试.html">
+            
+                <a href="../Spring Boot/Spring Boot 单元测试.html">
+            
+                    
+                    Spring Boot 单元测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.30" data-path="../Spring Boot/Spring Boot 参数校验.html">
+            
+                <a href="../Spring Boot/Spring Boot 参数校验.html">
+            
+                    
+                    Spring Boot 参数校验
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.31" data-path="../Spring Boot/Spring Boot 启动任务.html">
+            
+                <a href="../Spring Boot/Spring Boot 启动任务.html">
+            
+                    
+                    Spring Boot 启动任务
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.32" data-path="../Spring Boot/Spring Boot 基础配置.md">
+            
+                <span>
+            
+                    
+                    Spring Boot 基础配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.33" data-path="../Spring Boot/Spring Boot 多模块管理.html">
+            
+                <a href="../Spring Boot/Spring Boot 多模块管理.html">
+            
+                    
+                    Spring Boot 多模块管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.34" data-path="../Spring Boot/Spring Boot 定时任务.html">
+            
+                <a href="../Spring Boot/Spring Boot 定时任务.html">
+            
+                    
+                    Spring Boot 定时任务
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.35" data-path="../Spring Boot/Spring Boot 文件上传下载.html">
+            
+                <a href="../Spring Boot/Spring Boot 文件上传下载.html">
+            
+                    
+                    Spring Boot 文件上传下载
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.36" data-path="../Spring Boot/Spring Boot 统一异常处理.html">
+            
+                <a href="../Spring Boot/Spring Boot 统一异常处理.html">
+            
+                    
+                    Spring Boot 统一异常处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.37" data-path="../Spring Boot/Spring Boot 获取 Bean.html">
+            
+                <a href="../Spring Boot/Spring Boot 获取 Bean.html">
+            
+                    
+                    Spring Boot 获取 Bean
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.38" data-path="../Spring Boot/Spring Boot 限流.html">
+            
+                <a href="../Spring Boot/Spring Boot 限流.html">
+            
+                    
+                    Spring Boot 限流
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../Apache Shiro/">
+            
+                <a href="../Apache Shiro/">
+            
+                    
+                    Apache Shiro
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../Apache Shiro/Spring Boot Shiro 用户认证.html">
+            
+                <a href="../Apache Shiro/Spring Boot Shiro 用户认证.html">
+            
+                    
+                    Spring Boot Shiro 用户认证
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../Apache Shiro/Spring Boot Shiro 手机号认证.html">
+            
+                <a href="../Apache Shiro/Spring Boot Shiro 手机号认证.html">
+            
+                    
+                    Spring Boot Shiro 手机号认证
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../Apache Shiro/Spring Boot Shiro 授权.html">
+            
+                <a href="../Apache Shiro/Spring Boot Shiro 授权.html">
+            
+                    
+                    Spring Boot Shiro 授权
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../Apache Shiro/Spring Boot Shiro Remember me.html">
+            
+                <a href="../Apache Shiro/Spring Boot Shiro Remember me.html">
+            
+                    
+                    Spring Boot Shiro Remember me
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../Apache Shiro/Spring Boot Shiro Redis.html">
+            
+                <a href="../Apache Shiro/Spring Boot Shiro Redis.html">
+            
+                    
+                    Spring Boot Shiro Redis
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.6" data-path="../Apache Shiro/Spring Boot Shiro JWT.html">
+            
+                <a href="../Apache Shiro/Spring Boot Shiro JWT.html">
+            
+                    
+                    Spring Boot Shiro JWT
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../Spring Security/">
+            
+                <a href="../Spring Security/">
+            
+                    
+                    Spring Security
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../Spring Security/Spring Security 表单认证.html">
+            
+                <a href="../Spring Security/Spring Security 表单认证.html">
+            
+                    
+                    Spring Security 表单认证
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../Spring Security/Spring Security 用户认证.html">
+            
+                <a href="../Spring Security/Spring Security 用户认证.html">
+            
+                    
+                    Spring Security 用户认证
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../Spring Security/Spring Security RBAC.html">
+            
+                <a href="../Spring Security/Spring Security RBAC.html">
+            
+                    
+                    Spring Security RBAC
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../Spring Security/Spring Security 图形验证码.html">
+            
+                <a href="../Spring Security/Spring Security 图形验证码.html">
+            
+                    
+                    Spring Security 图形验证码
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../Sharding Sphere/">
+            
+                <a href="../Sharding Sphere/">
+            
+                    
+                    Sharding Sphere
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../Sharding Sphere/分库分表一理论篇.html">
+            
+                <a href="../Sharding Sphere/分库分表一理论篇.html">
+            
+                    
+                    分库分表一理论篇
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../Sharding Sphere/Spring Boot 实现读写分离.html">
+            
+                <a href="../Sharding Sphere/Spring Boot 实现读写分离.html">
+            
+                    
+                    Spring Boot 实现读写分离
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="../Sharding Sphere/Spring Boot 实现分表.html">
+            
+                <a href="../Sharding Sphere/Spring Boot 实现分表.html">
+            
+                    
+                    Spring Boot 实现分表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="../Sharding Sphere/Spring Boot 实现分库分表.html">
+            
+                <a href="../Sharding Sphere/Spring Boot 实现分库分表.html">
+            
+                    
+                    Spring Boot 实现分库分表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5" data-path="../Sharding Sphere/Spring Boot 实现分表+读写分离.html">
+            
+                <a href="../Sharding Sphere/Spring Boot 实现分表+读写分离.html">
+            
+                    
+                    Spring Boot 实现分表+读写分离
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6" data-path="../Sharding Sphere/Spring Boot 实现分表分库+读写分离.html">
+            
+                <a href="../Sharding Sphere/Spring Boot 实现分表分库+读写分离.html">
+            
+                    
+                    Spring Boot 实现分表分库+读写分离
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.7" data-path="../Sharding Sphere/Spring Boot 实现分布式事务.html">
+            
+                <a href="../Sharding Sphere/Spring Boot 实现分布式事务.html">
+            
+                    
+                    Spring Boot 实现分布式事务
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../Spring Cloud/">
+            
+                <a href="../Spring Cloud/">
+            
+                    
+                    Spring Cloud
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../Spring Cloud/Spring Cloud 概览.html">
+            
+                <a href="../Spring Cloud/Spring Cloud 概览.html">
+            
+                    
+                    Spring Cloud 概览
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../Spring Cloud/Spring Cloud Admin.html">
+            
+                <a href="../Spring Cloud/Spring Cloud Admin.html">
+            
+                    
+                    Spring Cloud Admin
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../Spring Cloud/Spring Cloud Gateway.html">
+            
+                <a href="../Spring Cloud/Spring Cloud Gateway.html">
+            
+                    
+                    Spring Cloud Gateway
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../Spring Cloud/Spring Cloud OpenFeign.html">
+            
+                <a href="../Spring Cloud/Spring Cloud OpenFeign.html">
+            
+                    
+                    Spring Cloud OpenFeign
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../Spring Cloud/Spring Cloud Alibaba 概览.html">
+            
+                <a href="../Spring Cloud/Spring Cloud Alibaba 概览.html">
+            
+                    
+                    Spring Cloud Alibaba 概览
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6" data-path="../Spring Cloud/Spring Cloud Alibaba Nacos.html">
+            
+                <a href="../Spring Cloud/Spring Cloud Alibaba Nacos.html">
+            
+                    
+                    Spring Cloud Alibaba Nacos
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    数据库
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="Redis设计与实现.html">
+            
+                <a href="Redis设计与实现.html">
+            
+                    
+                    Redis设计与实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.10.2" data-path="MySQL 操作手册.html">
+            
+                <a href="MySQL 操作手册.html">
+            
+                    
+                    MySQL 操作手册
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="PostgreSQL操作手册.html">
+            
+                <a href="PostgreSQL操作手册.html">
+            
+                    
+                    PostgreSQL操作手册
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.4" data-path="PostGIS 操作手册.html">
+            
+                <a href="PostGIS 操作手册.html">
+            
+                    
+                    PostGIS 操作手册
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="../企业级大数据平台/">
+            
+                <a href="../企业级大数据平台/">
+            
+                    
+                    企业级大数据平台
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../企业级大数据平台/数据仓库.html">
+            
+                <a href="../企业级大数据平台/数据仓库.html">
+            
+                    
+                    数据仓库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../企业级大数据平台/Hive基本概念.html">
+            
+                <a href="../企业级大数据平台/Hive基本概念.html">
+            
+                    
+                    初识 Hive
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../企业级大数据平台/数据采集.html">
+            
+                <a href="../企业级大数据平台/数据采集.html">
+            
+                    
+                    数据采集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.4" data-path="../企业级大数据平台/Pentaho Kettle.html">
+            
+                <a href="../企业级大数据平台/Pentaho Kettle.html">
+            
+                    
+                    Pentaho Kettle
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.5" data-path="../企业级大数据平台/数据治理.html">
+            
+                <a href="../企业级大数据平台/数据治理.html">
+            
+                    
+                    数据治理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.6" data-path="../企业级大数据平台/任务调度.html">
+            
+                <a href="../企业级大数据平台/任务调度.html">
+            
+                    
+                    任务调度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.7" data-path="../企业级大数据平台/Azkaban Job.html">
+            
+                <a href="../企业级大数据平台/Azkaban Job.html">
+            
+                    
+                    Azkaban Job
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.8" data-path="../企业级大数据平台/Azkaban Flow.html">
+            
+                <a href="../企业级大数据平台/Azkaban Flow.html">
+            
+                    
+                    Azkaban Flow
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.9" data-path="../企业级大数据平台/Spark RDD.html">
+            
+                <a href="../企业级大数据平台/Spark RDD.html">
+            
+                    
+                    Spark RDD
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.10" data-path="../企业级大数据平台/Spark Java Word Count.html">
+            
+                <a href="../企业级大数据平台/Spark Java Word Count.html">
+            
+                    
+                    Spark Java Word Count
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.11" data-path="../企业级大数据平台/Spark SQL.html">
+            
+                <a href="../企业级大数据平台/Spark SQL.html">
+            
+                    
+                    Spark SQL
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="../量化交易/">
+            
+                <a href="../量化交易/">
+            
+                    
+                    量化交易
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../量化交易/数据篇.html">
+            
+                <a href="../量化交易/数据篇.html">
+            
+                    
+                    数据篇
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.2" data-path="../量化交易/交易指标.html">
+            
+                <a href="../量化交易/交易指标.html">
+            
+                    
+                    交易指标
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.3" data-path="../量化交易/择时策略.html">
+            
+                <a href="../量化交易/择时策略.html">
+            
+                    
+                    择时策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.4" data-path="../量化交易/选股策略.html">
+            
+                <a href="../量化交易/选股策略.html">
+            
+                    
+                    选股策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.5" data-path="../量化交易/数据回测.html">
+            
+                <a href="../量化交易/数据回测.html">
+            
+                    
+                    数据回测
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.6" data-path="../量化交易/实盘交易.html">
+            
+                <a href="../量化交易/实盘交易.html">
+            
+                    
+                    实盘交易
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.7" data-path="../量化交易/量化交易基本概念.html">
+            
+                <a href="../量化交易/量化交易基本概念.html">
+            
+                    
+                    量化交易基本概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12.8" data-path="../量化交易/股票基本概念.html">
+            
+                <a href="../量化交易/股票基本概念.html">
+            
+                    
+                    股票基本概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="../工具/">
+            
+                <a href="../工具/">
+            
+                    
+                    工具
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.13.1" data-path="../工具/AList.html">
+            
+                <a href="../工具/AList.html">
+            
+                    
+                    AList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.2" data-path="../工具/Aria2.html">
+            
+                <a href="../工具/Aria2.html">
+            
+                    
+                    Aria2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.3" data-path="../工具/Charles.html">
+            
+                <a href="../工具/Charles.html">
+            
+                    
+                    Charles
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.4" data-path="../工具/Code View.html">
+            
+                <a href="../工具/Code View.html">
+            
+                    
+                    Code View
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.5" data-path="../工具/GitBook.html">
+            
+                <a href="../工具/GitBook.html">
+            
+                    
+                    GitBook
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.6" data-path="../工具/Jetbrains全家桶.html">
+            
+                <a href="../工具/Jetbrains全家桶.html">
+            
+                    
+                    Jetbrains全家桶
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.7" data-path="../工具/Microsoft全家桶.html">
+            
+                <a href="../工具/Microsoft全家桶.html">
+            
+                    
+                    Microsoft全家桶
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.8" data-path="../工具/Zerotier.html">
+            
+                <a href="../工具/Zerotier.html">
+            
+                    
+                    Zerotier
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.9" data-path="../工具/Zotero.html">
+            
+                <a href="../工具/Zotero.html">
+            
+                    
+                    Zotero
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.10" data-path="../工具/百度网盘.html">
+            
+                <a href="../工具/百度网盘.html">
+            
+                    
+                    百度网盘
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.11" data-path="../工具/阿里云盘.html">
+            
+                <a href="../工具/阿里云盘.html">
+            
+                    
+                    阿里云盘
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="../环境部署/">
+            
+                <a href="../环境部署/">
+            
+                    
+                    环境部署
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../环境部署/Java 环境搭建.html">
+            
+                <a href="../环境部署/Java 环境搭建.html">
+            
+                    
+                    Java 环境搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.2" data-path="../环境部署/Maven 环境搭建.md">
+            
+                <span>
+            
+                    
+                    Maven 环境搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.3" data-path="../环境部署/MySQL 安装部署.html">
+            
+                <a href="../环境部署/MySQL 安装部署.html">
+            
+                    
+                    MySQL 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.4" data-path="../Nginx/Nginx%20安装部署.md">
+            
+                <span>
+            
+                    
+                    Nginx 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.5" data-path="../环境部署/MinIO 环境搭建.html">
+            
+                <a href="../环境部署/MinIO 环境搭建.html">
+            
+                    
+                    MinIO 环境搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.6" data-path="../环境部署/Hadoop 安装部署.md">
+            
+                <span>
+            
+                    
+                    Hadoop 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.7" data-path="../环境部署/Hive 安装部署.html">
+            
+                <a href="../环境部署/Hive 安装部署.html">
+            
+                    
+                    Hive 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.8" data-path="../环境部署/Spark 安装部署.html">
+            
+                <a href="../环境部署/Spark 安装部署.html">
+            
+                    
+                    Spark 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.9" data-path="../环境部署/Zookeeper 集群搭建.html">
+            
+                <a href="../环境部署/Zookeeper 集群搭建.html">
+            
+                    
+                    Zookeeper 集群搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.10" data-path="../环境部署/Kafka 集群搭建.html">
+            
+                <a href="../环境部署/Kafka 集群搭建.html">
+            
+                    
+                    Kafka 集群搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.11" data-path="../环境部署/Hbase 集群搭建.html">
+            
+                <a href="../环境部署/Hbase 集群搭建.html">
+            
+                    
+                    Hbase 集群搭建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.12" data-path="../环境部署/Sqoop 安装部署.html">
+            
+                <a href="../环境部署/Sqoop 安装部署.html">
+            
+                    
+                    Sqoop 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.13" data-path="../环境部署/Flume 安装部署.html">
+            
+                <a href="../环境部署/Flume 安装部署.html">
+            
+                    
+                    Flume 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.14" data-path="../环境部署/Azkaban 安装部署.html">
+            
+                <a href="../环境部署/Azkaban 安装部署.html">
+            
+                    
+                    Azkaban 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14.15" data-path="../环境部署/DataX 安装部署.html">
+            
+                <a href="../环境部署/DataX 安装部署.html">
+            
+                    
+                    DataX 安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="../Maven/">
+            
+                <a href="../Maven/">
+            
+                    
+                    Maven
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../Maven/Maven 仓库.html">
+            
+                <a href="../Maven/Maven 仓库.html">
+            
+                    
+                    Maven 仓库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15.2" data-path="../Maven/Maven 引入本地jar包.md">
+            
+                <span>
+            
+                    
+                    Maven 引入本地jar包
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="../Docker/">
+            
+                <a href="../Docker/">
+            
+                    
+                    Docker
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.16.1" data-path="../Docker/Docker安装部署.html">
+            
+                <a href="../Docker/Docker安装部署.html">
+            
+                    
+                    Docker安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.2" data-path="../Docker/Docker基础命令.html">
+            
+                <a href="../Docker/Docker基础命令.html">
+            
+                    
+                    Docker基础命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.3" data-path="../Docker/Dockerfile构建镜像.html">
+            
+                <a href="../Docker/Dockerfile构建镜像.html">
+            
+                    
+                    Dockerfile构建镜像
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.4" data-path="../Docker/Docker常用中间件部署.html">
+            
+                <a href="../Docker/Docker常用中间件部署.html">
+            
+                    
+                    Docker常用中间件部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.5" data-path="../Docker/Docker Compose.html">
+            
+                <a href="../Docker/Docker Compose.html">
+            
+                    
+                    Docker Compose
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16.6" data-path="../Docker/Kubernetes安装部署.html">
+            
+                <a href="../Docker/Kubernetes安装部署.html">
+            
+                    
+                    Kubernetes安装部署
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="../Nginx/">
+            
+                <a href="../Nginx/">
+            
+                    
+                    Nginx
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.17.1" data-path="../Nginx/Nginx最佳实践.md">
+            
+                <span>
+            
+                    
+                    Nginx最佳实践
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >MySQL 操作手册</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="mysql-&#x64CD;&#x4F5C;&#x624B;&#x518C;">MySQL &#x64CD;&#x4F5C;&#x624B;&#x518C;</h2>
+<h3 id="mysql-&#x8FDE;&#x63A5;">MySQL &#x8FDE;&#x63A5;</h3>
+<pre><code class="lang-shell">mysql -h &lt;&#x5730;&#x5740;&gt; -P &lt;&#x7AEF;&#x53E3;&gt; -u &lt;&#x7528;&#x6237;&#x540D;&gt; -p
+Enter password:
+</code></pre>
+<h3 id="&#x6570;&#x636E;&#x5E93;&#x64CD;&#x4F5C;">&#x6570;&#x636E;&#x5E93;&#x64CD;&#x4F5C;</h3>
+<pre><code class="lang-mysql">-- &#x521B;&#x5EFA;&#x6570;&#x636E;&#x5E93;
+CREATE DATABASE dbname CHARACTER SET utf8 COLLATE utf8_general_ci;
+-- &#x67E5;&#x770B;&#x5DF2;&#x6709;&#x5E93;
+SHOW DATABASES;
+-- &#x67E5;&#x770B;&#x5F53;&#x524D;&#x5E93;&#x4FE1;&#x606F;
+SHOW CREATE DATABASE dbname;
+-- &#x5220;&#x9664;&#x5E93;
+DROP DATABASE dbname;
+</code></pre>
+<h3 id="&#x8868;&#x64CD;&#x4F5C;">&#x8868;&#x64CD;&#x4F5C;</h3>
+<h4 id="&#x521B;&#x5EFA;&#x8868;">&#x521B;&#x5EFA;&#x8868;</h4>
+<pre><code class="lang-mysql">CREATE TABLE tb_name (
+    id BIGINT(20) NOT NULL PRIMARY KEY COMMENT &apos;&#x4E3B;&#x952E;Id&apos;,
+    title VARCHAR(64) NOT NULL COMMENT &apos;&#x6807;&#x9898;&apos;,
+    create_time DATETIME NOT NULL DEFAULT NOW() COMMENT &apos;&#x521B;&#x5EFA;&#x65F6;&#x95F4;&apos;,
+    update_time DATETIME NOT NULL DEFAULT NOW() COMMENT &apos;&#x66F4;&#x65B0;&#x65F6;&#x95F4;&apos;
+) COMMENT &apos;tb_name&apos;;
+</code></pre>
+<h4 id="&#x67E5;&#x770B;&#x6240;&#x6709;&#x8868;">&#x67E5;&#x770B;&#x6240;&#x6709;&#x8868;</h4>
+<pre><code class="lang-mysql">SHOW TABLES;
+</code></pre>
+<h4 id="&#x67E5;&#x770B;&#x8868;&#x7ED3;&#x6784;">&#x67E5;&#x770B;&#x8868;&#x7ED3;&#x6784;</h4>
+<pre><code class="lang-mysql">SHOW CREATE TABLE tb_name;
+</code></pre>
+<h4 id="&#x4FEE;&#x6539;&#x8868;">&#x4FEE;&#x6539;&#x8868;</h4>
+<pre><code class="lang-mysql">-- &#x65B0;&#x589E;&#x8868;&#x5B57;&#x6BB5;
+ALTER TABLE tb_name ADD column_name VARCHAR(32) COMMENT &apos;column_name&apos;;
+-- &#x5220;&#x9664;&#x8868;&#x5B57;&#x6BB5;
+ALTER TABLE tb_name DROP column_name;
+-- &#x5220;&#x9664;&#x8868;&#x7D22;&#x5F15;
+ALTER TABLE tb_name DROP INDEX index_name;
+-- &#x4FEE;&#x6539;&#x8868;&#x5B57;&#x6BB5;
+ALTER TABLE tb_name MODIFY column_name VARCHAR(64) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;column_name&apos;;
+</code></pre>
+<h4 id="&#x5220;&#x9664;&#x8868;">&#x5220;&#x9664;&#x8868;</h4>
+<pre><code class="lang-mysql">-- &#x5220;&#x9664;&#x8868;
+DROP TABLE tb_name;
+</code></pre>
+<h4 id="&#x6E05;&#x7A7A;&#x8868;">&#x6E05;&#x7A7A;&#x8868;</h4>
+<pre><code class="lang-mysql">-- &#x6E05;&#x7A7A;&#x8868;&#x6570;&#x636E;
+TRUNCATE TABLE tb_name;
+</code></pre>
+<h4 id="&#x590D;&#x5236;&#x8868;">&#x590D;&#x5236;&#x8868;</h4>
+<pre><code class="lang-mysql">-- &#x590D;&#x5236;&#x8868;&#x7ED3;&#x6784;
+CREATE TABLE tb_name_copy LIKE tb_name;
+-- &#x590D;&#x5236;&#x8868;&#x7ED3;&#x6784;&#x548C;&#x6570;&#x636E;
+CREATE TABLE tb_name_copy SELECT * FROM tb_name;
+</code></pre>
+<h3 id="&#x7D22;&#x5F15;&#x64CD;&#x4F5C;">&#x7D22;&#x5F15;&#x64CD;&#x4F5C;</h3>
+<h4 id="&#x521B;&#x5EFA;&#x7D22;&#x5F15;">&#x521B;&#x5EFA;&#x7D22;&#x5F15;</h4>
+<pre><code class="lang-mysql">-- &#x521B;&#x5EFA;&#x666E;&#x901A;&#x7D22;&#x5F15;
+CREATE INDEX index_name ON tb_name(column_name);
+-- &#x521B;&#x5EFA;&#x552F;&#x4E00;&#x7D22;&#x5F15;
+CREATE UNIQUE INDEX index_name ON tb_name(column_name);
+-- &#x521B;&#x5EFA;&#x8054;&#x5408;&#x7D22;&#x5F15;
+CREATE INDEX `column_a_column_b_index` using btree on tb_name(column_a,column_b);
+</code></pre>
+<h4 id="&#x5220;&#x9664;&#x7D22;&#x5F15;">&#x5220;&#x9664;&#x7D22;&#x5F15;</h4>
+<pre><code class="lang-mysql">ALTER TABLE tb_name DROP INDEX index_name;
+</code></pre>
+<h4 id="&#x67E5;&#x770B;&#x7D22;&#x5F15;">&#x67E5;&#x770B;&#x7D22;&#x5F15;</h4>
+<pre><code class="lang-mysql">SHOW INDEX FROM tb_name;
+</code></pre>
+<h3 id="&#x6570;&#x636E;&#x64CD;&#x4F5C;">&#x6570;&#x636E;&#x64CD;&#x4F5C;</h3>
+<h4 id="&#x63D2;&#x5165;&#x6570;&#x636E;">&#x63D2;&#x5165;&#x6570;&#x636E;</h4>
+<pre><code class="lang-mysql">INSERT INTO tb_name(column_a,column_b,column_c) values(value_a,value_b,value_c);
+</code></pre>
+<h4 id="&#x5220;&#x9664;&#x6570;&#x636E;">&#x5220;&#x9664;&#x6570;&#x636E;</h4>
+<pre><code class="lang-mysql">DELETE FROM tb_name;
+</code></pre>
+<h4 id="&#x66F4;&#x65B0;&#x6570;&#x636E;">&#x66F4;&#x65B0;&#x6570;&#x636E;</h4>
+<pre><code class="lang-mysql">-- &#x5168;&#x8868;&#x66F4;&#x65B0;
+UPDATE tb_name SET column_a=value_a,column_b=value_b,column_c=value_c;
+
+-- &#x6761;&#x4EF6;&#x66F4;&#x65B0;
+UPDATE tb_name SET column_a=value_a where id=1;
+
+-- &#x8FDE;&#x8868;&#x66F4;&#x65B0;
+UPDATE tb_name_1 t1,tb_name_2 t2 SET t1.column_a=t2.column_a where t1.column_b=t2.column_b;
+</code></pre>
+<h3 id="&#x6570;&#x636E;&#x7C7B;&#x578B;&#x5217;&#x7C7B;&#x578B;">&#x6570;&#x636E;&#x7C7B;&#x578B;(&#x5217;&#x7C7B;&#x578B;)</h3>
+<h4 id="&#x6570;&#x503C;&#x7C7B;&#x578B;">&#x6570;&#x503C;&#x7C7B;&#x578B;</h4>
+<ul>
+<li>TINYINT</li>
+<li>SMALLINT</li>
+<li>MEDIUMINT</li>
+<li>INT</li>
+<li>BIGINT</li>
+<li>FLOAT &#x5355;&#x7CBE;&#x5EA6;</li>
+<li>DOUBLE &#x53CC;&#x7CBE;&#x5EA6;</li>
+<li>DECIMAL(M,D) M&#x4E5F;&#x8868;&#x793A;&#x603B;&#x4F4D;&#x6570;&#xFF0C;D&#x8868;&#x793A;&#x5C0F;&#x6570;&#x4F4D;&#x6570;&#x3002;</li>
+</ul>
+<h4 id="&#x5B57;&#x7B26;&#x4E32;&#x7C7B;&#x578B;">&#x5B57;&#x7B26;&#x4E32;&#x7C7B;&#x578B;</h4>
+<ul>
+<li>CHAR</li>
+<li>VARCHAR</li>
+<li>TEXT</li>
+</ul>
+<h4 id="&#x65E5;&#x671F;&#x7C7B;&#x578B;">&#x65E5;&#x671F;&#x7C7B;&#x578B;</h4>
+<ul>
+<li>DATETIME</li>
+<li>TIMESTAMP</li>
+</ul>
+<h3 id="&#x5EFA;&#x8868;&#x89C4;&#x8303;">&#x5EFA;&#x8868;&#x89C4;&#x8303;</h3>
+<ul>
+<li><p>Normal Format, NF</p>
+<ul>
+<li>&#x6BCF;&#x4E2A;&#x8868;&#x4FDD;&#x5B58;&#x4E00;&#x4E2A;&#x5B9E;&#x4F53;&#x4FE1;&#x606F;</li>
+<li>&#x6BCF;&#x4E2A;&#x5177;&#x6709;&#x4E00;&#x4E2A;ID&#x5B57;&#x6BB5;&#x4F5C;&#x4E3A;&#x4E3B;&#x952E;</li>
+<li>ID&#x4E3B;&#x952E; + &#x539F;&#x5B50;&#x8868;</li>
+</ul>
+</li>
+<li><p>1NF, &#x7B2C;&#x4E00;&#x8303;&#x5F0F;
+  &#x5B57;&#x6BB5;&#x4E0D;&#x80FD;&#x518D;&#x5206;&#xFF0C;&#x5C31;&#x6EE1;&#x8DB3;&#x7B2C;&#x4E00;&#x8303;&#x5F0F;&#x3002;</p>
+</li>
+<li>2NF, &#x7B2C;&#x4E8C;&#x8303;&#x5F0F;
+  &#x6EE1;&#x8DB3;&#x7B2C;&#x4E00;&#x8303;&#x5F0F;&#x7684;&#x524D;&#x63D0;&#x4E0B;&#xFF0C;&#x4E0D;&#x80FD;&#x51FA;&#x73B0;&#x90E8;&#x5206;&#x4F9D;&#x8D56;&#x3002;
+  &#x6D88;&#x9664;&#x590D;&#x5408;&#x4E3B;&#x952E;&#x5C31;&#x53EF;&#x4EE5;&#x907F;&#x514D;&#x90E8;&#x5206;&#x4F9D;&#x8D56;&#x3002;&#x589E;&#x52A0;&#x5355;&#x5217;&#x5173;&#x952E;&#x5B57;&#x3002;</li>
+<li>3NF, &#x7B2C;&#x4E09;&#x8303;&#x5F0F;
+  &#x6EE1;&#x8DB3;&#x7B2C;&#x4E8C;&#x8303;&#x5F0F;&#x7684;&#x524D;&#x63D0;&#x4E0B;&#xFF0C;&#x4E0D;&#x80FD;&#x51FA;&#x73B0;&#x4F20;&#x9012;&#x4F9D;&#x8D56;&#x3002;
+  &#x67D0;&#x4E2A;&#x5B57;&#x6BB5;&#x4F9D;&#x8D56;&#x4E8E;&#x4E3B;&#x952E;&#xFF0C;&#x800C;&#x6709;&#x5176;&#x4ED6;&#x5B57;&#x6BB5;&#x4F9D;&#x8D56;&#x4E8E;&#x8BE5;&#x5B57;&#x6BB5;&#x3002;&#x8FD9;&#x5C31;&#x662F;&#x4F20;&#x9012;&#x4F9D;&#x8D56;&#x3002;
+  &#x5C06;&#x4E00;&#x4E2A;&#x5B9E;&#x4F53;&#x4FE1;&#x606F;&#x7684;&#x6570;&#x636E;&#x653E;&#x5728;&#x4E00;&#x4E2A;&#x8868;&#x5185;&#x5B9E;&#x73B0;&#x3002;</li>
+</ul>
+<h3 id="select">SELECT</h3>
+<pre><code>SELECT [ALL|DISTINCT] select_expr FROM -&gt; WHERE -&gt; GROUP BY [&#x5408;&#x8BA1;&#x51FD;&#x6570;] -&gt; HAVING -&gt; ORDER BY -&gt; LIMIT
+a. select_expr
+-- &#x53EF;&#x4EE5;&#x7528; * &#x8868;&#x793A;&#x6240;&#x6709;&#x5B57;&#x6BB5;&#x3002;
+select * from tb;
+-- &#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x8868;&#x8FBE;&#x5F0F;&#xFF08;&#x8BA1;&#x7B97;&#x516C;&#x5F0F;&#x3001;&#x51FD;&#x6570;&#x8C03;&#x7528;&#x3001;&#x5B57;&#x6BB5;&#x4E5F;&#x662F;&#x4E2A;&#x8868;&#x8FBE;&#x5F0F;&#xFF09;
+select stu, 29+25, now() from tb;
+-- &#x53EF;&#x4EE5;&#x4E3A;&#x6BCF;&#x4E2A;&#x5217;&#x4F7F;&#x7528;&#x522B;&#x540D;&#x3002;&#x9002;&#x7528;&#x4E8E;&#x7B80;&#x5316;&#x5217;&#x6807;&#x8BC6;&#xFF0C;&#x907F;&#x514D;&#x591A;&#x4E2A;&#x5217;&#x6807;&#x8BC6;&#x7B26;&#x91CD;&#x590D;&#x3002;
+- &#x4F7F;&#x7528; as &#x5173;&#x952E;&#x5B57;&#xFF0C;&#x4E5F;&#x53EF;&#x7701;&#x7565; as.
+        select stu+10 as add10 from tb;
+b. FROM &#x5B50;&#x53E5;
+    &#x7528;&#x4E8E;&#x6807;&#x8BC6;&#x67E5;&#x8BE2;&#x6765;&#x6E90;&#x3002;
+    -- &#x53EF;&#x4EE5;&#x4E3A;&#x8868;&#x8D77;&#x522B;&#x540D;&#x3002;&#x4F7F;&#x7528;as&#x5173;&#x952E;&#x5B57;&#x3002;
+SELECT * FROM tb1 AS tt, tb2 AS bb;
+-- from&#x5B50;&#x53E5;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x540C;&#x65F6;&#x51FA;&#x73B0;&#x591A;&#x4E2A;&#x8868;&#x3002;
+-- &#x591A;&#x4E2A;&#x8868;&#x4F1A;&#x6A2A;&#x5411;&#x53E0;&#x52A0;&#x5230;&#x4E00;&#x8D77;&#xFF0C;&#x800C;&#x6570;&#x636E;&#x4F1A;&#x5F62;&#x6210;&#x4E00;&#x4E2A;&#x7B1B;&#x5361;&#x5C14;&#x79EF;&#x3002;
+SELECT * FROM tb1, tb2;
+-- &#x5411;&#x4F18;&#x5316;&#x7B26;&#x63D0;&#x793A;&#x5982;&#x4F55;&#x9009;&#x62E9;&#x7D22;&#x5F15;
+USE INDEX&#x3001;IGNORE INDEX&#x3001;FORCE INDEX
+SELECT * FROM table1 USE INDEX (key1,key2) WHERE key1=1 AND key2=2 AND key3=3;
+SELECT * FROM table1 IGNORE INDEX (key3) WHERE key1=1 AND key2=2 AND key3=3;
+c. WHERE &#x5B50;&#x53E5;
+    -- &#x4ECE;from&#x83B7;&#x5F97;&#x7684;&#x6570;&#x636E;&#x6E90;&#x4E2D;&#x8FDB;&#x884C;&#x7B5B;&#x9009;&#x3002;
+    -- &#x6574;&#x578B;1&#x8868;&#x793A;&#x771F;&#xFF0C;0&#x8868;&#x793A;&#x5047;&#x3002;
+    -- &#x8868;&#x8FBE;&#x5F0F;&#x7531;&#x8FD0;&#x7B97;&#x7B26;&#x548C;&#x8FD0;&#x7B97;&#x6570;&#x7EC4;&#x6210;&#x3002;
+        -- &#x8FD0;&#x7B97;&#x6570;&#xFF1A;&#x53D8;&#x91CF;&#xFF08;&#x5B57;&#x6BB5;&#xFF09;&#x3001;&#x503C;&#x3001;&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x503C;
+        -- &#x8FD0;&#x7B97;&#x7B26;&#xFF1A;
+            =, &lt;=&gt;, &lt;&gt;, !=, &lt;=, &lt;, &gt;=, &gt;, !, &amp;&amp;, ||,
+            in (not) null, (not) like, (not) in, (not) between and, is (not), and, or, not, xor
+            is/is not &#x52A0;&#x4E0A;ture/false/unknown&#xFF0C;&#x68C0;&#x9A8C;&#x67D0;&#x4E2A;&#x503C;&#x7684;&#x771F;&#x5047;
+            &lt;=&gt;&#x4E0E;&lt;&gt;&#x529F;&#x80FD;&#x76F8;&#x540C;&#xFF0C;&lt;=&gt;&#x53EF;&#x7528;&#x4E8E;null&#x6BD4;&#x8F83;
+d. GROUP BY &#x5B50;&#x53E5;, &#x5206;&#x7EC4;&#x5B50;&#x53E5;
+    GROUP BY &#x5B57;&#x6BB5;/&#x522B;&#x540D; [&#x6392;&#x5E8F;&#x65B9;&#x5F0F;]
+    &#x5206;&#x7EC4;&#x540E;&#x4F1A;&#x8FDB;&#x884C;&#x6392;&#x5E8F;&#x3002;&#x5347;&#x5E8F;&#xFF1A;ASC&#xFF0C;&#x964D;&#x5E8F;&#xFF1A;DESC
+    &#x4EE5;&#x4E0B;[&#x5408;&#x8BA1;&#x51FD;&#x6570;]&#x9700;&#x914D;&#x5408; GROUP BY &#x4F7F;&#x7528;&#xFF1A;
+    count &#x8FD4;&#x56DE;&#x4E0D;&#x540C;&#x7684;&#x975E;NULL&#x503C;&#x6570;&#x76EE;  count(*)&#x3001;count(&#x5B57;&#x6BB5;)
+    sum &#x6C42;&#x548C;
+    max &#x6C42;&#x6700;&#x5927;&#x503C;
+    min &#x6C42;&#x6700;&#x5C0F;&#x503C;
+    avg &#x6C42;&#x5E73;&#x5747;&#x503C;
+    group_concat &#x8FD4;&#x56DE;&#x5E26;&#x6709;&#x6765;&#x81EA;&#x4E00;&#x4E2A;&#x7EC4;&#x7684;&#x8FDE;&#x63A5;&#x7684;&#x975E;NULL&#x503C;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x7ED3;&#x679C;&#x3002;&#x7EC4;&#x5185;&#x5B57;&#x7B26;&#x4E32;&#x8FDE;&#x63A5;&#x3002;
+e. HAVING &#x5B50;&#x53E5;&#xFF0C;&#x6761;&#x4EF6;&#x5B50;&#x53E5;
+    &#x4E0E; where &#x529F;&#x80FD;&#x3001;&#x7528;&#x6CD5;&#x76F8;&#x540C;&#xFF0C;&#x6267;&#x884C;&#x65F6;&#x673A;&#x4E0D;&#x540C;&#x3002;
+    where &#x5728;&#x5F00;&#x59CB;&#x65F6;&#x6267;&#x884C;&#x68C0;&#x6D4B;&#x6570;&#x636E;&#xFF0C;&#x5BF9;&#x539F;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x8FC7;&#x6EE4;&#x3002;
+    having &#x5BF9;&#x7B5B;&#x9009;&#x51FA;&#x7684;&#x7ED3;&#x679C;&#x518D;&#x6B21;&#x8FDB;&#x884C;&#x8FC7;&#x6EE4;&#x3002;
+    having &#x5B57;&#x6BB5;&#x5FC5;&#x987B;&#x662F;&#x67E5;&#x8BE2;&#x51FA;&#x6765;&#x7684;&#xFF0C;where &#x5B57;&#x6BB5;&#x5FC5;&#x987B;&#x662F;&#x6570;&#x636E;&#x8868;&#x5B58;&#x5728;&#x7684;&#x3002;
+    where &#x4E0D;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x5B57;&#x6BB5;&#x7684;&#x522B;&#x540D;&#xFF0C;having &#x53EF;&#x4EE5;&#x3002;&#x56E0;&#x4E3A;&#x6267;&#x884C;WHERE&#x4EE3;&#x7801;&#x65F6;&#xFF0C;&#x53EF;&#x80FD;&#x5C1A;&#x672A;&#x786E;&#x5B9A;&#x5217;&#x503C;&#x3002;
+    where &#x4E0D;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x5408;&#x8BA1;&#x51FD;&#x6570;&#x3002;&#x4E00;&#x822C;&#x9700;&#x7528;&#x5408;&#x8BA1;&#x51FD;&#x6570;&#x624D;&#x4F1A;&#x7528; having
+    SQL&#x6807;&#x51C6;&#x8981;&#x6C42;HAVING&#x5FC5;&#x987B;&#x5F15;&#x7528;GROUP BY&#x5B50;&#x53E5;&#x4E2D;&#x7684;&#x5217;&#x6216;&#x7528;&#x4E8E;&#x5408;&#x8BA1;&#x51FD;&#x6570;&#x4E2D;&#x7684;&#x5217;&#x3002;
+f. ORDER BY &#x5B50;&#x53E5;&#xFF0C;&#x6392;&#x5E8F;&#x5B50;&#x53E5;
+    order by &#x6392;&#x5E8F;&#x5B57;&#x6BB5;/&#x522B;&#x540D; &#x6392;&#x5E8F;&#x65B9;&#x5F0F; [,&#x6392;&#x5E8F;&#x5B57;&#x6BB5;/&#x522B;&#x540D; &#x6392;&#x5E8F;&#x65B9;&#x5F0F;]...
+    &#x5347;&#x5E8F;&#xFF1A;ASC&#xFF0C;&#x964D;&#x5E8F;&#xFF1A;DESC
+    &#x652F;&#x6301;&#x591A;&#x4E2A;&#x5B57;&#x6BB5;&#x7684;&#x6392;&#x5E8F;&#x3002;
+g. LIMIT &#x5B50;&#x53E5;&#xFF0C;&#x9650;&#x5236;&#x7ED3;&#x679C;&#x6570;&#x91CF;&#x5B50;&#x53E5;
+    &#x4EC5;&#x5BF9;&#x5904;&#x7406;&#x597D;&#x7684;&#x7ED3;&#x679C;&#x8FDB;&#x884C;&#x6570;&#x91CF;&#x9650;&#x5236;&#x3002;&#x5C06;&#x5904;&#x7406;&#x597D;&#x7684;&#x7ED3;&#x679C;&#x7684;&#x770B;&#x4F5C;&#x662F;&#x4E00;&#x4E2A;&#x96C6;&#x5408;&#xFF0C;&#x6309;&#x7167;&#x8BB0;&#x5F55;&#x51FA;&#x73B0;&#x7684;&#x987A;&#x5E8F;&#xFF0C;&#x7D22;&#x5F15;&#x4ECE;0&#x5F00;&#x59CB;&#x3002;
+    limit &#x8D77;&#x59CB;&#x4F4D;&#x7F6E;, &#x83B7;&#x53D6;&#x6761;&#x6570;
+    &#x7701;&#x7565;&#x7B2C;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#xFF0C;&#x8868;&#x793A;&#x4ECE;&#x7D22;&#x5F15;0&#x5F00;&#x59CB;&#x3002;limit &#x83B7;&#x53D6;&#x6761;&#x6570;
+h. DISTINCT, ALL &#x9009;&#x9879;
+    distinct &#x53BB;&#x9664;&#x91CD;&#x590D;&#x8BB0;&#x5F55;
+    &#x9ED8;&#x8BA4;&#x4E3A; all, &#x5168;&#x90E8;&#x8BB0;&#x5F55;
+</code></pre><h3 id="&#x5B50;&#x67E5;&#x8BE2;">&#x5B50;&#x67E5;&#x8BE2;</h3>
+<pre><code>/* &#x5B50;&#x67E5;&#x8BE2; */ ------------------
+    - &#x5B50;&#x67E5;&#x8BE2;&#x9700;&#x7528;&#x62EC;&#x53F7;&#x5305;&#x88F9;&#x3002;
+-- from&#x578B;
+    from&#x540E;&#x8981;&#x6C42;&#x662F;&#x4E00;&#x4E2A;&#x8868;&#xFF0C;&#x5FC5;&#x987B;&#x7ED9;&#x5B50;&#x67E5;&#x8BE2;&#x7ED3;&#x679C;&#x53D6;&#x4E2A;&#x522B;&#x540D;&#x3002;
+    - &#x7B80;&#x5316;&#x6BCF;&#x4E2A;&#x67E5;&#x8BE2;&#x5185;&#x7684;&#x6761;&#x4EF6;&#x3002;
+    - from&#x578B;&#x9700;&#x5C06;&#x7ED3;&#x679C;&#x751F;&#x6210;&#x4E00;&#x4E2A;&#x4E34;&#x65F6;&#x8868;&#x683C;&#xFF0C;&#x53EF;&#x7528;&#x4EE5;&#x539F;&#x8868;&#x7684;&#x9501;&#x5B9A;&#x7684;&#x91CA;&#x653E;&#x3002;
+    - &#x5B50;&#x67E5;&#x8BE2;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x8868;&#xFF0C;&#x8868;&#x578B;&#x5B50;&#x67E5;&#x8BE2;&#x3002;
+    select * from (select * from tb where id&gt;0) as subfrom where id&gt;1;
+-- where&#x578B;
+    - &#x5B50;&#x67E5;&#x8BE2;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x503C;&#xFF0C;&#x6807;&#x91CF;&#x5B50;&#x67E5;&#x8BE2;&#x3002;
+    - &#x4E0D;&#x9700;&#x8981;&#x7ED9;&#x5B50;&#x67E5;&#x8BE2;&#x53D6;&#x522B;&#x540D;&#x3002;
+    - where&#x5B50;&#x67E5;&#x8BE2;&#x5185;&#x7684;&#x8868;&#xFF0C;&#x4E0D;&#x80FD;&#x76F4;&#x63A5;&#x7528;&#x4EE5;&#x66F4;&#x65B0;&#x3002;
+    select * from tb where money = (select max(money) from tb);
+    -- &#x5217;&#x5B50;&#x67E5;&#x8BE2;
+        &#x5982;&#x679C;&#x5B50;&#x67E5;&#x8BE2;&#x7ED3;&#x679C;&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x4E00;&#x5217;&#x3002;
+        &#x4F7F;&#x7528; in &#x6216; not in &#x5B8C;&#x6210;&#x67E5;&#x8BE2;
+        exists &#x548C; not exists &#x6761;&#x4EF6;
+            &#x5982;&#x679C;&#x5B50;&#x67E5;&#x8BE2;&#x8FD4;&#x56DE;&#x6570;&#x636E;&#xFF0C;&#x5219;&#x8FD4;&#x56DE;1&#x6216;0&#x3002;&#x5E38;&#x7528;&#x4E8E;&#x5224;&#x65AD;&#x6761;&#x4EF6;&#x3002;
+            select column1 from t1 where exists (select * from t2);
+    -- &#x884C;&#x5B50;&#x67E5;&#x8BE2;
+        &#x67E5;&#x8BE2;&#x6761;&#x4EF6;&#x662F;&#x4E00;&#x4E2A;&#x884C;&#x3002;
+        select * from t1 where (id, gender) in (select id, gender from t2);
+        &#x884C;&#x6784;&#x9020;&#x7B26;&#xFF1A;(col1, col2, ...) &#x6216; ROW(col1, col2, ...)
+        &#x884C;&#x6784;&#x9020;&#x7B26;&#x901A;&#x5E38;&#x7528;&#x4E8E;&#x4E0E;&#x5BF9;&#x80FD;&#x8FD4;&#x56DE;&#x4E24;&#x4E2A;&#x6216;&#x4E24;&#x4E2A;&#x4EE5;&#x4E0A;&#x5217;&#x7684;&#x5B50;&#x67E5;&#x8BE2;&#x8FDB;&#x884C;&#x6BD4;&#x8F83;&#x3002;
+    -- &#x7279;&#x6B8A;&#x8FD0;&#x7B97;&#x7B26;
+    != all()    &#x76F8;&#x5F53;&#x4E8E; not in
+    = some()    &#x76F8;&#x5F53;&#x4E8E; in&#x3002;any &#x662F; some &#x7684;&#x522B;&#x540D;
+    != some()   &#x4E0D;&#x7B49;&#x540C;&#x4E8E; not in&#xFF0C;&#x4E0D;&#x7B49;&#x4E8E;&#x5176;&#x4E2D;&#x67D0;&#x4E00;&#x4E2A;&#x3002;
+    all, some &#x53EF;&#x4EE5;&#x914D;&#x5408;&#x5176;&#x4ED6;&#x8FD0;&#x7B97;&#x7B26;&#x4E00;&#x8D77;&#x4F7F;&#x7528;&#x3002;
+</code></pre><h3 id="&#x8FDE;&#x63A5;&#x67E5;&#x8BE2;join">&#x8FDE;&#x63A5;&#x67E5;&#x8BE2;(join)</h3>
+<pre><code>/* &#x8FDE;&#x63A5;&#x67E5;&#x8BE2;(join) */ ------------------
+    &#x5C06;&#x591A;&#x4E2A;&#x8868;&#x7684;&#x5B57;&#x6BB5;&#x8FDB;&#x884C;&#x8FDE;&#x63A5;&#xFF0C;&#x53EF;&#x4EE5;&#x6307;&#x5B9A;&#x8FDE;&#x63A5;&#x6761;&#x4EF6;&#x3002;
+-- &#x5185;&#x8FDE;&#x63A5;(inner join)
+    - &#x9ED8;&#x8BA4;&#x5C31;&#x662F;&#x5185;&#x8FDE;&#x63A5;&#xFF0C;&#x53EF;&#x7701;&#x7565;inner&#x3002;
+    - &#x53EA;&#x6709;&#x6570;&#x636E;&#x5B58;&#x5728;&#x65F6;&#x624D;&#x80FD;&#x53D1;&#x9001;&#x8FDE;&#x63A5;&#x3002;&#x5373;&#x8FDE;&#x63A5;&#x7ED3;&#x679C;&#x4E0D;&#x80FD;&#x51FA;&#x73B0;&#x7A7A;&#x884C;&#x3002;
+    on &#x8868;&#x793A;&#x8FDE;&#x63A5;&#x6761;&#x4EF6;&#x3002;&#x5176;&#x6761;&#x4EF6;&#x8868;&#x8FBE;&#x5F0F;&#x4E0E;where&#x7C7B;&#x4F3C;&#x3002;&#x4E5F;&#x53EF;&#x4EE5;&#x7701;&#x7565;&#x6761;&#x4EF6;&#xFF08;&#x8868;&#x793A;&#x6761;&#x4EF6;&#x6C38;&#x8FDC;&#x4E3A;&#x771F;&#xFF09;
+    &#x4E5F;&#x53EF;&#x7528;where&#x8868;&#x793A;&#x8FDE;&#x63A5;&#x6761;&#x4EF6;&#x3002;
+    &#x8FD8;&#x6709; using, &#x4F46;&#x9700;&#x5B57;&#x6BB5;&#x540D;&#x76F8;&#x540C;&#x3002; using(&#x5B57;&#x6BB5;&#x540D;)
+    -- &#x4EA4;&#x53C9;&#x8FDE;&#x63A5; cross join
+        &#x5373;&#xFF0C;&#x6CA1;&#x6709;&#x6761;&#x4EF6;&#x7684;&#x5185;&#x8FDE;&#x63A5;&#x3002;
+        select * from tb1 cross join tb2;
+-- &#x5916;&#x8FDE;&#x63A5;(outer join)
+    - &#x5982;&#x679C;&#x6570;&#x636E;&#x4E0D;&#x5B58;&#x5728;&#xFF0C;&#x4E5F;&#x4F1A;&#x51FA;&#x73B0;&#x5728;&#x8FDE;&#x63A5;&#x7ED3;&#x679C;&#x4E2D;&#x3002;
+    -- &#x5DE6;&#x5916;&#x8FDE;&#x63A5; left join
+        &#x5982;&#x679C;&#x6570;&#x636E;&#x4E0D;&#x5B58;&#x5728;&#xFF0C;&#x5DE6;&#x8868;&#x8BB0;&#x5F55;&#x4F1A;&#x51FA;&#x73B0;&#xFF0C;&#x800C;&#x53F3;&#x8868;&#x4E3A;null&#x586B;&#x5145;
+    -- &#x53F3;&#x5916;&#x8FDE;&#x63A5; right join
+        &#x5982;&#x679C;&#x6570;&#x636E;&#x4E0D;&#x5B58;&#x5728;&#xFF0C;&#x53F3;&#x8868;&#x8BB0;&#x5F55;&#x4F1A;&#x51FA;&#x73B0;&#xFF0C;&#x800C;&#x5DE6;&#x8868;&#x4E3A;null&#x586B;&#x5145;
+-- &#x81EA;&#x7136;&#x8FDE;&#x63A5;(natural join)
+    &#x81EA;&#x52A8;&#x5224;&#x65AD;&#x8FDE;&#x63A5;&#x6761;&#x4EF6;&#x5B8C;&#x6210;&#x8FDE;&#x63A5;&#x3002;
+    &#x76F8;&#x5F53;&#x4E8E;&#x7701;&#x7565;&#x4E86;using&#xFF0C;&#x4F1A;&#x81EA;&#x52A8;&#x67E5;&#x627E;&#x76F8;&#x540C;&#x5B57;&#x6BB5;&#x540D;&#x3002;
+    natural join
+    natural left join
+    natural right join
+select info.id, info.name, info.stu_num, extra_info.hobby, extra_info.sex from info, extra_info where info.stu_num = extra_info.stu_id;
+</code></pre><h3 id="with-as-&#x590D;&#x6742;&#x67E5;&#x8BE2;&#x4F18;&#x5316;">WITH AS &#x590D;&#x6742;&#x67E5;&#x8BE2;&#x4F18;&#x5316;</h3>
+<p>WITH AS&#x77ED;&#x8BED;&#xFF0C;&#x4E5F;&#x53EB;&#x505A;&#x5B50;&#x67E5;&#x8BE2;&#x90E8;&#x5206;&#xFF08;subquery factoring&#xFF09;&#xFF0C;&#x53EF;&#x4EE5;&#x8BA9;&#x4F60;&#x505A;&#x5F88;&#x591A;&#x4E8B;&#x60C5;&#xFF0C;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;SQL&#x7247;&#x65AD;&#xFF0C;&#x8BE5;SQL&#x7247;&#x65AD;&#x4F1A;&#x88AB;&#x6574;&#x4E2A;SQL&#x8BED;&#x53E5;&#x6240;&#x7528;&#x5230;&#x3002;&#x6709;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x662F;&#x4E3A;&#x4E86;&#x8BA9;SQL&#x8BED;&#x53E5;&#x7684;&#x53EF;&#x8BFB;&#x6027;&#x66F4;&#x9AD8;&#x4E9B;&#xFF0C;
+&#x4E5F;&#x6709;&#x53EF;&#x80FD;&#x662F;&#x5728;UNION ALL&#x7684;&#x4E0D;&#x540C;&#x90E8;&#x5206;&#xFF0C;&#x4F5C;&#x4E3A;&#x63D0;&#x4F9B;&#x6570;&#x636E;&#x7684;&#x90E8;&#x5206;&#x3002; &#x7279;&#x522B;&#x5BF9;&#x4E8E;UNION ALL&#x6BD4;&#x8F83;&#x6709;&#x7528;&#x3002;
+&#x56E0;&#x4E3A;UNION ALL&#x7684;&#x6BCF;&#x4E2A;&#x90E8;&#x5206;&#x53EF;&#x80FD;&#x76F8;&#x540C;&#xFF0C;&#x4F46;&#x662F;&#x5982;&#x679C;&#x6BCF;&#x4E2A;&#x90E8;&#x5206;&#x90FD;&#x53BB;&#x6267;&#x884C;&#x4E00;&#x904D;&#x7684;&#x8BDD;&#xFF0C;&#x5219;&#x6210;&#x672C;&#x592A;&#x9AD8;&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;WITH AS&#x77ED;&#x8BED;&#xFF0C;&#x5219;&#x53EA;&#x8981;&#x6267;&#x884C;&#x4E00;&#x904D;&#x5373;&#x53EF;</p>
+<pre><code class="lang-mysql">with t1 as (select * from a)
+select * from t1;
+
+with t1 as (select * from a),
+     t2 as (select * from b)
+select * from t2;
+</code></pre>
+<h3 id="&#x5907;&#x4EFD;&#x4E0E;&#x8FD8;&#x539F;">&#x5907;&#x4EFD;&#x4E0E;&#x8FD8;&#x539F;</h3>
+<pre><code class="lang-shell"># &#x5BFC;&#x51FA;&#x4E00;&#x5F20;&#x8868;
+mysqldump -u&#x7528;&#x6237;&#x540D; -p&#x5BC6;&#x7801; &#x5E93;&#x540D; &#x8868;&#x540D; &gt; &#x6587;&#x4EF6;&#x540D;(D:/a.sql)
+# &#x5BFC;&#x51FA;&#x591A;&#x5F20;&#x8868;
+mysqldump -u&#x7528;&#x6237;&#x540D; -p&#x5BC6;&#x7801; &#x5E93;&#x540D; &#x8868;1 &#x8868;2 &#x8868;3 &gt; &#x6587;&#x4EF6;&#x540D;(D:/a.sql)
+# &#x5BFC;&#x51FA;&#x6240;&#x6709;&#x8868;
+mysqldump -u&#x7528;&#x6237;&#x540D; -p&#x5BC6;&#x7801; &#x5E93;&#x540D; &gt; &#x6587;&#x4EF6;&#x540D;(D:/a.sql)
+# &#x5BFC;&#x51FA;&#x4E00;&#x4E2A;&#x5E93;
+mysqldump -u&#x7528;&#x6237;&#x540D; -p&#x5BC6;&#x7801; --lock-all-tables --database &#x5E93;&#x540D; &gt; &#x6587;&#x4EF6;&#x540D;(D:/a.sql)
+
+# &#x5BFC;&#x5165;
+
+# &#x5728;&#x767B;&#x5F55;mysql&#x7684;&#x60C5;&#x51B5;&#x4E0B;
+source  &#x5907;&#x4EFD;&#x6587;&#x4EF6;
+# &#x5728;&#x4E0D;&#x767B;&#x5F55;&#x7684;&#x60C5;&#x51B5;&#x4E0B;
+mysql -u&#x7528;&#x6237;&#x540D; -p&#x5BC6;&#x7801; &#x5E93;&#x540D; &lt; &#x5907;&#x4EFD;&#x6587;&#x4EF6;
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Redis设计与实现.html" class="navigation navigation-prev " aria-label="Previous page: Redis设计与实现">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="PostgreSQL操作手册.html" class="navigation navigation-next " aria-label="Next page: PostgreSQL操作手册">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"MySQL 操作手册","level":"1.10.2","depth":2,"next":{"title":"PostgreSQL操作手册","level":"1.10.3","depth":2,"path":"数据库/PostgreSQL操作手册.md","ref":"数据库/PostgreSQL操作手册.md","articles":[]},"previous":{"title":"Redis设计与实现","level":"1.10.1","depth":2,"path":"数据库/Redis设计与实现.md","ref":"数据库/Redis设计与实现.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["toggle-chapters"],"pluginsConfig":{"toggle-chapters":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"数据库/MySQL 操作手册.md","mtime":"2024-09-04T15:17:09.207Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2024-09-07T13:11:00.723Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-toggle-chapters/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

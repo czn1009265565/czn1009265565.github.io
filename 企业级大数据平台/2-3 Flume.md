@@ -16,50 +16,7 @@ mv /opt/module/apache-flume-1.10.1-bin /opt/module/flume
 ```
 
 **日志存储路径**  
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="ERROR">
-  <Properties>
-    <!-- 配置对应的日志存储路径 -->
-    <Property name="LOG_DIR">/opt/module/flume/log</Property>
-  </Properties>
-  <Appenders>
-    <Console name="Console" target="SYSTEM_ERR">
-      <PatternLayout pattern="%d (%t) [%p - %l] %m%n" />
-    </Console>
-    <RollingFile name="LogFile" fileName="${LOG_DIR}/flume.log" filePattern="${LOG_DIR}/archive/flume.log.%d{yyyyMMdd}-%i">
-      <PatternLayout pattern="%d{dd MMM yyyy HH:mm:ss,SSS} %-5p [%t] (%C.%M:%L) %equals{%x}{[]}{} - %m%n" />
-      <Policies>
-        <!-- Roll every night at midnight or when the file reaches 100MB -->
-        <SizeBasedTriggeringPolicy size="100 MB"/>
-        <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
-      </Policies>
-      <DefaultRolloverStrategy min="1" max="20">
-        <Delete basePath="${LOG_DIR}/archive">
-          <!-- Nested conditions: the inner condition is only evaluated on files for which the outer conditions are true. -->
-          <IfFileName glob="flume.log.*">
-            <!-- Only allow 1 GB of files to accumulate -->
-            <IfAccumulatedFileSize exceeds="1 GB"/>
-          </IfFileName>
-        </Delete>
-      </DefaultRolloverStrategy>
-    </RollingFile>
-  </Appenders>
 
-  <Loggers>
-    <Logger name="org.apache.flume.lifecycle" level="info"/>
-    <Logger name="org.jboss" level="WARN"/>
-    <Logger name="org.apache.avro.ipc.netty.NettyTransceiver" level="WARN"/>
-    <Logger name="org.apache.hadoop" level="INFO"/>
-<Logger name="org.apache.hadoop.hive" level="ERROR"/>
-    <Root level="INFO">
-      <AppenderRef ref="LogFile" />
-	  <!-- 新增控制台输出 -->
-      <AppenderRef ref="Console" />
-    </Root>
-  </Loggers>
-</Configuration>
-```
 
 **验证**  
 ```shell
