@@ -1,6 +1,23 @@
-# Spring Boot 配置加载
+# Spring Boot 基础配置
 
-## `@Value`注入
+## 加载顺序
+### 配置文件格式
+
+1. application.properties
+2. application.yml
+3. bootstrap.properties
+4. bootstrap.yml
+5. application-${profile}
+
+### 加载说明
+
+1. 单纯SpringBoot项目并不会加载bootstrap配置文件，需要引入`spring-cloud-starter-bootstrap`依赖
+2. 在不指定`spring.profiles.active`时，加载顺序 bootstrap.properties > bootstrap.yml > application.properties > application.yml
+3. 当同一配置属性在properties与yml文件都存在时，最终加载 **properties** 文件中的属性
+4. 当同一配置属性在bootstrap与application文件都存在时，虽然先加载bootstrap文件，但最终加载 **application** 文件中的属性
+5. 在指定`spring.profiles.active`时，加载顺序 bootstrap.properties > bootstrap.yml > application-${profile} > application.properties > application.yml，且同一配置属性在application-${profile}与application文件都存在时，最终加载 application-${profile} 文件中的属性
+
+## 单属性注入
 
 ### application配置
 
@@ -13,7 +30,7 @@ wechat:
   openAppSecret: ${wechat.appSecret}
 ```
 
-### 使用`@Value`读取配置
+### `@Value`读取配置
 
 注意点:  
 1. `@Value`注解只能读取单个配置进行赋值
@@ -34,9 +51,9 @@ public class WechatAccountConfig {
 }
 ```
 
-## `@ConfigurationProperties`注入
+## 多属性注入
 
-### 使用`@ConfigurationProperties`注解批量绑定
+### `@ConfigurationProperties`批量绑定
 
 ```java
 @Data
@@ -58,7 +75,7 @@ public class WechatAccountConfig {
 }
 ```
 
-## 使用Environment动态获取配置
+## Environment动态获取配置
 
 ```java
 @Data
@@ -169,4 +186,35 @@ public class JavaConfig {
 }
 ```
 
+## 生成配置元数据
 
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-configuration-processor</artifactId>
+    <optional>true</optional>
+</dependency>
+```
+
+配合@ConfigurationProperties注解  
+```java
+@Data
+@Component
+@ConfigurationProperties(prefix = "wechat")
+public class WechatAccountConfig {
+
+    /** 公众平台id */
+    private String appId;
+
+    /** 公众平台密钥 */
+    private String appSecret;
+
+    /** 开放平台id */
+    private String openAppId;
+
+    /** 开放平台密钥 */
+    private String openAppSecret;
+}
+```
+
+编译后即可在application文件动态提示
