@@ -2,13 +2,9 @@
 
 ## 依赖配置
 
-### pom依赖
+### 引入依赖
 
 ```xml
-<properties>
-	<minio.version>8.5.2</minio.version>
-</properties>
-
 <dependency>
     <groupId>io.minio</groupId>
     <artifactId>minio</artifactId>
