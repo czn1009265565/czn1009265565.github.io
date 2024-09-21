@@ -25,6 +25,11 @@ Flyway 将 SQL 文件分为 `Versioned` 、`Repeatable` 和 `Undo`
         <groupId>org.flywaydb</groupId>
         <artifactId>flyway-core</artifactId>
     </dependency>
+    <!-- MySQL需要单独引入依赖 -->
+    <dependency>
+        <groupId>org.flywaydb</groupId>
+        <artifactId>flyway-mysql</artifactId>
+    </dependency>
 
     <dependency>
         <groupId>org.springframework.boot</groupId>

@@ -6,10 +6,6 @@
 [Spring Boot与MyBatis对应版本查看](http://mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/)
 
 ```xml
-<properties>
-    <mysql.version>8.0.28</mysql.version>
-    <mybatis.version>2.2.1</mybatis.version>
-</properties>
 <dependencies>
     <!-- MySQL Driver -->
     <dependency>
@@ -31,11 +27,19 @@
 
 ```yaml
 spring:
+  # MySQL
   datasource:
     url: jdbc:mysql://localhost:3306/dbname
     username: username
     password: password
     driver-class-name: com.mysql.jdbc.Driver
+#  PostgreSQL    
+#  datasource:
+#    url: jdbc:postgresql://127.0.0.1:5432/dbname
+#    username: postgres
+#    password: postgres
+#    driver-class-name: org.postgresql.Driver
+    
 
 mybatis:
   configuration:

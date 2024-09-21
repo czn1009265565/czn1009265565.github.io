@@ -5,16 +5,18 @@
 ### 引入依赖
 
 ```xml
-<properties>
-    <!-- mybatis 与 mybatis-plus 对应版本-->
-    <mybatis.version>2.2.1</mybatis.version>
-    <mybatis.plus.version>3.5.1</mybatis.plus.version>
-</properties>
-
 <dependencies>
+    <!-- Spring Boot 2.x-->
     <dependency>
         <groupId>com.baomidou</groupId>
         <artifactId>mybatis-plus-boot-starter</artifactId>
+        <version>${mybatis.plus.version}</version>
+    </dependency>
+
+    <!-- Spring Boot 3.x-->
+    <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
         <version>${mybatis.plus.version}</version>
     </dependency>
 </dependencies>
@@ -24,11 +26,18 @@
 
 ```yaml
 spring:
+  # MySQL
   datasource:
-    url: jdbc:postgresql://127.0.0.1:5432/dbname
-    username: postgres
-    password: postgres
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:mysql://localhost:3306/dbname
+    username: username
+    password: password
+    driver-class-name: com.mysql.jdbc.Driver
+  # PostgreSQL    
+#  datasource:
+#    url: jdbc:postgresql://127.0.0.1:5432/dbname
+#    username: postgres
+#    password: postgres
+#    driver-class-name: org.postgresql.Driver
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
@@ -56,7 +65,7 @@ public class SpringBootMybatisPlusApplication {
 这里使用MySQL数据库
 
 ```sql
-CREATE TABLE user (
+CREATE TABLE user (c
     id BIGINT(20) NOT NULL PRIMARY KEY COMMENT '用户Id',
     username VARCHAR(64) NOT NULL COMMENT '用户名',
     nickname VARCHAR(64) COMMENT '昵称',
@@ -68,10 +77,7 @@ CREATE TABLE user (
 ) COMMENT '用户表';
 ```
 
-### 定义实体类 `UserDO.java`
-
-此处使用了 Lombok 简化代码
-
+### 定义实体类
 ```java
 @Data
 @TableName(value = "user", autoResultMap = true)
