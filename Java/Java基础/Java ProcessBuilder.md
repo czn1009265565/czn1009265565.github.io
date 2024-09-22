@@ -1,21 +1,22 @@
-## Java与Python协同开发
+## Java ProcessBuilder
 
-### 背景
-Java与Python结合开发是指将Python语言与Java语言结合起来，利用它们的优势，共同开发一个应用程序。  
-Python语言拥有许多强大的特性，如易于学习、快速开发、可扩展性等，而Java语言则拥有跨平台、可靠性、安全性等优势，因此将它们结合起来，可以发挥出更大的作用。  
-在一个大型企业系统中，Java可能用于后端服务和业务逻辑，而Python可能用于数据分析和机器学习任务。在这种情况下，两种语言需要能够协同工作，以实现全面的功能。  
+### 简介
+ProcessBuilder用于创建操作系统进程
 
+**进程属性**  
+1. 命令 command，表示要调用的外部程序文件及其参数
+2. 环境 environment，从变量到值依赖于系统的映射
+3. 工作目录 working directory，默认值是当前进程的当前工作目录，通常根据系统属性 user.dir 来命名
+4. redirectErrorStream属性，此属性为false意思是子进程的标准输出和错误输出被发送给两个独立的流，这些流可以通过 Process.getInputStream() 和 Process.getErrorStream()方法来访问。如果将值设置为 true，标准错误将与标准输出合并，在此情况下，合并的数据可从 Process.getInputStream() 返回的流读取，而从 Process.getErrorStream() 返回的流读取将直接到达文件尾。
 
-### ProcessBuilder
-Java提供了ProcessBuilder类，可以在Java代码中调用外部程序或脚本。
+### 执行命令行
 
-**Java执行命令行**  
 ```java
-public class PythonTest {
+public class CommandTest {
     public static void main(String[] args) {
         try {
             // 创建ProcessBuilder对象，指定要执行的命令和参数
-            ProcessBuilder pb = new ProcessBuilder("python", "-c", "print('Hello, Python!')");
+            ProcessBuilder pb = new ProcessBuilder("java", "--version");
             // 启动子进程并等待其完成
             Process process = pb.start();
 
@@ -36,7 +37,8 @@ public class PythonTest {
 }
 ```
 
-**Java执行Python脚本**  
+### 执行Python脚本
+
 ```java
 public class PythonTest {
     public static void main(String[] args) {
@@ -78,7 +80,8 @@ public class PythonTest {
 }
 ```
 
-**Java中断Python任务**  
+### 中断Python任务
+
 ```java
 public class PythonTest {
     public static void main(String[] args) {
