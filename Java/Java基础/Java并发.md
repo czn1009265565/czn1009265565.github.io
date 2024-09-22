@@ -193,3 +193,37 @@ AQS提供的模板方法可分为三类:
 3. boolean tryLock(); //非阻塞式响应中断能立即返回，获取锁返回true反之返回fasle
 4. boolean tryLock(long time, TimeUnit unit) throws InterruptedException;//超时获取锁，在超时内或者未中断的情况下能够获取锁
 5. Condition newCondition();//获取与lock绑定的等待通知组件，当前线程必须获得了锁才能进行等待，进行等待时会先释放锁，当再次获取锁时才能从等待中返回
+
+### ReentrantLock
+
+```java
+public class LockTest {
+    // 初始化选择公平锁(true)、非公平锁(false)
+    private static ReentrantLock lock = new ReentrantLock(false);
+
+    public void fairLock() {
+        // 获取不到锁则阻塞
+        lock.lock();
+        try {
+            // 具体业务逻辑
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public void nonFairLock() {
+        boolean condition = lock.tryLock();
+        if (!condition){
+            // 未获取到锁
+            return;
+        }
+        try {
+            // 具体业务逻辑
+        }
+        finally {
+            // 手动释放锁
+            lock.unlock();
+        }
+    }
+}
+```

@@ -13,10 +13,7 @@
 
 1. Java System
 2. Java Path
-3. Java File
-4. Java 锁
 5. Java 线程池 / Spring Boot 线程池
-6. Java ProcessBuilder
 
 
 
