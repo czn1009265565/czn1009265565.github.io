@@ -12,8 +12,12 @@
 ## TODO
 
 1. Java System
-2. Java Path
-5. Java 线程池 / Spring Boot 线程池
+2. Spring Boot Quartz
+3. Java 线程池 / Spring Boot 线程池
+
+
+1. Java秒杀
+2. Java架构师-技术专家
 
 
 
