@@ -63,7 +63,7 @@ nohup java -jar ./target/spring-boot-examples-0.0.1-SNAPSHOT.jar &
    ![img.png](imgs/IDEA.png)
 4. 在远程终端启动服务(注意点：调试参数需要放在`-jar`前面)  
    ```shell
-   java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 -jar ./target/spring-boot-examples-0.0.1-SNAPSHOT.jar
+   java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -jar ./target/spring-boot-examples-0.0.1-SNAPSHOT.jar
    ```
 5. IDEA开启Debug
 
