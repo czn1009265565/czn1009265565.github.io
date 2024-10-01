@@ -52,6 +52,8 @@ mysql_secure_installation
 ```shell
 # 创建数据库用户,并授予远程连接权限
 mysql> create user 'username'@'%' identified by 'password';
+# 修改root密码
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'password';
 # 为用户授权数据库所有权限
 mysql> grant all privileges on *.* to 'username'@'%';
 # 刷新权限
