@@ -12,11 +12,11 @@
 ## TODO
 
 1. Java System
-2. Spring Boot Quartz
-3. Java 线程池 / Spring Boot 线程池
-4. MVCC
+2. Jmeter
+3. MVCC
+4. Spring Boot Thymeleaf
 
-1. Java秒杀
+1. Java秒杀系统
 2. Java架构师-技术专家
 
 
