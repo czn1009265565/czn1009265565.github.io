@@ -5,11 +5,21 @@
 ## 依赖配置
 
 ```xml
-<dependency>
-    <groupId>org.springdoc</groupId>
-    <artifactId>springdoc-openapi-ui</artifactId>
-    <version>1.6.15</version>
-</dependency>
+<dependencys>
+    <!-- Spring Boot 2.X-->
+    <dependency>
+        <groupId>org.springdoc</groupId>
+        <artifactId>springdoc-openapi-ui</artifactId>
+        <version>1.8.0</version>
+    </dependency>
+
+    <!-- Spring Boot 3.X-->
+    <dependency>
+        <groupId>org.springdoc</groupId>
+        <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+        <version>2.6.0</version>
+    </dependency>
+</dependencys>
 ```
 
 
@@ -22,8 +32,9 @@ springdoc:
     path: /v3/api-docs
   swagger-ui:
     enabled: true
-    path: /swagger-ui
 ```
+
+默认地址: `http://localhost:8080/swagger-ui/index.html`
 
 ## 注解映射
 
@@ -32,11 +43,39 @@ springdoc:
 |SpringFox|SpringDoc|
 |---|---|
 |@Api|@Tag|
-|@ApiOperation(value="foo",notes="bar")|@Operation(summary="foo", description="bar")|
+|@ApiOperation|@Operation|
 |@ApiModel|@Schema|
 |@ApiModelProperty|@Schema|
 |@ApiIgnore|@Parameter(hidden=true)|
 
+### 接口定义
 
-访问 `http://localhost:8080/swagger-ui.html`
+```java
+@Tag(name = "AdminControllerApi", description = "管理员管理")
+public interface AdminControllerApi {
+
+    @Operation(summary = "添加用户",
+            description = "根据姓名添加用户并返回")
+    CommonResult<User> addUser(String name);
+}
+```
+
+### 实体类定义
+
+```java
+@Data
+@AllArgsConstructor
+@Schema(name = "CommonResult", description = "通用返回对象")
+public class CommonResult<T> {
+    @Schema(name = "code", description = "状态码")
+    private long code;
+
+    @Schema(name = "message", description = "提示信息")
+    private String message;
+
+    @Schema(name = "data", description = "数据封装")
+    private T data;
+}
+```
+
 
