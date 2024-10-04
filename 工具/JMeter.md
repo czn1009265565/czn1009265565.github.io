@@ -24,6 +24,11 @@ JMeter 是由 Java 实现的，并且使用一个 Java 线程来模拟一个用�
 
 右击`Thread Group` > `Add` > `Sampler` > `HTTP Request`
 
+### POST JSON
+右击`Thread Group` > `Add` > `Config Element` > `HTTP Header Manager`  
+1. `HTTP Request` 选择 `Body Data`，输入请求参数
+2. `HTTP Header Manager` 新增Header，Name: `Content-Type`，Value: `application/json`
+
 ### 设置请求参数
 1. Name: 测试接口的描述性文字
 2. Protocol: 协议类型http,https
