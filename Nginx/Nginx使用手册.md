@@ -149,22 +149,27 @@ location /static/ {
 
 ```
 http {
-    # mynet是自定义的命名 在server结构中引用即可
-    upstream mynet {    
+    # backend_server是自定义的命名 在server结构中引用即可
+    upstream backend_server {
         # server servername:port  servername可以写主机名或者IP
-        server 192.168.1.30:80 max_fails=3 fail_timeout=60s weight=5;
-        server 192.168.1.31:80 max_fails=3 fail_timeout=60s weight=5;  
+        server 192.168.1.101:8080 max_fails=3 fail_timeout=60s weight=1;
+        server 192.168.1.102:8080 max_fails=3 fail_timeout=60s weight=1;
     }
 
     server {
         listen       80;
-        server_name  localhost; 
+        server_name  localhost;
         location / {
+            proxy_pass http://backend_server;
             proxy_set_header Host $host:$server_port;
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header X-Scheme $scheme;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_pass http://mynet;
+            
+            # 支持http长连接
+            proxy_http_version 1.1;
+            proxy_set_header Connection "";
+        }
     }
 }
 ```
