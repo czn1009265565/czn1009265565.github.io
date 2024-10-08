@@ -17,7 +17,7 @@
 4. Spring Boot HikariCP
 5. JVM调优
 
-1. Java秒杀系统
+
 2. Java架构师-技术专家
 
 
