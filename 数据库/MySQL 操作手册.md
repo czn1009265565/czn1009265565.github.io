@@ -1,13 +1,51 @@
-## MySQL 操作手册
+# MySQL 操作手册
 
-### MySQL 连接
+## MySQL命令
 
 ```shell
+# 创建连接
 mysql -h <地址> -P <端口> -u <用户名> -p
 Enter password:
+
+# 导出一张表
+mysqldump -u用户名 -p密码 库名 表名 > table_name.sql
+# 导出多张表
+mysqldump -u用户名 -p密码 库名 表1 表2 表3 > dbname.sql
+# 导出所有表
+mysqldump -u用户名 -p密码 库名 > dbname.sql
+# 导出数据库
+mysqldump -u用户名 -p密码 --lock-all-tables --database 库名 > dbname.sql
+
+# 登录mysql导入
+source 备份文件
+# shell执行导入
+mysql -u用户名 -p密码 库名 < 备份文件
 ```
 
-### 数据库操作
+## 数据类型
+### 数值类型
+
+- TINYINT
+- SMALLINT
+- MEDIUMINT
+- INT
+- BIGINT
+- FLOAT 单精度
+- DOUBLE 双精度
+- DECIMAL(M,D) M也表示总位数，D表示小数位数。
+
+### 字符串类型
+
+- CHAR
+- VARCHAR
+- TEXT
+
+### 日期类型
+
+- DATETIME
+- TIMESTAMP
+
+## 数据库操作
 
 ```mysql
 -- 创建数据库
@@ -20,9 +58,9 @@ SHOW CREATE DATABASE dbname;
 DROP DATABASE dbname;
 ```
 
-### 表操作
+## 表操作
 
-#### 创建表
+### 创建表
 
 ```mysql
 CREATE TABLE tb_name (
@@ -33,19 +71,19 @@ CREATE TABLE tb_name (
 ) COMMENT 'tb_name';
 ```
 
-#### 查看所有表
+### 查看所有表
 
 ```mysql
 SHOW TABLES;
 ```
 
-#### 查看表结构
+### 查看表结构
 
 ```mysql
 SHOW CREATE TABLE tb_name;
 ```
 
-#### 修改表
+### 修改表
 
 ```mysql
 -- 新增表字段
@@ -58,21 +96,21 @@ ALTER TABLE tb_name DROP INDEX index_name;
 ALTER TABLE tb_name MODIFY column_name VARCHAR(64) NOT NULL DEFAULT '' COMMENT 'column_name';
 ```
 
-#### 删除表
+### 删除表
 
 ```mysql
 -- 删除表
 DROP TABLE tb_name;
 ```
 
-#### 清空表
+### 清空表
 
 ```mysql
 -- 清空表数据
 TRUNCATE TABLE tb_name;
 ```
 
-#### 复制表
+### 复制表
 
 ```mysql
 -- 复制表结构
@@ -81,9 +119,9 @@ CREATE TABLE tb_name_copy LIKE tb_name;
 CREATE TABLE tb_name_copy SELECT * FROM tb_name;
 ```
 
-### 索引操作
+## 索引操作
 
-#### 创建索引
+### 创建索引
 
 ```mysql
 -- 创建普通索引
@@ -94,33 +132,33 @@ CREATE UNIQUE INDEX index_name ON tb_name(column_name);
 CREATE INDEX `column_a_column_b_index` using btree on tb_name(column_a,column_b);
 ```
 
-#### 删除索引
+### 删除索引
     
 ```mysql
 ALTER TABLE tb_name DROP INDEX index_name;
 ```
 
-#### 查看索引
+### 查看索引
 
 ```mysql
 SHOW INDEX FROM tb_name;
 ```
 
-### 数据操作
+## 数据操作
 
-#### 插入数据
+### 插入数据
 
 ```mysql
 INSERT INTO tb_name(column_a,column_b,column_c) values(value_a,value_b,value_c);
 ```
 
-#### 删除数据
+### 删除数据
 
 ```mysql
 DELETE FROM tb_name;
 ```
 
-#### 更新数据
+### 更新数据
 
 ```mysql
 -- 全表更新
@@ -133,47 +171,8 @@ UPDATE tb_name SET column_a=value_a where id=1;
 UPDATE tb_name_1 t1,tb_name_2 t2 SET t1.column_a=t2.column_a where t1.column_b=t2.column_b;
 ```
 
-### 数据类型(列类型)
-#### 数值类型
 
-- TINYINT
-- SMALLINT
-- MEDIUMINT
-- INT
-- BIGINT
-- FLOAT 单精度
-- DOUBLE 双精度
-- DECIMAL(M,D) M也表示总位数，D表示小数位数。
-
-#### 字符串类型
-
-- CHAR
-- VARCHAR
-- TEXT
-
-#### 日期类型
-
-- DATETIME
-- TIMESTAMP
-
-### 建表规范
-- Normal Format, NF
-    - 每个表保存一个实体信息
-    - 每个具有一个ID字段作为主键
-    - ID主键 + 原子表
-
-- 1NF, 第一范式
-    字段不能再分，就满足第一范式。
-- 2NF, 第二范式
-    满足第一范式的前提下，不能出现部分依赖。
-    消除复合主键就可以避免部分依赖。增加单列关键字。
-- 3NF, 第三范式
-    满足第二范式的前提下，不能出现传递依赖。
-    某个字段依赖于主键，而有其他字段依赖于该字段。这就是传递依赖。
-    将一个实体信息的数据放在一个表内实现。
-
-
-### SELECT 
+## 表查询
 
 ```
 SELECT [ALL|DISTINCT] select_expr FROM -> WHERE -> GROUP BY [合计函数] -> HAVING -> ORDER BY -> LIMIT
@@ -271,7 +270,7 @@ h. DISTINCT, ALL 选项
     all, some 可以配合其他运算符一起使用。
 ```
 
-### 连接查询(join)
+### 连接查询
 
 ```
 /* 连接查询(join) */ ------------------
@@ -300,10 +299,9 @@ h. DISTINCT, ALL 选项
 select info.id, info.name, info.stu_num, extra_info.hobby, extra_info.sex from info, extra_info where info.stu_num = extra_info.stu_id;
 ```
 
-### WITH AS 复杂查询优化
-WITH AS短语，也叫做子查询部分（subquery factoring），可以让你做很多事情，定义一个SQL片断，该SQL片断会被整个SQL语句所用到。有的时候，是为了让SQL语句的可读性更高些，
-也有可能是在UNION ALL的不同部分，作为提供数据的部分。 特别对于UNION ALL比较有用。
-因为UNION ALL的每个部分可能相同，但是如果每个部分都去执行一遍的话，则成本太高，所以可以使用WITH AS短语，则只要执行一遍即可
+### WITH AS
+当我们书写一些结构相对复杂的SQL语句时，可能某个子查询在多个层级多个地方存在重复使用的情况，
+这个时候我们可以使用 `with as` 语句将其独立出来，极大提高SQL可读性，简化SQL，常用于实现数据分析需求。
 
 ```mysql
 with t1 as (select * from a)
@@ -312,24 +310,4 @@ select * from t1;
 with t1 as (select * from a),
      t2 as (select * from b)
 select * from t2;
-```
-
-### 备份与还原
-
-```shell
-# 导出一张表
-mysqldump -u用户名 -p密码 库名 表名 > 文件名(D:/a.sql)
-# 导出多张表
-mysqldump -u用户名 -p密码 库名 表1 表2 表3 > 文件名(D:/a.sql)
-# 导出所有表
-mysqldump -u用户名 -p密码 库名 > 文件名(D:/a.sql)
-# 导出一个库
-mysqldump -u用户名 -p密码 --lock-all-tables --database 库名 > 文件名(D:/a.sql)
-
-# 导入
-
-# 在登录mysql的情况下
-source  备份文件
-# 在不登录的情况下
-mysql -u用户名 -p密码 库名 < 备份文件
 ```
