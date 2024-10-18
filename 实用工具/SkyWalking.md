@@ -77,3 +77,102 @@ tail -200f logs/skywalking-webapp.log
 # 启动服务
 java -javaagent:<skywalking-agent-path> -Dskywalking.collector.backend_service=127.0.0.1:11800 -Dskywalking.agent.service_name=<application-name> -jar app.jar
 ```
+
+### 日志收集
+
+#### 引入依赖
+
+```xml
+<dependency>
+    <groupId>org.apache.skywalking</groupId>
+    <artifactId>apm-toolkit-logback-1.x</artifactId>
+    <version>9.3.0</version>
+</dependency>
+```
+
+#### 日志配置
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!--定义日志文件的存储路径-->
+    <property name="LOG_HOME" value="app/logs/"/>
+
+    <!-- 控制台 appender -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%class:%line] %-5level - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--skywalking grpc 日志收集-->
+    <appender name="GRPC" class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.log.GRPCLogClientAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.mdc.TraceIdMDCPatternLogbackLayout">
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.sss} [%X{sw_ctx}] [%thread] %-5level %logger{36} -%msg%n</pattern>
+            </layout>
+        </encoder>
+    </appender>
+
+    <!--按天生成日志-->
+    <!-- 出错日志 appender -->
+    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/error.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 按天回滚 daily -->
+            <fileNamePattern>${LOG_HOME}/error-%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <!-- 日志最大的历史 30天 -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%class:%line] %-5level - %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印错误日志 -->
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    <!-- info日志 appender -->
+    <appender name="FILE_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/info.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 按天回滚 daily -->
+            <fileNamePattern>${LOG_HOME}/info-%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <!-- 日志最大的历史 30天 -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%class:%line] %-5level - %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印INFO级别日志 -->
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- 测试环境+开发环境，日志级别为INFO且不写日志文件 -->
+    <springProfile name="test,dev">
+        <root level="INFO">
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="GRPC"/>
+        </root>
+    </springProfile>
+
+    <!-- 生产环境. 日志级别为INFO且写日志文件-->
+    <springProfile name="prod">
+        <root level="INFO">
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="FILE_ERROR" />
+            <appender-ref ref="FILE_INFO" />
+            <appender-ref ref="GRPC"/>
+        </root>
+    </springProfile>
+
+</configuration>
+```
+
+启动服务即可看到日志成功输出至SkyWalking平台

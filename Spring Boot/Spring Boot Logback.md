@@ -3,17 +3,9 @@
 ### Configuration
 主要划分为以下三个核心配置
 
-1. appender
-
-	负责写日志的组件,主要用于配置输出格式，日志回滚策略，日志最大历史
-
-2. logger
-
-	用来设置某一个包或者具体的某一个类的日志打印级别以及指定appender
-
-3. root
-
-	根logger，也是一种logger，且只有一个level属性
+1. appender: 负责写日志的组件,主要用于配置输出格式，日志回滚策略，日志最大历史
+2. logger: 用来设置某一个包或者具体的某一个类的日志打印级别以及指定appender
+3. root: 根logger，也是一种logger，且只有一个level属性
 
 ### 案例
 如下为一个传统的logback.xml示例
@@ -100,4 +92,4 @@
 ```
 
 1. 日志文件存储路径修改 `<property name="LOG_HOME" value="app/logs/"/>`
-2. 修改logger约束的包路径、或者删除logger都可
+2. 修改logger日志监听的包路径，删除logger则表示监听所有包路径
