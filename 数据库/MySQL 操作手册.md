@@ -16,7 +16,7 @@ mysqldump -u用户名 -p密码 库名 > dbname.sql
 # 导出数据库
 mysqldump -u用户名 -p密码 --lock-all-tables --database 库名 > dbname.sql
 
-# 登录mysql导入
+# mysql导入
 source 备份文件
 # shell执行导入
 mysql -u用户名 -p密码 库名 < 备份文件
