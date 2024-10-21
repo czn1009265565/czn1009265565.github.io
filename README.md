@@ -11,14 +11,12 @@
 
 ## TODO
 
-1. Java System
-2. MVCC
-3. Spring Boot Thymeleaf
-4. Spring Boot HikariCP
-5. JVM调优
+1. MVCC
+2. Spring Boot Thymeleaf
+3. JVM调优
 
 
-2. Java架构师-技术专家
+1. Java架构师-技术专家
 
 
 
