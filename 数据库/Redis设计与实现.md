@@ -89,34 +89,7 @@ struct dictEntry {
 Sorted Set 类似于 Set，但和 Set 相比，Sorted Set 增加了一个权重参数 score，
 使得集合中的元素能够按 score 进行有序排列，还可以通过 score 的范围来获取元素的列表。
 
-跳跃表
-
-```c
-struct skiplist {
-   // 表头节点和表尾节点
-   skipNode *header,*tail;
-   // 表中节点数量
-   unsigned long length;
-   // 表中层数最大的节点层数
-   int level;
-}
-
-struct skiplistNode {
-   skiplistLevel {
-      // 前进指针
-      struct skiplistNode *forward;
-      // 跨度
-      unsigned int span;
-   } level[];
-   // 后退指针
-   struct skiplistNode *backward;
-   // 分值
-   double score;
-   // 成员对象
-   robj *robj;
-}
-```
-   
+底层实现: 跳表
 
 ```
 1       5
@@ -125,6 +98,7 @@ struct skiplistNode {
 ```
 - 跳表由多层组成，每一层都是一个有序链表。最底层包含所有元素，每一层的元素数量逐层减少
 - 通过在每一层中跳过部分元素，平均时间复杂度为 O(log n)，使得查找效率接近于二分查找
+- 相对于红黑树来说，实现更简单，占用更少的内存，简单的删除和插入不需要进行复杂的平衡操作
 
 ## 持久化机制
 
