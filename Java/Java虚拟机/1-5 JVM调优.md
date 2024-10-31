@@ -3,8 +3,8 @@
 
 ## 参数类型
 - `-` 标准选项，`java -help`查看支持的选项
-- `-X` 附加选项，`java -X`查看支持的选项
-- `-XX` 高级选项
+- `-X` 附加选项，`java -X`查看支持的选项，`-Xmx4096m -Xms4096m -Xloggc:/path/to/gc.log` 
+- `-XX` 高级选项 `-XX:+HeapDumpOnOutOfMemoryError`
 
 ### `-XX` 高级选项
 - Boolean类型  
@@ -67,16 +67,9 @@ jstack命令用于生成虚拟机当前时刻的线程快照
 
 - `jstack pid`
 
-CPU飙高排查(线程死锁、死循环)  
-
-1. 查看CPU占用 `top`
-2. 转储Java进程内的线程堆栈信息 `jstack pid > pid.txt`
-3. 查看进程中最占CPU的线程 `top -p pid -H`
-4. 最耗CPU的线程PID转换为16进制输出 `printf "%x" pid`
-5. 查看高占用CPU具体问题 文本搜索16进制线程号
-
 ### MAT
 MAT下载地址: `https://www.eclipse.org/mat/downloads.php`
+
 1. overview: 堆内存大小、对象个数、类的个数、类加载器的个数、GC root 个数、线程概况等全局统计信息。
 2. Leak Suspects: 直击引用链条上占用内存较多的可疑对象，可解决一些基础问题，但复杂的问题往往帮助有限。
 3. Histogram: 罗列每个类实例的内存占比，包括自身内存占用量（Shallow Heap）及支配对象的内存占用量（Retain Heap），
@@ -87,5 +80,47 @@ MAT下载地址: `https://www.eclipse.org/mat/downloads.php`
 4. Dominator tree: 按对象的 Retain Heap 排序，也支持按多个维度聚类统计，最常用的功能之一
 
 
+## 实战
 
+### CPU飙高排查
+CPU飙高可能的原因: 线程死锁，死循环等
 
+1. 查看CPU占用 `top`
+2. 转储Java进程内的线程堆栈信息 `jstack pid > pid.txt`
+3. 查看进程中最占CPU的线程 `top -Hp pid`
+4. 最耗CPU的线程PID转换为16进制输出 `printf "%x" pid`
+5. 查看高占用CPU具体问题 文本搜索16进制线程号
+
+### 内存溢出
+- 堆内存溢出
+- 栈内存溢出 
+- 方法区溢出
+- 直接内存溢出
+
+#### 堆内存溢出
+报错信息: `java.lang.OutOfMemoryError: Java heap space`
+
+可能的原因: 存在内存泄露或大对象分配
+
+解决: 分析堆内存排查是否存在内存泄露，调整堆内存大小`-Xmx`
+
+#### 栈内存溢出
+报错信息: `java.lang.StackOverflowError`
+
+可能的原因: 线程请求的栈深度大于虚拟机所允许的最大深度，例如不合理的递归调用
+
+解决: 调整栈内存大小`-Xss`
+
+#### 方法区溢出
+
+报错信息: `java.lang.OutOfMemoryError：Metaspace`
+可能的原因: 常量池里对象过大，加载的类过多
+解决办法: 留空元空间相关配置(因为元空间使用的是本机直接内存)，或设置元空间大小 `-XX:MetaspaceSize`和`-XX:MaxMetaspaceSize`
+
+### 项目变慢
+
+可能的原因:   
+1. Stop The World过长
+2. 项目依赖的资源变慢，例如DB表过大
+3. 线程竞争
+4. 服务器问题，CPU、内存占用
