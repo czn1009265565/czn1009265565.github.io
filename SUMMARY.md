@@ -129,7 +129,7 @@
 	* [Maven 环境搭建](环境部署/Maven 环境搭建.md)
 	* [MySQL 安装部署](环境部署/MySQL 安装部署.md)
 	* [Nginx 安装部署](Nginx/Nginx%20安装部署.md)
-	* [MinIO 环境搭建](环境部署/MinIO 环境搭建.md)
+	* [MinIO 环境搭建](环境部署/MinIO 安装部署.md)
 	* [Hadoop 安装部署](环境部署/Hadoop 安装部署.md)
 	* [Hive 安装部署](环境部署/Hive 安装部署.md)
 	* [Spark 安装部署](环境部署/Spark 安装部署.md)
