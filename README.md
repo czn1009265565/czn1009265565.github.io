@@ -12,9 +12,7 @@
 ## TODO
 
 1. MVCC
-2. Spring Boot Thymeleaf
-3. JVM调优
-4. Spark
+2. Spark
 
 1. Java架构师-技术专家
 
