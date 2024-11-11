@@ -38,7 +38,7 @@ MVCC 全称 Mutil-Version Concurrency Control，多版本并发控制，在不�
 - trx_id: 记录了新增/最近修改这条记录的事务 id，事务 id 是自增的
 - roll_pointer: 回滚指针指向当前记录的上一个版本(在undo log 中)
 
-![undo log](./imgs/undo%20log.png)
+![undo log](imgs/undo%20log.png)
 
 ### ReadView
 ReadView（读视图）是 快照读 SQL执行时MVCC提取数据的依据，ReadView中包含了四个核心字段:

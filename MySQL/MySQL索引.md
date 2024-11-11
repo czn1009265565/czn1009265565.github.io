@@ -22,7 +22,7 @@ MySQL 索引相关的数据结构有两种，一种是 B+Tree，一种是 Hash�
 这里先简单介绍下B-Tree和B+Tree，B-Tree全称多路平衡查找树，B+Tree是B-Tree的一种变体，这里的B指的Balanced(平衡)的意思。
 目前大部分数据库系统及文件系统都采用 B-Tree 或其变种 B+Tree 作为索引结构。
 
-![B+Tree](./imgs/B+Tree.png)
+![B+Tree](imgs/B+Tree.png)
 
 区别  
 1. B-Tree的所有节点既存放键(key) 也存放数据(data)，而 B+Tree只有叶子节点存放 key 和 data，其他非叶子节点只存放 key。
