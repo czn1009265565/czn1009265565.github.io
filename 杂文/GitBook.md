@@ -2,14 +2,14 @@
 
 ### 背景
 
-想要搭建基于Markdown文本格式，风格简洁的博客网站，当然最好是具备操作简单易上手的特点。嗯，`Gitbook` 出现了。
+想要搭建基于Markdown文本格式，风格简洁的博客网站，当然最好是具备操作简单易上手的特点。
 
 GitBook 基于 `Git` 和 `Markdown` 来构建书籍，它可以将 `Markdown` 文件，
 按指定的目录结构生成网页（HTML）或者电子书（pdf、epub、mobi），其核心为 `Node.js` 包。
 
 ### 环境配置
 
-1. Nodejs安装部署,由于 `gitbook-cli` 已经停止维护了,因此我们需要下载停止维护前的Nodejs版本 `v10.23.0` [下载链接](https://nodejs.org/download/release/v10.23.0/node-v10.23.0-x64.msi)
+1. Nodejs安装部署,由于 `gitbook-cli` 已经停止维护了,因此我们需要下载停止维护前的Nodejs版本 `v10.23.0` 
 2. 安装完成后，验证版本
    ```shell
    node -v
@@ -24,12 +24,7 @@ GitBook 基于 `Git` 和 `Markdown` 来构建书籍，它可以将 `Markdown` �
    npm install -g gitbook-cli
    ```
 4. npm代理设置  
-   ```shell
-   # 设置代理
-   npm config set proxy=http://127.0.0.1:10809
-   # 取消代理
-   npm config delete proxy
-   ```
+
 
 ### 创建电子书
 
