@@ -2,12 +2,13 @@
 
 ## 集群规划
 
-|hadoop101|hadoop102|hadoop103|
-|---|---|---|
-|zk    |zk|    zk|
-|kafka|    kafka    |kafka|
+| hadoop101 | hadoop102 | hadoop103 |
+|-----------|-----------|-----------|
+| zk        | zk        | zk        |
+| kafka     | kafka     | kafka     |
 
 ## 集群部署
+
 下载地址: http://kafka.apache.org/downloads.html
 
 ### 前置准备
@@ -15,6 +16,7 @@
 Zookeeper集群安装部署
 
 ### 解压
+
 ```shell
 tar -zxvf kafka_2.12-3.3.1.tgz -C /opt/module/
 
@@ -22,6 +24,7 @@ mv /opt/module/kafka_2.12-3.3.1 /opt/module/kafka
 ```
 
 ### 修改配置文件
+
 ```shell
 vim /opt/module/kafka/config/server.properties
 ```
@@ -29,7 +32,6 @@ vim /opt/module/kafka/config/server.properties
 ```properties
 #broker的全局唯一编号，不能重复，只能是数字。（每个节点单独配置）
 broker.id=1
-
 #broker对外暴露的IP和端口 （每个节点单独配置）
 advertised.listeners=PLAINTEXT://hadoop101:9092
 #处理网络请求的线程数量
@@ -68,6 +70,7 @@ scp -r /opt/module/kafka hadoop@hadoop103:/opt/module/kafka
 ```
 
 修改配置项
+
 ```properties
 # hadoop102
 broker.id=2
