@@ -47,3 +47,26 @@ NameNode会通过异步的方式将block复制到其他节点，使数据副本�
 4. 客户端以packet为单位接受，先在本地进行缓存，然后写入目标文件中，进行合并
 
 ![HDFS读流程](imgs/HDFS读流程.png)
+
+## MapReduce
+Hadoop MapReduce 是一个分布式计算框架，用于编写处理海量数据的作业。
+
+MapReduce 作业通过将输入的数据集拆分为独立的块，这些块由 `map` 以并行方式处理，框架对 `map` 的输出进行排序，然后输入到 `reduce` 中。
+
+1. MapReduce编程模型只能包含一个Map阶段和一个Reduce阶段，如果用户的业务逻辑非常复杂，那就只能通过多个MapReduce程序以串行方式运行
+2. 每一个Map阶段和Reduce阶段都可以由多个Map Task和Reduce Task
+3. 实际应用中我们只需编写map()和reduce()两个函数，即可完成简单的分布式程序的设计
+
+```
+(input) <k1, v1> -> map -> <k2, v2> -> combine -> <k2, v2> -> reduce -> (output) <k3, v3> 
+```
+
+### Combiner
+`combiner` 是 `map` 运算后的可选操作，它实际上是一个本地化的 `reduce` 操作，它主要是在 `map` 计算出中间文件后做一个简单的合并重复 `key` 值的操作。
+
+但并非所有场景都适合使用 `combiner`，使用它的原则是 `combiner` 的输出不会影响到 `reduce` 计算的最终输入，
+例如：求总数，最大值，最小值时都可以使用 `combiner`，但是做平均值计算则不能使用 `combiner`。
+
+### Partitioner
+
+`partitioner` 可以理解成分类器，将 `map` 的输出按照 key 值的不同分别分给对应的 `reducer`，支持自定义实现。
