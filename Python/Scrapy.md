@@ -1,5 +1,7 @@
 ## Scrapy
 
+### 简介
+![scrapy架构图](./imgs/scrapy.png)
 
 ### 安装依赖
 
@@ -178,7 +180,6 @@ scrapy shell "https://quotes.toscrape.com"
 ```shell
 scrapy crawl quotes
 ```
-
 
 ### 选择器
 
