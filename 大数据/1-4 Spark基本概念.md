@@ -124,41 +124,100 @@ Transformation转换算子又可以分为Value和Key-Value两类。但是Key-Val
         }
     }
     ```
+#### Action行动算子
+转换算子都是懒加载，并不会立即执行，而真正触发整个作业的执行的则是行动算子
 
-#### WordCount
+主要包括: collect,count,first,take,countByValue,countByKey,saveAsTextFile,foreach,foreachPartition
 
 ```java
-public class WordCountApplication {
+public class RDDApplication {
     public static void main(String[] args) {
-        String inputPath = args[0];
         // 1.创建配置对象
         SparkConf conf = new SparkConf().setMaster("local[*]").setAppName("sparkCore");
 
         // 2. 创建sparkContext
         JavaSparkContext sc = new JavaSparkContext(conf);
 
-        // 3. 编写代码
-        // 读取数据
-        JavaRDD<String> javaRDD = sc.textFile(inputPath);
+        // 3. 基于集合创建RDD
+        JavaRDD<String> collectRDD = sc.parallelize(Arrays.asList("hadoop", "spark"));
+        // collect 以数组形式返回
+        List<String> collect = collectRDD.collect();
+        // count 返回RDD中元素个数
+        long count = collectRDD.count();
+        // first 返回RDD中第一个元素
+        String first = collectRDD.first();
+        // take 返回RDD中前N个元素组成的数组
+        List<String> take = collectRDD.take(2);
+        // countByValue 计数
+        Map<String, Long> stringLongMap = collectRDD.countByValue();
+        // save 保存为TXT文件
+        collectRDD.saveAsTextFile("output");
+        // foreach 遍历RDD中每个元素
+        collectRDD.foreach(System.out::println);
+        // foreachPartition 遍历RDD中每个分区
+        collectRDD.foreachPartition(new VoidFunction<Iterator<String>>() {
+            @Override
+            public void call(Iterator<String> integerIterator) throws Exception {
+                // 一次处理一个分区的数据
+                while (integerIterator.hasNext()) {
+                    String next = integerIterator.next();
+                    System.out.println(next);
+                }
+            }
+        });
 
-        // 长字符串切分为单个单词
-        JavaRDD<String> flatMapRDD = javaRDD.flatMap(
-                (FlatMapFunction<String, String>) s -> Arrays.stream(s.split(" ")).iterator()
-        );
-
-        // 转换格式为  (单词,1)
-        JavaPairRDD<String, Integer> pairRDD = flatMapRDD.mapToPair(
-                (PairFunction<String, String, Integer>) s -> new Tuple2<>(s, 1)
-        );
-
-        // 合并相同单词
-        JavaPairRDD<String, Integer> javaPairRDD = pairRDD.reduceByKey(
-                (Function2<Integer, Integer, Integer>) (v1, v2) -> v1 + v2
-        );
-
-        javaPairRDD. collect().forEach(System.out::println);
         // 4. 关闭sc
         sc.stop();
     }
 }
+```
+
+#### WordCount实例
+
+```java
+public class WordCountApplication {
+  public static void main(String[] args) {
+    String inputPath = args[0];
+    String outputPath = args[1];
+    // 1.创建配置对象
+    SparkConf conf = new SparkConf().setMaster("local").setAppName("sparkCore");
+
+    // 2. 创建sparkContext
+    JavaSparkContext sc = new JavaSparkContext(conf);
+
+    // 3. 编写代码
+    // 读取数据
+    JavaRDD<String> javaRDD = sc.textFile(inputPath);
+
+    // 长字符串切分为单个单词
+    JavaRDD<String> flatMapRDD = javaRDD.flatMap(
+            (FlatMapFunction<String, String>) s -> Arrays.stream(s.split(" ")).iterator()
+    );
+
+    // 转换格式为  (单词,1)
+    JavaPairRDD<String, Integer> pairRDD = flatMapRDD.mapToPair(
+            (PairFunction<String, String, Integer>) s -> new Tuple2<>(s, 1)
+    );
+
+    // 合并相同单词
+    JavaPairRDD<String, Integer> javaPairRDD = pairRDD.reduceByKey(
+            (Function2<Integer, Integer, Integer>) (v1, v2) -> v1 + v2
+    );
+
+    javaPairRDD.collect().forEach(System.out::println);
+    javaPairRDD.saveAsTextFile(outputPath);
+    // 4. 关闭sc
+    sc.stop();
+  }
+}
+```
+
+执行任务  
+```shell
+bin/spark-submit \
+--class com.example.sparkexamples.WordCountApplication \
+--master local \
+./spark-examples-0.0.1-SNAPSHOT.jar \
+./input.txt \
+./output
 ```
