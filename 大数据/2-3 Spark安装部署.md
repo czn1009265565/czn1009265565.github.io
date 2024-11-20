@@ -41,6 +41,11 @@ bin/spark-submit \
 - `spark-examples_2.12-3.3.1.jar`: 运行的程序
 - `10`: 要运行程序的输入参数
 
+Spark Yarn模式有`yarn-client`和`yarn-cluster`两种模式，主要区别在于: Driver程序的运行节点
+
+- `yarn-client`: Driver程序运行在客户端，适用于交互、调试，希望立即看到app的输出。
+- `yarn-cluster`: Driver程序运行在由ResourceManager启动的APPMaster，适用于生产环境。
+
 ## Standalone 模式
 
 ### 集群规划
@@ -57,15 +62,34 @@ bin/spark-submit \
 tar -zxvf spark-3.3.1-bin-hadoop3.tgz
 mv spark-3.3.1-bin-hadoop3 /opt/module/spark-standalone
 ```
-添加环境变量
+添加环境变量  
 ```shell
 # 添加环境变量
 sudo vim /etc/profile.d/spark_env.sh
 
 export SPARK_HOME=/opt/module/spark-standalone
 export PATH=$PATH:$SPARK_HOME/bin
-```
 
+source /etc/profile.d/spark_env.sh
+```
+配置Master
+```shell
+cp spark-env.sh.template spark-env.sh
+vim spark-env.sh
+
+SPARK_LOCAL_IP=192.168.1.101
+SPARK_MASTER_HOST=hadoop101
+SPARK_MASTER_PORT=7077
+```
+配置Worker
+```shell
+cp workers.template workers
+vim workers
+
+hadoop101
+hadoop102
+hadoop103
+```
 ## Yarn 模式
 
 ### 安装使用
@@ -73,4 +97,16 @@ export PATH=$PATH:$SPARK_HOME/bin
 ```shell
 tar -zxvf spark-3.3.1-bin-hadoop3.tgz
 mv spark-3.3.1-bin-hadoop3 /opt/module/spark-yarn
+```
+配置YARN信息
+```shell
+cp spark-env.sh.template spark-env.sh
+vim spark-env.sh
+
+YARN_CONF_DIR=/opt/module/hadoop/etc/hadoop
+```
+配置历史服务器  
+```shell
+cp spark-defaults.conf.template spark-defaults.conf
+vim spark-defaults.conf
 ```
