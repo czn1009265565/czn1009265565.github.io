@@ -62,22 +62,11 @@ Spark Yarn模式有`yarn-client`和`yarn-cluster`两种模式，主要区别在�
 tar -zxvf spark-3.3.1-bin-hadoop3.tgz
 mv spark-3.3.1-bin-hadoop3 /opt/module/spark-standalone
 ```
-添加环境变量  
-```shell
-# 添加环境变量
-sudo vim /etc/profile.d/spark_env.sh
-
-export SPARK_HOME=/opt/module/spark-standalone
-export PATH=$PATH:$SPARK_HOME/bin
-
-source /etc/profile.d/spark_env.sh
-```
 配置Master
 ```shell
 cp spark-env.sh.template spark-env.sh
 vim spark-env.sh
 
-SPARK_LOCAL_IP=192.168.1.101
 SPARK_MASTER_HOST=hadoop101
 SPARK_MASTER_PORT=7077
 ```
@@ -90,6 +79,11 @@ hadoop101
 hadoop102
 hadoop103
 ```
+启动集群
+```shell
+sbin/start-all.sh
+```
+
 ## Yarn 模式
 
 ### 安装使用

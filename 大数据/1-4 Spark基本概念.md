@@ -227,6 +227,11 @@ Spark SQL是用于结构化数据处理的Spark模块。与基本的Spark RDD AP
 在内部，Spark SQL使用这些额外的信息来执行额外的优化。与Spark SQL交互的方式有多种，包括SQL和Dataset API。
 计算结果时，使用相同的执行引擎，与您用于表达计算的API/语言无关。
 
+### RDD VS DataFrame VS DataSet
+RDD(Spark1.0)=》Dataframe(Spark1.3)=》Dataset(Spark1.6)
+
+ 
+
 ### 引入依赖
 
 ```shell
@@ -244,8 +249,6 @@ Spark SQL是用于结构化数据处理的Spark模块。与基本的Spark RDD AP
     </dependency>
 </dependencies>
 ```
-
-### RDD VS DataFrame VS DataSet
 
 
 ### MySQL读写实例
