@@ -6,12 +6,12 @@ Spark是一种基于内存的快速、通用、可扩展的大数据分析计算
 
 ![Spark内置模块](./imgs/Spark内置模块.png)
 
-- Spark Core：实现了Spark的基本功能，包含任务调度、内存管理、错误恢复、与存储系统交互等模块。Spark Core中还包含了对弹性分布式数据集(Resilient Distributed DataSet，简称RDD)的API定义。
-- Spark SQL：是Spark用来操作结构化数据的程序包。通过Spark SQL，我们可以使用 SQL或者Apache Hive版本的HQL来查询数据。Spark SQL支持多种数据源，比如Hive表、Parquet以及JSON等。
-- Spark Streaming：是Spark提供的对实时数据进行流式计算的组件。提供了用来操作数据流的API，并且与Spark Core中的 RDD API高度对应。
-- Spark MLlib：提供常见的机器学习功能的程序库。包括分类、回归、聚类、协同过滤等，还提供了模型评估、数据 导入等额外的支持功能。
-- Spark GraphX：主要用于图形并行计算和图挖掘系统的组件。
-- 集群管理器：Spark设计为可以高效地在一个计算节点到数千个计算节点之间伸缩计算。为了实现这样的要求，同时获得最大灵活性，Spark支持在各种集群管理器(Cluster Manager)上运行，包括Hadoop YARN、Apache Mesos，以及Spark自带的调度器Standalone。
+- Spark Core: 实现了Spark的基本功能，包含任务调度、内存管理、错误恢复、与存储系统交互等模块。Spark Core中还包含了对弹性分布式数据集(Resilient Distributed DataSet，简称RDD)的API定义。
+- Spark SQL: 是Spark用来操作结构化数据的程序包。通过Spark SQL，我们可以使用 SQL或者Apache Hive版本的HQL来查询数据。Spark SQL支持多种数据源，比如Hive表、Parquet以及JSON等。
+- Spark Streaming: 是Spark提供的对实时数据进行流式计算的组件。提供了用来操作数据流的API，并且与Spark Core中的 RDD API高度对应。
+- Spark MLlib: 提供常见的机器学习功能的程序库。包括分类、回归、聚类、协同过滤等，还提供了模型评估、数据 导入等额外的支持功能。
+- Spark GraphX: 主要用于图形并行计算和图挖掘系统的组件。
+- 集群管理器: Spark设计为可以高效地在一个计算节点到数千个计算节点之间伸缩计算。为了实现这样的要求，同时获得最大灵活性，Spark支持在各种集群管理器(Cluster Manager)上运行，包括Hadoop YARN、Apache Mesos，以及Spark自带的调度器Standalone。
 
 ## Spark Core
 
@@ -220,4 +220,69 @@ bin/spark-submit \
 ./spark-examples-0.0.1-SNAPSHOT.jar \
 ./input.txt \
 ./output
+```
+
+## Spark SQL
+Spark SQL是用于结构化数据处理的Spark模块。与基本的Spark RDD API不同，Spark SQL提供的接口为Spark提供了有关数据结构和正在执行的计算的更多信息。
+在内部，Spark SQL使用这些额外的信息来执行额外的优化。与Spark SQL交互的方式有多种，包括SQL和Dataset API。
+计算结果时，使用相同的执行引擎，与您用于表达计算的API/语言无关。
+
+### 引入依赖
+
+```shell
+<dependencies>
+    <dependency>
+        <groupId>org.apache.spark</groupId>
+        <artifactId>spark-core_2.12</artifactId>
+        <version>${spark.version}</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.apache.spark</groupId>
+        <artifactId>spark-sql_2.12</artifactId>
+        <version>${spark.version}</version>
+    </dependency>
+</dependencies>
+```
+
+### RDD VS DataFrame VS DataSet
+
+
+### MySQL读写实例
+
+```java
+public class MySQLApplication {
+    public static void main(String[] args) {
+        //1. 创建配置对象
+        SparkConf conf = new SparkConf().setAppName("sparksql").setMaster("local[*]");
+
+        //2. 获取sparkSession
+        SparkSession spark = SparkSession.builder().config(conf).getOrCreate();
+
+        //3. 编写代码
+
+        // 3.1 配置连接参数
+        Properties properties = new Properties();
+        properties.setProperty("user", "root");
+        properties.setProperty("password", "root");
+
+        // 3.2 读取表数据
+        Dataset<Row> lineDS = spark.read()
+                .jdbc("jdbc:mysql://127.0.0.1:3306/dbname", "t1", properties);
+        // 3.3 创建临时视图
+        lineDS.createOrReplaceTempView("node_1");
+        lineDS = spark.sql("select * from node_1 limit 100");
+        lineDS.createOrReplaceTempView("node_2");
+        lineDS = spark.sql("select * from node_2 order by id");
+        lineDS.show();
+
+        // 写入
+        lineDS.write()
+                .mode(SaveMode.Append)
+                .jdbc("jdbc:mysql://127.0.0.1:3306/dbname", "t2", properties);
+
+        //4. 关闭sparkSession
+        spark.close();
+    }
+}
 ```
