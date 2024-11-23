@@ -252,8 +252,72 @@ RDD(Spark1.0)=》Dataframe(Spark1.3)=》Dataset(Spark1.6)
 </dependencies>
 ```
 
+### 读写CSV
 
-### MySQL读写实例
+```java
+public class SparkSQLApplication {
+    public static void main(String[] args) {
+        //1. 创建配置对象
+        SparkConf conf = new SparkConf().setAppName("sparksql").setMaster("local[*]");
+
+        //2. 获取sparkSession
+        SparkSession spark = SparkSession.builder().config(conf).getOrCreate();
+
+        //3. 编写代码
+        DataFrameReader reader = spark.read();
+
+        // 添加参数读取CSV,CSV读取的字段默认都是String类型
+        Dataset<Row> userDS = reader
+                .option("header", "true")//默认为false 不读取列名
+                .option("sep",",") // 默认为, 列的分割
+                // 不需要写压缩格式  自适应
+                .csv("input/user.csv");
+        userDS.show();
+
+        DataFrameWriter<Row> writer = userDS.write();
+        writer.option("seq",";")
+                .option("header","true")
+                // 压缩格式
+                // .option("compression","gzip")
+                // 写出模式 append-追加,Ignore-忽略本次写出,Overwrite-覆盖写,ErrorIfExists-如果存在报错
+                .mode(SaveMode.Append)
+                .csv("output");
+
+        //4. 关闭sparkSession
+        spark.close();
+
+    }
+}      
+```
+### 读写JSON
+
+```java
+public class SparkSQLApplication {
+    public static void main(String[] args) {
+        //1. 创建配置对象
+        SparkConf conf = new SparkConf().setAppName("sparksql").setMaster("local[*]");
+
+        //2. 获取sparkSession
+        SparkSession spark = SparkSession.builder().config(conf).getOrCreate();
+
+        //3. 编写代码 
+        // 1. 完整的 json 需要以紧凑的形式保存在一行中
+        // 2. json数据可以读取数据的数据类型
+        Dataset<Row> json = spark.read().json("input/user.json");
+        json.show();
+
+        // 读取别的类型的数据也能写出为json
+        DataFrameWriter<Row> writer = json.write();
+
+        writer.json("output");
+
+        //4. 关闭sparkSession
+        spark.close();
+    }
+}
+```
+
+### 读写MySQL
 
 ```java
 public class MySQLApplication {
@@ -276,7 +340,7 @@ public class MySQLApplication {
                 .jdbc("jdbc:mysql://127.0.0.1:3306/dbname", "t1", properties);
         // 3.3 创建临时视图
         lineDS.createOrReplaceTempView("node_1");
-        lineDS = spark.sql("select * from node_1 limit 100");
+        spark.sql("select * from node_1 limit 100");
         lineDS.createOrReplaceTempView("node_2");
         lineDS = spark.sql("select * from node_2 order by id");
         lineDS.show();
@@ -291,3 +355,38 @@ public class MySQLApplication {
     }
 }
 ```
+
+### 用户自定义函数
+
+#### UDF
+输入一行返回一行
+
+```java
+public class SparkSQLApplication {
+    public static void main(String[] args) {
+        //1. 创建配置对象
+        SparkConf conf = new SparkConf().setAppName("sparksql").setMaster("local[*]");
+
+        //2. 获取sparkSession
+        SparkSession spark = SparkSession.builder().config(conf).getOrCreate();
+
+        //3. 编写代码
+        Dataset<Row> lineRDD = spark.read().json("input/user.json");
+        lineRDD.createOrReplaceTempView("user");
+
+        // 定义一个函数
+        // 需要首先导入依赖 import static org.apache.spark.sql.functions.udf;
+        UserDefinedFunction addName = udf((UDF1<String, String>) s -> s + " Name", DataTypes.StringType);
+        // 注册UDF
+        spark.udf().register("addName",addName);
+
+        spark.sql("select addName(name) newName from user").show();
+
+        //4. 关闭sparkSession
+        spark.close();
+    }
+}
+```
+
+#### UDAF
+输入多行，返回一行。通常和groupBy一起使用，如果直接使用UDAF函数，默认将所有的数据合并在一起。
