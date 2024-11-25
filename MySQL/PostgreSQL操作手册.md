@@ -1,6 +1,6 @@
 # PostgreSQL操作手册
 
-## 登录
+## 连接数据库
 
 运行PostgreSQL的交互式终端程序，它被称为psql， 它允许你交互地输入、编辑和执行SQL命令。
 
@@ -21,6 +21,30 @@ psql -U postgre -d postgres
 - -W, --password
 - -d, --dbname=DBNAME
 - -c, --command=COMMAND
+
+## 数据迁移
+```shell
+# 备份数据库
+pg_dump -U username -h localhost -p 5432 -d dbname -f dbname.bak
+
+# 恢复数据库
+psql -U username -h localhost -p 5432 -d dbname -f dbname.bak
+
+# 备份表数据
+pg_dump -U username -h localhost  -p 5432 -d dbname -t table_name -a -f table_name.sql
+# 恢复表数据
+psql -U username -h localhost -p 5432 -d dbname -f table_name.sql
+```
+
+参数说明:
+
+1. -t 参数指定要导出的表名
+2. -d 参数指定要导出的数据库名
+3. -a 参数指定只导出数据而不导出表结构
+4. -f 参数指定导出数据的文件名
+
+注意点：在还原中往往会遇到异常，例如缺少postgis插件，缺少函数方法等，根据报错日志配置环境即可。
+
 
 ## 基本数据类型
 
@@ -157,15 +181,12 @@ create table composite_demo (
 insert into composite_demo (person_info) values (ROW('张三', 28, '北京'));
 ```
 
+## 数据库操作
 
-## DDL
-
-### 数据库
-
-#### schema
+### schema
 schema是数据库内部的一个"文件夹"或"命名空间"，用于逻辑上组织和隔离数据，以实现更好的数据管理和安全控制
 
-#### 查询数据库
+### 查询数据库
 ```
 -- 仅命令行客户端支持
 -- 查看所有数据库
@@ -185,13 +206,12 @@ from
 	pg_database
 order by
 	pg_database_size(pg_database.datname) desc;
-	
 
 -- 查询schema 
 SELECT schema_name FROM information_schema.schemata;
 ```
 
-#### 创建数据库
+### 创建数据库
 
 ```sql
 -- 创建数据库
@@ -205,22 +225,22 @@ CREATE DATABASE name [ [WITH] [OWNER [=] dbowner]
 CREATE SCHEMA schema_name;
 ```
 
-#### 切换数据库
+### 切换数据库
 
 ```
 -- 仅命令行客户端支持
 \c dbname
 ```
 
-#### 删除数据库
+### 删除数据库
 
 ```sql
 DROP DATABASE IF EXISTS dbname;
 ```
 
-### 表
+## 表操作
 
-#### 查询表
+### 查询表
 
 ```
 -- 仅命令行客户端支持
@@ -247,7 +267,7 @@ order by
 	pg_total_relation_size('"' || table_schema || '"."' || table_name || '"') desc
 ```
 
-#### 创建表
+### 创建表
 
 ```sql
 CREATE TABLE table_name(
@@ -258,7 +278,7 @@ CREATE TABLE table_name(
 );
 ```
 
-#### 修改表
+### 修改表
 
 ```sql
 -- 重命名表名
@@ -274,43 +294,17 @@ ALTER TABLE table_name RENAME column_name TO new_column_name;
 ALTER TABLE table_name ALTER COLUMN column_name TYPE column_type;
 ```
 
-#### 删除表
+### 删除表
 
 ```sql
 DROP TABLE table_name;
 ```
 
-#### 清除表
+### 清除表
 
 ```sql
 TRUNCATE TABLE table_name;
 ```
-
-## DML
-
-### 导入导出
-
-```shell
-# 备份数据库
-pg_dump -U username -h localhost -p 5432 -d dbname -f dbname.bak
-
-# 恢复数据库
-psql -U username -h localhost -p 5432 -d dbname -f dbname.bak
-
-# 备份表数据
-pg_dump -U username -h localhost  -p 5432 -d dbname -t table_name -a -f table_name.sql
-# 恢复表数据
-psql -U username -h localhost -p 5432 -d dbname -f table_name.sql
-```
-
-参数说明:
-
-1. -t 参数指定要导出的表名
-2. -d 参数指定要导出的数据库名
-3. -a 参数指定只导出数据而不导出表结构
-4. -f 参数指定导出数据的文件名
-
-注意点：在还原中往往会遇到异常，例如缺少postgis插件，缺少函数方法等，根据报错日志配置环境即可。
 
 ## 存储过程
 
