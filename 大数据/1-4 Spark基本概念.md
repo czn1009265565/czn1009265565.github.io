@@ -321,38 +321,43 @@ public class SparkSQLApplication {
 
 ```java
 public class MySQLApplication {
-    public static void main(String[] args) {
-        //1. 创建配置对象
-        SparkConf conf = new SparkConf().setAppName("sparksql").setMaster("local[*]");
+  public static void main(String[] args) {
+    //1. 创建配置对象
+    SparkConf conf = new SparkConf().setAppName("sparksql").setMaster("local[*]");
 
-        //2. 获取sparkSession
-        SparkSession spark = SparkSession.builder().config(conf).getOrCreate();
+    //2. 获取sparkSession
+    SparkSession spark = SparkSession.builder().config(conf).getOrCreate();
 
-        //3. 编写代码
+    //3. 编写代码
 
-        // 3.1 配置连接参数
-        Properties properties = new Properties();
-        properties.setProperty("user", "root");
-        properties.setProperty("password", "root");
+    // 3.1 配置连接参数
+    Properties properties = new Properties();
+    properties.setProperty("user", "root");
+    properties.setProperty("password", "root");
+    // 筛选条件
+    String[] predicates = {"id > 100"};
 
-        // 3.2 读取表数据
-        Dataset<Row> lineDS = spark.read()
-                .jdbc("jdbc:mysql://127.0.0.1:3306/dbname", "t1", properties);
-        // 3.3 创建临时视图
-        lineDS.createOrReplaceTempView("node_1");
-        spark.sql("select * from node_1 limit 100");
-        lineDS.createOrReplaceTempView("node_2");
-        lineDS = spark.sql("select * from node_2 order by id");
-        lineDS.show();
+    // 3.2 读取表数据
+    spark.read()
+            .jdbc("jdbc:mysql://127.0.0.1:3306/dbname",
+                    "t1",
+                    predicates,
+                    properties)
+            // 创建临时视图
+            .createOrReplaceTempView("node_1");
 
-        // 写入
-        lineDS.write()
-                .mode(SaveMode.Append)
-                .jdbc("jdbc:mysql://127.0.0.1:3306/dbname", "t2", properties);
+    spark.sql("select * from node_1 limit 10").createOrReplaceTempView("node_2");
+    Dataset<Row> dataset = spark.sql("select * from node_2 order by id");
+    dataset.show();
 
-        //4. 关闭sparkSession
-        spark.close();
-    }
+    // 写入
+    dataset.write()
+            .mode(SaveMode.Append)
+            .jdbc("jdbc:mysql://127.0.0.1:3306/dbname", "t2", properties);
+
+    //4. 关闭sparkSession
+    spark.close();
+  }
 }
 ```
 
@@ -362,8 +367,60 @@ public class MySQLApplication {
 输入一行返回一行
 
 ```java
-public class SparkSQLApplication {
+public class UDFApplication {
+  public static void main(String[] args) {
+    //1. 创建配置对象
+    SparkConf conf = new SparkConf().setAppName("sparksql").setMaster("local[*]");
+
+    //2. 获取sparkSession
+    SparkSession spark = SparkSession.builder().config(conf).getOrCreate();
+
+    //3. 编写代码
+    Dataset<Row> lineRDD = spark.read().json("user.json");
+    lineRDD.createOrReplaceTempView("user");
+
+    // 注册UDF
+    spark.udf().register("get_json_path", getJsonPath());
+    spark.udf().register("get_upper_case", getUpperCase());
+
+    spark.sql("select get_upper_case(name) as name,age from user").show();
+    spark.sql("select name,age,get_json_path(desc, '$.detail') as detail from user").show();
+
+    //4. 关闭sparkSession
+    spark.close();
+  }
+
+  /** 字符串转大写 */
+  public static UserDefinedFunction getUpperCase() {
+    //需要首先导入依赖 import static org.apache.spark.sql.functions.udf;
+    return udf(new UDF1<String, String>() {
+      @Override
+      public String call(String value) throws Exception {
+        return value.toUpperCase();
+      }
+    }, DataTypes.StringType);
+  }
+
+  /** JSON解析 */
+  public static UserDefinedFunction getJsonPath() {
+    // 需要首先导入依赖 import static org.apache.spark.sql.functions.udf;
+    return udf(new UDF2<String,String, String>() {
+      @Override
+      public String call(String jsonValue,String jsonPath) throws Exception {
+        return JsonPath.read(jsonValue, jsonPath).toString();
+      }
+    }, DataTypes.StringType);
+  }
+}
+```
+
+#### UDAF
+输入多行，返回一行。通常和groupBy一起使用，如果直接使用UDAF函数，默认将所有的数据合并在一起。
+
+```java
+public class UDAFApplication {
     public static void main(String[] args) {
+
         //1. 创建配置对象
         SparkConf conf = new SparkConf().setAppName("sparksql").setMaster("local[*]");
 
@@ -371,22 +428,165 @@ public class SparkSQLApplication {
         SparkSession spark = SparkSession.builder().config(conf).getOrCreate();
 
         //3. 编写代码
-        Dataset<Row> lineRDD = spark.read().json("input/user.json");
-        lineRDD.createOrReplaceTempView("user");
+        spark.read().json("user.json").createOrReplaceTempView("user");
 
-        // 定义一个函数
-        // 需要首先导入依赖 import static org.apache.spark.sql.functions.udf;
-        UserDefinedFunction addName = udf((UDF1<String, String>) s -> s + " Name", DataTypes.StringType);
-        // 注册UDF
-        spark.udf().register("addName",addName);
+        // 注册需要导入依赖 import static org.apache.spark.sql.functions.udaf;
+        spark.udf().register("avgAge",udaf(new MyAvg(), Encoders.LONG()));
 
-        spark.sql("select addName(name) newName from user").show();
+        spark.sql("select avgAge(age) newAge from user").show();
 
         //4. 关闭sparkSession
         spark.close();
     }
+
+    public static class Buffer implements Serializable {
+        private Long sum;
+        private Long count;
+
+        public Buffer() {
+        }
+
+        public Buffer(Long sum, Long count) {
+            this.sum = sum;
+            this.count = count;
+        }
+
+        public Long getSum() {
+            return sum;
+        }
+
+        public void setSum(Long sum) {
+            this.sum = sum;
+        }
+
+        public Long getCount() {
+            return count;
+        }
+
+        public void setCount(Long count) {
+            this.count = count;
+        }
+    }
+
+    public static class MyAvg extends Aggregator<Long,Buffer,Double> {
+
+        @Override
+        public Buffer zero() {
+            return new Buffer(0L,0L);
+        }
+
+        @Override
+        public Buffer reduce(Buffer b, Long a) {
+            b.setSum(b.getSum() + a);
+            b.setCount(b.getCount() + 1);
+            return b;
+        }
+
+        @Override
+        public Buffer merge(Buffer b1, Buffer b2) {
+
+            b1.setSum(b1.getSum() + b2.getSum());
+            b1.setCount(b1.getCount() + b2.getCount());
+
+            return b1;
+        }
+
+        @Override
+        public Double finish(Buffer reduction) {
+            return reduction.getSum().doubleValue() / reduction.getCount();
+        }
+
+        @Override
+        public Encoder<Buffer> bufferEncoder() {
+            // 可以用kryo进行优化
+            return Encoders.kryo(Buffer.class);
+        }
+
+        @Override
+        public Encoder<Double> outputEncoder() {
+            return Encoders.DOUBLE();
+        }
+    }
 }
 ```
 
-#### UDAF
-输入多行，返回一行。通常和groupBy一起使用，如果直接使用UDAF函数，默认将所有的数据合并在一起。
+## Spark Streaming
+
+Spark Streaming 是 Apache Spark 的一个扩展模块，专门用于处理实时数据流。
+它通过将数据流切分为一系列小批次（微批次）进行处理，使得开发者能够使用与批处理相同的 API 来处理流数据。
+这种微批处理的架构允许 Spark Streaming 高效地处理实时数据，并且提供了高容错性和可扩展性。
+
+Spark Streaming 可以从各种数据源中接收实时数据，如 Apache Kafka、Flume、HDFS等，并且可以将处理结果存储到文件系统、数据库或实时仪表板中。
+
+### DStream特性
+在 Spark Streaming 中，DStream（离散化流）是数据流的基本抽象。
+
+- 时间间隔: DStream 会按设定的时间间隔生成一个新的 RDD，并将其作为批次处理的单位。该时间间隔可以由用户定义，通常该间隔时间需要大于计算时间，否则会造成任务叠加。
+- 容错机制: 通过将数据持久化到 HDFS 或启用 Checkpoint 机制，DStream 能够在系统故障或失败时恢复数据，并继续处理。
+- 转换操作: DStream 提供了一系列的转换操作，如 map、filter、reduceByKey 等，这些操作会作用于每个 RDD，并生成新的 DStream。
+
+### DStream编程
+
+#### 引入依赖
+
+```xml
+<dependencies>
+  <dependency>
+    <groupId>org.apache.spark</groupId>
+    <artifactId>spark-streaming_2.12</artifactId>
+    <version>${spark.version}</version>
+  </dependency>
+
+  <dependency>
+    <groupId>org.apache.spark</groupId>
+    <artifactId>spark-core_2.12</artifactId>
+    <version>${spark.version}</version>
+  </dependency>
+
+  <dependency>
+    <groupId>org.apache.spark</groupId>
+    <artifactId>spark-streaming-kafka-0-10_2.12</artifactId>
+    <version>${spark.version}</version>
+  </dependency>
+</dependencies>
+```
+
+#### Kafka实例
+
+```java
+public class KafkaApplication {
+  public static void main(String[] args) throws InterruptedException {
+    // 创建流环境
+    JavaStreamingContext javaStreamingContext = new JavaStreamingContext(
+            "local[*]", "KafkaApplication", Duration.apply(3000));
+
+    // 创建配置参数
+    HashMap<String, Object> map = new HashMap<>();
+    map.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,"hadoop101:9092,hadoop102:9092,hadoop103:9092");
+    map.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
+    map.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
+    map.put(ConsumerConfig.GROUP_ID_CONFIG,"spark_stream");
+    // 设置消费模式‌ earliest、‌latest
+    map.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG,"latest");
+
+    // 需要消费的主题
+    ArrayList<String> strings = new ArrayList<>();
+    strings.add("spark_stream_topic");
+
+    JavaInputDStream<ConsumerRecord<String, String>> directStream = KafkaUtils.createDirectStream(javaStreamingContext,
+            LocationStrategies.PreferBrokers(),
+            ConsumerStrategies.<String, String>Subscribe(strings,map));
+
+    directStream.map(new Function<ConsumerRecord<String, String>, String>() {
+      @Override
+      public String call(ConsumerRecord<String, String> v1) throws Exception {
+        return v1.value();
+      }
+    }).print(100);
+
+    // 执行流的任务
+    javaStreamingContext.start();
+    javaStreamingContext.awaitTermination();
+  }
+}
+```
