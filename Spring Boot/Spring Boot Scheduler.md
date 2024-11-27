@@ -1,4 +1,4 @@
-# Spring Task
+# Spring Boot Scheduler
 
 `@Scheduled`注解是Spring Boot提供的用于定时任务控制的注解，主要用于控制任务在某个指定时间执行，或者每隔一段时间执行。
 
