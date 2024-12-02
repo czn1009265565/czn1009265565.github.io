@@ -1,17 +1,20 @@
 # PyQt6
 
 ## 简介
-PySide / PyQt是C++的程序开发框架QT的Python实现，在介绍PyQt框架之前，先介绍下什么是QT、GUI?
+PySide / PyQt是C++的程序开发框架QT的Python实现，都用于在Python中构建GUI应用程序，主要区别在于它们的授权，
+PyQt商业使用可能需要购买许可
+在介绍PyQt框架之前，先介绍下什么是QT、GUI?
 
 - Qt 是跨平台C++图形用户界面应用程序开发框架。它既可以开发GUI程序，也可用于开发非GUI程序，比如控制台工具和服务器。Qt是面向对象的框架，使用特殊的代码生成扩展（称为元对象编译器(Meta Object Compiler, moc)）以及一些宏，Qt很容易扩展，并且允许真正的组件编程。
 
 - GUI 是图形用户界面（Graphical User Interface）的简称，是指采用图形方式显示的计算机操作用户界面。
 
+PyQt和PySide是两个Python绑定的Qt库，它们都用于在Python中构建GUI应用程序。主要区别在于它们的授权和维护者。PyQt由英国的Riverbank Computing开发，使用GPLv3和商业许可证，商业使用可能需要购买许可，而PySide起初由Nokia开发，现在由Qt公司和开源社区共同维护，遵循更为宽松的LGPL许可证，更适合商业项目。
 ## 环境搭建
 
 ### 安装依赖  
 ```shell
-pip install pyqt6 -i https://mirrors.aliyun.com/pypi/simple
+pip install pyqt6 pyside6 -i https://mirrors.aliyun.com/pypi/simple
 ```
 
 安装完成后，基于脚本测试是否安装成功  
@@ -29,10 +32,10 @@ if __name__ == "__main__":
 ```
 
 ### 配置 Qt Designer
-Qt Designer 是个强大、灵活的可视化GUI设计工具，使用简单，通过拖拽和单击就可以完成复杂的界面设计，并可随时预览效果图，生成的UI界面是个后缀为 `.ui` 的文件。
+Qt Designer 是个强大、灵活的可视化GUI设计工具，使用简单，通过拖拽和单击就可以完成复杂的界面设计，并可随时预览效果图，
+生成的UI界面是个后缀为 `.ui` 的文件。
 
-安装`pyqt6-tools` 工具包
-
+安装`pyqt6-tools` 工具包  
 ```shell
 pip install pyqt6-tools -i https://mirrors.aliyun.com/pypi/simple
 ```
@@ -44,31 +47,27 @@ Name: QT Designer
 Group: PyQt6
 Program: C:\Users\Administrator\AppData\Local\Programs\Python\Python310\Scripts\pyqt6-tools.exe
 Arguments: designer
-Working directory: $FileDir$ 
+Working directory: $FileDir$
 ```
-
 验证是否设置成功，`Tools => PyQt6 => QT Designer` 启动工具。
 
-
 ### 配置 PyUIC
-PyUIC 的作用是把上述 `.ui` 的文件转换成 `.py` 文件
-
+PyUIC 是一个命令行工具，它将`Qt Designer`中设计的`.ui`文件转换为对应的Python代码，从而提高开发速度。  
 ```
 Name: PyUIC
 Group: PyQt6
 Program: C:\Users\Administrator\AppData\Local\Programs\Python\Python310\Scripts\pyuic6.exe
 Arguments: $FileName$ -o $FileNameWithoutExtension$.py
-Working directory: $FileDir$ 
+Working directory: $FileDir$
 ```
 
-使用 `QT Designer`基于`Ctrl + S`保存窗体，自定义文件名例如 `windows.ui`，
+使用 `QT Designer`自定义窗体并保存，自定义文件名例如为`windows.ui`，
 右键点击`windows.ui => PyQt6 => PyUIC`生成对应的Python文件 `windows.py`，这里又叫做界面文件。
 
 - 界面文件: `.py` 文件是由 `.ui` 文件编译而来，所以当 `.ui` 文件发生变化时，对应的 `.py` 文件也会发生变化，将这种由 `.ui` 文件编译而来的 `.py` 文件称之为界面文件
 - 逻辑文件: 由于界面文件每次编译都会初始化，因此需要新建一个 `.py` 文件调用界面文件，这个新建的文件可以称之为逻辑文件
 
-创建逻辑文件
-
+创建逻辑文件  
 ```python
 import sys
 from PyQt6.QtWidgets import QApplication, QMainWindow
