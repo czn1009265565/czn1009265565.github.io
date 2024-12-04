@@ -64,8 +64,8 @@ public class SpringBootMybatisPlusApplication {
 ### 建表语句
 这里使用MySQL数据库
 
-```sql
-CREATE TABLE user (c
+```mysql
+CREATE TABLE user (
     id BIGINT(20) NOT NULL PRIMARY KEY COMMENT '用户Id',
     username VARCHAR(64) NOT NULL COMMENT '用户名',
     nickname VARCHAR(64) COMMENT '昵称',
