@@ -208,3 +208,45 @@ public class JDBCTest {
     }
 }
 ```
+
+### 连接池
+使用HikariCP创建数据库连接池
+```java
+public class JDBCTest {
+    public static void main(String[] args) throws SQLException {
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl("jdbc:postgresql://127.0.0.1:5432/postgres");
+        config.setUsername("postgres");
+        config.setPassword("postgres");
+        // 可以省略
+        // hikariDataSource.setDriverClassName("org.postgresql.Driver");
+        // 最小连接数
+        config.setMinimumIdle(5);
+        // 最大连接数
+        config.setMaximumPoolSize(10);
+        // 是否自动提交，默认为true
+        config.setAutoCommit(true);
+        // 连接测试语句，一般为 select 1
+        config.setConnectionTestQuery("select 1");
+        // 连接超时时长，单位毫秒
+        config.setConnectionTimeout(30000);
+        // 最大生命时长，单位毫秒
+        config.setMaxLifetime(1800000);
+        // 连接池名称
+        config.setPoolName("HikariCP");
+
+        // 配置连接池
+        HikariDataSource hikariDataSource = null;
+        try {
+            // 创建 Hikari 数据源
+            hikariDataSource = new HikariDataSource();
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            if (hikariDataSource != null) {
+                hikariDataSource.close();
+            }
+        }
+    }
+}
+```
