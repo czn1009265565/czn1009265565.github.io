@@ -1,108 +1,151 @@
 # Java Date
 
-### DateUtils
+## Date
+java.util 包提供了 Date 类来封装当前的日期和时间。
 
-```
-@Slf4j
-public class DateUtils {
-    /**
-     * 字符串转Date
-     * yyyy-MM-dd HH:mm:ss
-     */
-    public static Date string2Date(String dateString, String format) {
-        if (StringUtils.isEmpty(dateString)) {
-            return null;
-        }
-        DateFormat df = new SimpleDateFormat(format);
-        Date d = null;
-        try {
-            d = df.parse(dateString);
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error("日期转换错误[" + dateString + "][" + format + "]", e);
-        }
-        return d;
-    }
-
-    public static String date2String(Date date, String format) {
-        SimpleDateFormat sdf = new SimpleDateFormat(format);
-
-        return sdf.format(date);
-    }
-
-    public static Date timestamp2Date(long timestamp) {
-        return new Date(timestamp);
-    }
-
-    /**
-     * 毫秒数 13位长整型
-     * @param date
-     * @return
-     */
-    public static long date2Timestamp(Date date){
-        return date.getTime();
-    }
-
+基本API:  
+```java
+public class DateTest {
     public static void main(String[] args) {
-        System.out.println(string2Date("2020/03/25 10:10:10","yyyy/MM/dd HH:mm:ss"));
-        System.out.println(date2String(new Date(),"yyyy-MM-dd HH:mm:ss"));
-        System.out.println(timestamp2Date(System.currentTimeMillis()));
-        System.out.println(date2Timestamp(new Date()));
+        // 实例化对象
+        Date now = new Date();
+        Date date = new Date(System.currentTimeMillis());
+
+        // 获取时间戳
+        long timestamp = now.getTime();
+
+        // 日期比较
+        boolean before = date.before(now);
+        boolean after = date.after(now);
     }
 }
 ```
 
+## DateFormat
+java.text.DateFormat 是日期/时间格式化子类的抽象类，
+通过这个类可以完成日期和文本之间的转换，也就是可以在Date对象与String对象之间进行来回转换。
 
-### 时间线
-静态方法调用`Instant.now()`给出当前的时刻，可以使用`equals`或者`compareTo`方法来比较两个Instant对象，因此也可以用作时间戳。
-```
-Instant start = Instant.now();
-TimeUnit.SECONDS.sleep(1);
-Instant end = Instant.now();
-Duration duration = Duration.between(start,end);
-System.out.println(duration.toMillis()); // 时间间隔，toMillis毫秒,toNanos纳秒,toMinutes分钟...
-```
+字符串格式:  
+- y	年
+- M	月
+- d	日
+- H	时
+- m	分
+- s	秒
 
+```java
+public class DateFormatTest {
+    public static void main(String[] args) {
+        // 初始化格式
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        // 日期时间格式化字符串
+        Date now = new Date();
+        String dateValue = format.format(now);
 
-### 本地日期
-构建localDate对象，可以使用`new`或者`of`静态方法
-```
-LocalDate today = LocalDate.now();
-LocalDate future = LocalDate.of(2021,1,1);
-System.out.println(today);
-System.out.println(future);
-```
-
-日期计算,日期的加减，包括day,week,month,year
-```
-LocalDate today = LocalDate.now();
-LocalDate nextDay = today.plusDays(1); // 加一天
-LocalDate nextMonth = today.plusMonths(1); // 加一个月
-LocalDate preYear = today.minusYears(1); // 减一年
-System.out.println(today);
-System.out.println(today.until(nextMonth, ChronoUnit.DAYS)); // 到下个月所需要的天数
-```
-
-### 本地时间
-`LocalTime`用法与LocalDate类似。
-
-### 时区时间
-`ZonedDateTime`,具体时区id查看ZoneId源码
-```
-ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDate.now(), LocalTime.now(), ZoneId.of("Asia/Shanghai"));
-System.out.println(zonedDateTime);
+        // 字符串解析为Date对象
+        try {
+            Date date = format.parse("2024-01-01 00:00:00");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+}
 ```
 
-### 格式化和解析
-`DateTimeFormatter`为我们提供了预定义的格式器，以及自定义格式器
+## Calendar
+在Java中，Calendar是一个用于处理日期和时间的类。
+它提供了许多方法来获取和设置日期、时间以及执行日期和时间的计算操作。
+使用Calendar类，可以执行各种常见的日期和时间操作，如获取当前日期和时间、计算两个日期之间的差异、添加或减去指定数量的年、月、日、小时、分钟等等。
+
+```java
+public class CalendarTest {
+    public static void main(String[] args) {
+        // 初始化
+        Calendar calendar = Calendar.getInstance();
+        // Date转Calendar
+        Calendar instance = Calendar.getInstance();
+        instance.setTime(new Date());
+        // Calendar转Date
+        Date date = instance.getTime();
+
+        // 获取年月日
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        System.out.printf("%s年%s月%s日%n", year, month, day);
+
+        // 设置年月日
+        calendar.set(Calendar.YEAR, 2024);
+        calendar.set(Calendar.MONTH, 1);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        System.out.println(calendar);
+
+        // 时间计算
+        calendar.add(Calendar.YEAR, 1);
+        calendar.add(Calendar.YEAR, -1);
+    }
+}
+```
+
+## Java8日期类
+- LocalDate  日期/年月日
+- LocalTime  时间/时分秒
+- LocalDateTime  日期时间/年月日时分秒
+
+这里以LocalDate为例，LocalTime、LocalDateTime用法类似
 
 ```
-ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDate.now(), LocalTime.now(), ZoneId.of("Asia/Shanghai"));
-DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-String s = formatter.format(zonedDateTime);
-System.out.println(s);
-System.out.println(formatter.parse(s));
+public class LocalDateTest {
+    public static void main(String[] args) {
+        
+        // 初始化
+        LocalDate localDate = LocalDate.now();
+        LocalDate future = LocalDate.of(2024,1,1);
+
+        // 获取年月日
+        int year = localDate.getYear();
+        int month = localDate.getMonth().getValue();
+        int day = localDate.getDayOfMonth();
+        System.out.printf("%s年%s月%s日%n", year, month, day);
+
+        // 日期计算
+        LocalDate tomorrow = localDate.plus(1, ChronoUnit.DAYS);
+        LocalDate yesterday = localDate.plus(-1, ChronoUnit.DAYS);
+        // 日期比较
+        boolean equals = localDate.equals(future);
+        boolean before = localDate.isBefore(future);
+        boolean after = localDate.isAfter(future);
+
+        // 获取详情
+        // 获取所在月份的天数
+        int dayOfMonth = localDate.getDayOfMonth();
+        // 获取所在周的天数
+        int dayOfWeek = localDate.getDayOfWeek().getValue();
+        // 获取所在年的天数
+        int dayOfYear = localDate.getDayOfYear();
+        // 获取所在月份的第一天
+        LocalDate firstDayOfMonth = localDate.with(TemporalAdjusters.firstDayOfMonth());
+        // 获取所在月份下个月的第一天
+        LocalDate firstDayOfNextMonth = localDate.with(TemporalAdjusters.firstDayOfNextMonth());
+        // 获取所在月份的最后一天
+        LocalDate lastDayOfMonth = localDate.with(TemporalAdjusters.lastDayOfMonth());
+    }
+}
 ```
-**注意点 `yyyy-MM-dd HH:mm:ss`是24小时制时间，`yyyy-MM-dd hh:mm:ss`则是12小时制时间**
+
+日期时间格式化和解析，`DateTimeFormatter`为我们提供了预定义的格式器，以及自定义格式器
+
+```
+public class LocalDateTimeTest {
+    public static void main(String[] args) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        // 格式化字符串
+        String formattedDateTime = localDateTime.format(formatter);
+        LocalDateTime parsedDateTime = LocalDateTime.parse("2024-01-01 12:30:00", formatter);
+    }
+}
+```
 
 
