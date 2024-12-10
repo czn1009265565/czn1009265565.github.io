@@ -140,6 +140,8 @@ if __name__ == "__main__":
 在Python3.6中，可以发现最终结果并不等于2000000，并且每次执行的结果都不同。(Python3.10居然每次都是2000000)
 
 ### 互斥锁
+互斥锁是一种简单的加锁方法，用于控制对共享资源的访问。互斥锁只有两种状态:上锁和解锁。
+如果互斥量已经上锁，调用线程会阻塞，直到互斥量被解锁。互斥锁保证了一次只有一个线程可以访问共享资源。
 
 ```python
 import threading
@@ -169,12 +171,65 @@ if __name__ == "__main__":
     job2.join()
     print('num = {}'.format(num))
 ```
+到这里我们可以思考一个问题，假如上文add函数方法里面存在递归调用自身的情况，那么就会发生同一线程多次获取同一个锁的情况，也就造成了死锁，
+因此需要引入可重入锁的概念。
 
 ### 可重入锁
-RLock被称为重入锁，RLock锁是一个可以被同一个线程多次 acquire 的锁，但是最后必须由获取它的线程来释放它，
-不论同一个线程调用了多少次的acquire，最后它都必须调用相同次数的 release 才能完全释放锁，这个时候其他的线程才能获取这个锁。
+可重入锁，也称为递归锁，允许同一个线程在已经持有锁的情况下，可以再次获取该锁而不会造成死锁。
+其核心特性是锁能够支持同一线程的多次加锁。
+
+```python
+import threading
+
+num = 0
+# 声明互斥锁
+lock = threading.Lock()
+
+
+def add():
+    global num
+    for i in range(1000000):
+        # 加锁
+        lock.acquire()
+        num += 1
+        # 递归调用一次
+        if num == 1000000:
+            add()
+        # 释放锁
+        lock.release()
+
+
+if __name__ == "__main__":
+    job = threading.Thread(target=add, name='add1')
+    job.start()
+
+    job.join()
+    print('num = {}'.format(num))
+```
 
 ### 信号量
+互斥锁同时只允许一个线程修改数据，而Semaphore是同时允许一定数量的线程修改数据
+
+```python
+import time
+import threading
+
+semaphore = threading.BoundedSemaphore(3)
+
+
+def print_time(thread_name, delay) -> None:
+    semaphore.acquire()
+    print("%s: %s" % (thread_name, time.ctime(time.time())))
+    time.sleep(delay)
+    semaphore.release()
+
+
+if __name__ == "__main__":
+    for i in range(10):
+        job = threading.Thread(target=print_time, args=('Thread-%s'%i, 3))
+        job.start()
+    print("主线程结束")
+```
 
 
 ### 事件
@@ -189,5 +244,90 @@ Event 全局定义了一个内置标志Flag，当Flag未被设置时(False)，�
 - `clear()`   将Flag设置为False
 - `is_set()`  返回bool值，判断Flag是否为True
 
-## 线程池
+案例一: 裁判开枪，运动员们同时起跑  
+```python
+import threading
+import time
 
+# 创建Event实例
+et = threading.Event()
+
+
+def run():
+    print("%s waiting~" % threading.current_thread().name)
+    et.wait()
+    print("%s running~ time:%s" % (threading.current_thread().name, time.time()))
+
+
+if __name__ == "__main__":
+    for i in range(10):
+        thread = threading.Thread(target=run, name="athlete-%s" % i)
+        thread.start()
+
+    time.sleep(10)
+    et.set()
+```
+
+案例二: 线程的启动与关闭  
+```python
+import threading
+import time
+
+# 创建Event实例
+event = threading.Event()
+
+
+def start_up():
+    print("线程%s开启"%threading.current_thread().name)
+    event.clear()
+    while not event.is_set():
+        print("%s: %s" % (threading.current_thread().name, time.ctime(time.time())))
+        event.wait(3)
+    print("线程%s关闭" % threading.current_thread().name)
+
+
+def shutdown():
+    event.set()
+
+
+if __name__ == "__main__":
+    # 启动线程
+    job1 = threading.Thread(target=start_up, name="start_up")
+    job1.start()
+
+    time.sleep(10)
+    # 关闭线程
+    job2 = threading.Thread(target=shutdown, name="shutdown")
+    job2.start()
+```
+
+## 线程池
+线程是稀缺资源，如果无限制的创建与销毁，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配，调优和监控
+
+```python
+import time
+import random
+from concurrent.futures import ThreadPoolExecutor
+
+# 创建一个包含3个线程的线程池
+pool = ThreadPoolExecutor(3)
+
+
+# 定义一个函数，该函数将被线程池中的线程执行
+def task_function(x):
+    # 随机休息1~3秒
+    time.sleep(random.randint(1, 3))
+    return x * x
+
+
+if __name__ == "__main__":
+    # 使用线程池执行任务
+    results = [pool.submit(task_function, i) for i in range(10)]
+
+    # 获取所有任务的结果
+    for future in results:
+        print(future.result())
+```
+`result` 方法能够输出对应的线程运行后方法的返回结果，如果线程还在运行，那么其会一直阻塞在那里，直到该线程运行完。
+当然，也可以设置 `result(timeout)`，即如果调用还没完成那么这个方法将等待 `timeout` 秒。如果在 `timeout` 秒内没有执行完成，
+则会抛出 `concurrent.futures.TimeoutError` 异常。
