@@ -101,6 +101,7 @@ public class LocalDateTest {
         // 初始化
         LocalDate localDate = LocalDate.now();
         LocalDate future = LocalDate.of(2024,1,1);
+        future = future.withYear(2025).withMonth(1).withDayOfMonth(1);
 
         // 获取年月日
         int year = localDate.getYear();
