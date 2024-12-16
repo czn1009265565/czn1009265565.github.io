@@ -1,4 +1,4 @@
-# Java线程池
+# Java 线程池
 ## ThreadPoolExecutor
 - corePoolSize : 核心线程数线程数定义了最小可以同时运行的线程数量。
 - maximumPoolSize : 当队列中存放的任务达到队列容量的时候，当前可以同时运行的线程数量变为最大线程数。
