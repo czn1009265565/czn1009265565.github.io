@@ -1,16 +1,21 @@
 # Java 并发
 
-## 背景
-为什么需要多线程?
+## 为什么需要多线程
+- 提高运行效率:  
+  在单核处理器的环境下，多线程程序可以在一个线程等待时，如等待输入/输出操作时，自动切换到其他线程执行，这样就提高了CPU的利用率。
 
-1. 多线程使得程序可以同时处理多个任务或请求，当一个线程执行耗时操作（如网络请求、文件读写等）时，其他线程可以继续执行，从而避免程序因为等待而被阻塞
-2. 充分利用多核处理器，现代计算机通常拥有多个处理核心，多线程可以将任务分配给不同的核心并发执行，提高计算机系统的利用率和性能。
-3. 简化编程模型： 多线程可以将复杂的任务分解为多个子任务，并发执行，使得程序结构更加清晰简洁。例如，在图形界面应用程序中，可以使用多线程来处理用户界面的响应和后台任务的执行，提升用户体验。
-4. 资源共享和通信： 多线程可以共享同一进程的内存空间，使得线程之间可以方便地共享数据和通信。这样可以避免复制大量数据或使用复杂的进程间通信机制。
+- 提高资源利用率:  
+  在多核处理器的环境下，多线程程序可以同时在多个核上运行，每个线程运行在一个独立的核上，这样就可以同时利用多个处理器核心。
+
+- 改善程序的响应性:  
+  对于图形界面的应用程序，多线程可以使得在处理耗时的任务时，界面仍然保持响应用户的操作。
+
+- 提高程序的扩展性:  
+  多线程可以使得程序模块化，各个线程可以独立运行，相互之间影响较小，便于程序的扩展和维护。
 
 尽管多线程带来了很多好处，但也需要注意一些问题，例如线程安全性、死锁、上下文切换消耗等。
 
-### 线程安全
+## 线程安全
 
 ```java
 public class Bank implements Runnable{
@@ -44,7 +49,118 @@ public class Bank implements Runnable{
     }
 }
 ```
-上述代码正确输出结果应该为1000,但实际情况却不是这样，答案往往小于1000。真正的问题在于run方法的执行过程中可能会被中断。如果能够确保线程失去控制之前方法运行完成，则数据累加和永远不会讹误。
+上述代码正确输出结果应该为1000,但实际情况却不是这样，答案往往小于1000。
+真正的问题在于run方法的执行过程中可能会被中断。如果能够确保线程失去控制之前方法运行完成，则数据累加和永远不会讹误。
+
+## 线程使用
+有三种使用线程的方法:
+
+- 实现 Runnable 接口
+- 实现 Callable 接口
+- 继承 Thread 类
+
+相较而言更推荐实现接口的方式，因为 `Java` 不支持多重继承，因此继承了 `Thread` 类就无法继承其它类，但是可以实现多个接口。
+其次类可能只要求可执行，继承整个 `Thread` 类开销过大。
+
+### 实现Runnable接口
+需要实现 `run()` 方法
+
+```java
+public class MyRunnable implements Runnable{
+    @Override
+    public void run() {
+        // 具体实现
+        System.out.printf("ThreadName:%s", Thread.currentThread().getName());
+    }
+
+    public static void main(String[] args) {
+        MyRunnable myRunnable = new MyRunnable();
+        Thread thread = new Thread(myRunnable);
+        thread.start();
+    }
+}
+```
+
+### 实现Callable
+与 `Runnable` 相比，`Callable` 可以有返回值，返回值通过 `FutureTask` 进行封装。
+
+```java
+public class MyCallable implements Callable<Long> {
+    @Override
+    public Long call() throws Exception {
+        long num = 0;
+        for (int i = 1; i < 101; i++) {
+            num += i;
+        }
+        return num;
+    }
+
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        MyCallable mc = new MyCallable();
+        FutureTask<Long> ft = new FutureTask<>(mc);
+        Thread thread = new Thread(ft);
+        thread.start();
+        System.out.println(ft.get());
+    }
+}
+```
+
+### 继承Thread
+同样也是需要实现 `run()` 方法，因为 `Thread` 类也实现了 `Runnable` 接口。
+
+```java
+public class MyThread extends Thread{
+
+    public void run() {
+        System.out.printf("ThreadName:%s", Thread.currentThread().getName());
+    }
+
+    public static void main(String[] args) {
+        MyThread myThread = new MyThread();
+        myThread.start();
+    }
+}
+```
+
+## 线程中断
+在Java中，线程的中断并不是直接停止线程，而是给线程发送一个信号，告知线程应该中断当前的操作。
+线程可以在适当的时候检查这个信号并相应地中断自己的操作。
+
+线程中断的核心方法  
+- interrupt(): 用于中断目标线程，将目标线程的中断标志位置为true。`Thread.currentThread().interrupt()` 或 `myThread.interrupt()`
+- isInterrupted(): 返回调用线程的中断状态，不会清除中断标志。`Thread.currentThread().isInterrupted()` 或 `myThread.isInterrupted()`
+- interrupted(): 返回调用线程的中断状态，并清除中断标志（静态方法）。`Thread.interrupted()`
+
+### interrupt
+通过调用一个线程的 `interrupt()` 来中断该线程，如果该线程处于阻塞、限期等待或者无限期等待状态，
+那么就会抛出 `InterruptedException`，从而提前结束该线程。但是不能中断 `I/O` 阻塞和 `synchronized` 锁阻塞。
+
+```java
+public class ThreadInterrupted implements Runnable {
+
+    @Override
+    public void run() {
+        try {
+            while (true) {
+                Thread.sleep(2000);
+                System.out.printf("ThreadName:%s date:%s \n", Thread.currentThread().getName(), new Date());
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        Thread thread = new Thread(new ThreadInterrupted());
+        thread.start();
+
+        Thread.sleep(5000);
+        // 中断线程
+        thread.interrupt();
+        System.out.printf("ThreadName:%s ending! \n", Thread.currentThread().getName());
+    }
+}
+```
 
 ### 死锁
 线程1申请了A资源的同时去申请B资源
