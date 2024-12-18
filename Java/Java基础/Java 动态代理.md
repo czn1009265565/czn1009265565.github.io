@@ -1,169 +1,139 @@
 # Java 动态代理
 
-代理类在程序运行时创建的代理方式被成为动态代理。在静态代理中，代理类（RenterProxy）是自己已经定义好了的，在程序运行之前就已经编译完成。而动态代理是在运行时根据我们在Java代码中的“指示”动态生成的。动态代理相较于静态代理的优势在于可以很方便的对代理类的所有函数进行统一管理，如果我们想在每个代理方法前都加一个方法，如果代理方法很多，我们需要在每个代理方法都要写一遍，很麻烦。而动态代理则不需要。
+## 背景
+动态代理提供了一种灵活且非侵入式的方式，可以对对象的行为进行定制和扩展。它在代码重用、解耦和业务逻辑分离、性能优化以及系统架构中起到了重要的作用。
 
-- JDK动态代理: 利用反射原理,动态的生成代理类,将类的载入延迟到程序执行之中,解耦了代理类和被代理类的联系.主要要实现InvationHandler接口.
+- 增强对象的功能: 通过动态代理，可以在不修改原始对象的情况下，对其方法进行增强或添加额外的行为。
+  可以在方法执行前后进行一些操作，比如日志记录、性能监测、事务管理等。
+- 解耦和业务逻辑分离: 动态代理可以将对象的特定操作从业务逻辑中解耦，使得代码更加模块化和可维护。
+  代理对象可以负责处理一些通用的横切关注点，而业务对象可以专注于核心业务逻辑。
+- 实现懒加载: 通过动态代理，可以延迟加载对象，只有在真正需要使用对象时才会进行创建和初始化，从而提高性能和资源利用效率。
+- 实现远程方法调用: 动态代理可以用于实现远程方法调用(RPC)和分布式系统中的服务代理。客户端通过代理对象调用远程服务，并隐藏了底层网络通信的细节。
+- 实现AOP编程: 动态代理是实现面向切面编程(AOP)的基础。通过代理对象，可以将横切关注点（如日志、事务、安全性）与业务逻辑进行解耦，
+  提供更高层次的模块化和可重用性。
 
-- CGLIB动态代理:原理是继承,把被代理类作为父类,动态生成被代理类的子类,三个步骤,设置父类,设置回调函数,创建子类.实现MethodInterceptor 接口,拦截调用父类方法时,会处理回调方法,处理自己的增强方法.
 
-## 应用场景
+在Java中，实现动态代理主要有JDK动态代理与CGLIB动态代理，相较性能来说，JDK动态代理更优秀，随着 `JDK` 版本的升级，这个优势更加明显。
 
-1. 方法性能监测，看一个方法的调用执行时间
-2. 日志管理，记录一个方法的前后执行情况
-3. 缓存，在一个方法执行前读取缓存
+## JDK动态代理
+基于Java的反射机制实现。JDK动态代理要求目标对象必须实现一个或多个接口，
+因为代理类是通过继承java.lang.reflect.Proxy类并实现与目标对象相同的接口来创建的。
+因此，JDK动态代理主要用于对接口进行代理。
 
-## JDK动态代理实例
+这里以短信接口为例
 
-将车站的售票服务抽象出一个接口`TicketService`,包含问询，卖票，退票功能,
-车站类`Station`实现了`TicketService`接口，车票代售点`StationProxy`则实现了代理角色的功能。
-从静态代理与动态代理两种实现方式进行对比：
+定义短信接口
 
-TicketService
 ```java
-public interface TicketService {
-    //售票
-    void sellTicket();
-    //问询
-    void inquire();
-    //退票
-    void withdraw();
+public interface SmsService {
+    String send(String message);
+}
+```
+短信实现类
+
+```java
+public class SmsServiceImpl implements SmsService {
+    public String send(String message) {
+        System.out.println("send message:" + message);
+        return message;
+    }
 }
 ```
 
-Station
+代理类及使用
+
 ```java
-public class Station implements TicketService{
-        @Override
-        public void sellTicket() {
-            System.out.println("售票......");
-        }
-        @Override
-        public void inquire() {
-            System.out.println("问询......");
-        }
-        @Override
-        public void withdraw() {
-            System.out.println("退票......");
-        }
-}
+public class JDKInvocationHandler implements InvocationHandler {
+    /**
+     * 代理类中的真实对象
+     */
+    private final Object target;
 
-```
-
-### 静态代理
-```java
-public class StationStaticProxy implements TicketService {
-
-    private Station station;
-
-    public StationStaticProxy(Station station){
-        this.station = station;
+    public JDKInvocationHandler(Object target) {
+        this.target = target;
     }
 
     @Override
-    public void sellTicket() {
-        hi();
-        station.sellTicket();
-        bye();
-    }
-
-    @Override
-    public void inquire() {
-        hi();
-        station.inquire();
-        bye();
-    }
-
-    @Override
-    public void withdraw() {
-        hi();
-        station.withdraw();
-        bye();
-    }
-
-    private void hi() {
-        System.out.println("欢迎光临");
-    }
-
-    private void bye() {
-        System.out.println("bye~");
+    public Object invoke(Object proxy, Method method, Object[] args) throws InvocationTargetException, IllegalAccessException {
+        //调用方法之前，我们可以添加自己的操作
+        System.out.println("before method " + method.getName());
+        Object result = method.invoke(target, args);
+        //调用方法之后，我们同样可以添加自己的操作
+        System.out.println("after method " + method.getName());
+        return result;
     }
 
     public static void main(String[] args) {
-        StationStaticProxy stationStaticProxy = new StationStaticProxy(new Station());
-        stationStaticProxy.inquire();
-        stationStaticProxy.sellTicket();
-        stationStaticProxy.withdraw();
+        // 初始化被代理对象
+        SmsService smsService = new SmsServiceImpl();
+        // 创建代理对象对象
+        SmsService proxyInstance = (SmsService) Proxy.newProxyInstance(
+                smsService.getClass().getClassLoader(), // 目标类的类加载器
+                smsService.getClass().getInterfaces(),  // 代理需要实现的接口，可指定多个
+                new JDKInvocationHandler(smsService));
+        // 方法调用
+        proxyInstance.send("message");
     }
 }
 ```
 
-### 动态代理
+## CGLIB动态代理
+基于ASM（一个通用的Java字节码操作和分析框架）库实现对类的字节码操作。
+与JDK动态代理不同，CGLIB动态代理是通过继承目标类来创建代理类的，因此它主要用于对没有实现接口的类进行代理。
+由于CGLIB是通过继承目标类来创建代理的，因此不能代理final类（因为final类不能被继承），同时目标类中的final方法也会被忽略（因为final方法不能被重写）。
+
+引入依赖  
+```xml
+<dependency>
+    <groupId>cglib</groupId>
+    <artifactId>cglib</artifactId>
+    <version>3.3.0</version>
+</dependency>
+```
+
+定义短信发送类
 
 ```java
-public class StationDynamicProxy implements InvocationHandler {
-
-    private Object subject;
-
-    public StationDynamicProxy(Object subject) {
-        this.subject = subject;
+public class SmsSender {
+    public String send(String message) {
+        System.out.println("send message:" + message);
+        return message;
     }
+}
+```
 
+代理类及使用
+
+```java
+public class CglibInvocationHandler implements MethodInterceptor {
+    /**
+     * @param o           被代理的对象（需要增强的对象）
+     * @param method      被拦截的方法（需要增强的方法）
+     * @param args        方法入参
+     * @param methodProxy 用于调用原始方法
+     */
     @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        System.out.println("hi");
-        Object invoke = method.invoke(subject, args);
-        System.out.println("bye~");
-        return invoke;
+    public Object intercept(Object o, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
+        //调用方法之前，我们可以添加自己的操作
+        System.out.println("before method " + method.getName());
+        Object object = methodProxy.invokeSuper(o, args);
+        //调用方法之后，我们同样可以添加自己的操作
+        System.out.println("after method " + method.getName());
+        return object;
     }
 
     public static void main(String[] args) {
-        Station station = new Station();
-        TicketService stationProxy = (TicketService) Proxy.newProxyInstance(StationDynamicProxy.class.getClassLoader(), station.getClass().getInterfaces(), new StationDynamicProxy(station));
-        stationProxy.inquire();
-        stationProxy.sellTicket();
-        stationProxy.withdraw();
-    }
-}
-```
-
-### Spring Boot 集成
-
-统计方法执行时长
-```java
-@Slf4j
-@AllArgsConstructor
-public class TimeDynamicProxy implements InvocationHandler {
-
-    private Object subject;
-
-    @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        long start = System.currentTimeMillis();
-        Object invoke = method.invoke(subject, args);
-        long end = System.currentTimeMillis();
-        log.info(subject.getClass().getSimpleName() + "." + method.getName() + "耗时:{}", end-start);
-        return invoke;
-    }
-}
-
-```
-
-```java
-@RestController
-public class ProductController {
-
-    private ProductService productService;
-
-    @Autowired
-    public ProductController(ProductService productService) {
-        this.productService = (ProductService) Proxy.newProxyInstance(TimeDynamicProxy.class.getClassLoader(),
-                new Class[]{ProductService.class}, new TimeDynamicProxy(productService));
-    }
-
-    @GetMapping("add")
-    public String add() {
-        productService.add();
-        return "success";
+        // 创建动态代理增强类
+        Enhancer enhancer = new Enhancer();
+        // 设置类加载器
+        enhancer.setClassLoader(SmsSender.class.getClassLoader());
+        // 设置被代理类
+        enhancer.setSuperclass(SmsSender.class);
+        // 设置方法拦截器
+        enhancer.setCallback(new CglibInvocationHandler());
+        // 创建代理类
+        SmsSender smsSender = (SmsSender) enhancer.create();
+        smsSender.send("message");
     }
 }
 ```
