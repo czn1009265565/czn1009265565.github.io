@@ -1,100 +1,110 @@
 # Java IO
-数据的传输可以看做是一种数据的流动，按照流动的方向，以内存为基准，分为输入input 和输出output ，即流向内存是输入流，流出内存的输出流。
+`IO`全称`Input/Output`，即数据的传输
 
-## 抽象类
+- 根据数据的流向可以分为: 输入流和输出流
+- 根据数据格式可以分为: 字节流和字符流
 
-1. File
-2. FileInputStream、FileOutputStream 读写字节流
+## 字节流和字符流
+首先要了解下字节与字符的定义，
+字节是最基本的数据存储单位，所有的数据最终都需要转换为字节来进行存储和传输。
+字符则是在字节的基础上进行组合和编码（例如ASCII、UTF-8、UTF-16）得到的更高级别的文本表示。
+简而言之，字节是计算机语言，字符是人的语言。
+
+- 字节流: 以字节为单位，读写数据的流，常用于读写二进制文件
+- 字符流: 以字符为单位，读写数据的流，常用于读写文本文件
+
+## Java抽象类
+
+1. FileInputStream、FileOutputStream 读写字节流
+2. FileReader、FileWriter 读写字符流
 3. BufferedInputStream、BufferedOutputStream 字节缓冲流
-4. FileReader、FileWriter 读写字符流
-5. BufferedReader、BufferedWriter 字符缓冲流
-6. RandomAccessFile 随机访问流
-7. ZipOutputStream 压缩流
+4. BufferedReader、BufferedWriter 字符缓冲流
+5. RandomAccessFile 随机访问流
+6. ZipOutputStream 压缩流
 
-### File与FileInputStream区别
-
-- File类实现的方法:getName,getParent,exists,isDirectory,isFilede,list等，关注的是文件在磁盘上的存储，File 不属于文件流，只能代表文件名和目录路径名
-
-- FileInputStream实现的方法:read,close等，关注的是文件内容
-
-### FileInputStream与FileReader区别
-
-FileInputStream：以字节流方式读取
-
-FileReader：把文件转换为字符流读入
-
-### 缓冲流的作用
-
-IO 操作是很消耗性能的，缓冲流将数据加载至缓冲区，一次性读取/写入多个字节，从而避免频繁的 IO 操作，提高流的传输效率。
+## 字节流
+这里以文件拷贝为例
 
 ```java
-public class FileUtils {
-
-    public static void copy_pdf_to_another_pdf_stream() {
+public class FileCopyTest {
+    public static void streamCopy() {
         // 记录开始时间
         long start = System.currentTimeMillis();
-        try (FileInputStream fis = new FileInputStream("深入理解计算机操作系统.pdf");
-             FileOutputStream fos = new FileOutputStream("深入理解计算机操作系统-副本.pdf")) {
+        FileInputStream fis = null;
+        FileOutputStream fos = null;
+        try {
+            fis = new FileInputStream("movie.mp4");
+            fos = new FileOutputStream("movie2.mp4");
             int content;
             while ((content = fis.read()) != -1) {
                 fos.write(content);
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                // 流的关闭准则，先开后关，后开先关
+                if (fos != null) {
+                    fos.close();
+                }
+                if (fis != null) {
+                    fis.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         // 记录结束时间
         long end = System.currentTimeMillis();
-        System.out.println("使用普通流复制PDF文件总耗时:" + (end - start) + " 毫秒");
+        System.out.println("使用普通流复制文件总耗时:" + (end - start) + " 毫秒");
     }
 
-    public static void copy_pdf_to_another_pdf_buffer_stream() {
+    public static void main(String[] args) {
+        streamCopy();
+    }
+}
+```
+
+### 字节缓冲流
+缓冲流的基本原理，是在创建流对象时，会创建一个内置的默认大小的缓冲区数组，通过缓冲区读写，减少系统IO次数，从而提高读写的效率。
+
+```java
+public class FileCopyTest {
+    public static void bufferCopy() {
         // 记录开始时间
         long start = System.currentTimeMillis();
-        try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream("深入理解计算机操作系统.pdf"));
-             BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("深入理解计算机操作系统-副本.pdf"))) {
+        BufferedInputStream bis = null;
+        BufferedOutputStream bos = null;
+        try {
+            bis = new BufferedInputStream(new FileInputStream("movie.mp4"));
+            bos = new BufferedOutputStream(new FileOutputStream("movie2.mp4"));
             int content;
             while ((content = bis.read()) != -1) {
                 bos.write(content);
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                // 流的关闭准则，先开后关，后开先关
+                if (bos != null) {
+                    bos.close();
+                }
+                if (bis != null) {
+                    bis.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
         // 记录结束时间
         long end = System.currentTimeMillis();
-        System.out.println("使用缓冲流复制PDF文件总耗时:" + (end - start) + " 毫秒");
+        System.out.println("使用缓冲流复制文件总耗时:" + (end - start) + " 毫秒");
     }
-}
-```
 
-### RandomAccessFile
-
-这里要介绍的随机访问流指的是支持随意跳转到文件的任意位置进行读写的 RandomAccessFile。
-
-RandomAccessFile 的构造方法如下，我们可以指定 mode（读写模式）。
-
-
-RandomAccessFile 可以帮助我们合并文件分片，示例代码如下：
-
-```java
-public class FileUtils {
-    public boolean merge(String fileName) throws IOException {
-        byte[] buffer = new byte[1024 * 10];
-        int len = -1;
-        try (RandomAccessFile saveFile = new RandomAccessFile(fileName, "rw")) {
-            for (int i = 0; i < DOWNLOAD_BATCH_SIZE; i++) {
-                try (BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(fileName + FILE_TEMP_SUFFIX + i))) {
-                    // 读到文件末尾则返回-1
-                    while ((len = bufferedInputStream.read(buffer)) != -1) {
-                        // 追加
-                        saveFile.write(buffer, 0, len);
-                    }
-                }
-            }
-            log.info("文件合并完成 {}", fileName);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return true;
+    public static void main(String[] args) {
+        bufferCopy();
     }
 }
 ```
