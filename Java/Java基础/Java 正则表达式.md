@@ -49,4 +49,46 @@ x|y匹配x或y
 \W匹配一个非字母，即非大小写、数字
 ```
 
+## 最佳实践
+
+```java
+public class RegexTest {
+
+    public static void main(String[] args) {
+        // 格式校验
+        Pattern pattern = Pattern.compile("^1[3-9]\\d{9}$");
+        Matcher m1 = pattern.matcher("12345678910");
+        Matcher m2 = pattern.matcher("13456789101");
+        System.out.println(m1.matches());
+        System.out.println(m2.matches());
+
+        // 查找匹配字符串
+        pattern = Pattern.compile("Java\\d{1,2}");
+        Matcher matcher = pattern.matcher("Java8和Java11是长期支持版本");
+        while (matcher.find()) {
+            String content = matcher.group(0);
+            System.out.println(content);
+        }
+
+        // 替换
+        Pattern p = Pattern.compile("cat");
+        Matcher m = p.matcher("one cat two cats in the yard");
+
+        // 追加替换
+        StringBuilder sb = new StringBuilder();
+        while (m.find()) {
+            m.appendReplacement(sb, "dog");
+        }
+        m.appendTail(sb);
+        System.out.println("appendReplacement: " + sb.toString());
+
+        // 替换第一个
+        String replaceFirst = m.replaceFirst("dog");
+        System.out.println("replaceFirst: " + replaceFirst);
+        // 替换所有
+        String replaceAll = m.replaceAll("dog");
+        System.out.println("replaceAll: "+ replaceAll);
+    }
+}
+```
 
