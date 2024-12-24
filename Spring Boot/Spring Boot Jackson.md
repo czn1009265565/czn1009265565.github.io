@@ -1,6 +1,6 @@
 # Spring Boot Jackson
 
-Spring Boot羡慕默认引入Jackson依赖，非Spring Boot则手动引入最新版本即可，避免高危漏洞。
+Spring Boot默认引入Jackson依赖，非Spring Boot则手动引入最新版本即可，避免高危漏洞。
 
 ```xml
 <dependency>
