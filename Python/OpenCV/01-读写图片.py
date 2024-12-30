@@ -2,9 +2,10 @@ import cv2
 
 """
 读取、展示、保存图片
-- imread(filename, flags=None)        读取图片，返回一个BGR形式的图像对象，其类型为一个numpy数组。flags枚举见ImreadModes
-- imshow(winname, mat)                展示图片
-- imwrite(filename, img, params=None) 保存图片
+
+imread(filename, flags=None)        读取图片，返回一个BGR形式的图像对象，其类型为一个numpy数组。flags枚举见ImreadModes
+imshow(winname, mat)                展示图片
+imwrite(filename, img, params=None) 保存图片
 
 
 ImreadModes 图片读取模式分为以下三种

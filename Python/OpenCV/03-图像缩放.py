@@ -4,7 +4,7 @@ import numpy as np
 """
 图像缩放
 
-resize(src, dsize[, dst[, fx[, fy[, interpolation]]]])
+cv2.resize(src, dsize[, dst[, fx[, fy[, interpolation]]]])
 
 src: 输入图片源
 dsize: 目标大小 (w,h)

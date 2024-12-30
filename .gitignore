@@ -13,3 +13,4 @@
 /exclude/
 /document/
 /spring-boot-examples/
+/**/.idea/
