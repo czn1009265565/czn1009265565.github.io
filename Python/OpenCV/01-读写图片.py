@@ -16,12 +16,12 @@ ImreadModes 图片读取模式分为以下三种
 
 if __name__ == "__main__":
     # 读取图片
-    img_color = cv2.imread('Resources/p1.jpg', 1)
-    img_grayscale = cv2.imread('Resources/p1.jpg', 0)
-    img_alpha = cv2.imread('Resources/p1.jpg', -1)
+    img_color = cv2.imread('image.jpg', 1)
+    img_grayscale = cv2.imread('image.jpg', 0)
+    img_alpha = cv2.imread('image.jpg', -1)
 
     # 展示图片
-    cv2.imshow('graycsale image', img_grayscale)
+    cv2.imshow('grayscale image', img_grayscale)
 
     # 等待用户按键触发，waitKey(0)代表按任意键继续
     cv2.waitKey(0)
