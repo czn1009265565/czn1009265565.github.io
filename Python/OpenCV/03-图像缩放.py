@@ -17,31 +17,29 @@ interpolation: 图像缩放的方法
   - INTER_CUBIC‌：双三次插值，适用于高精度要求的情况
   - INTER_LANCZOS4‌：Lanczos插值，适用于放大图像时提供较高的图像质量
 """
+# 读取图片
+image = cv2.imread('image.jpg')
+cv2.imshow('Original Image', image)
+h, w, c = image.shape
+print("原始图片 宽:%s 高:%s" % (w, h))
 
-if __name__ == "__main__":
-    # 读取图片
-    image = cv2.imread('Resources/book.jpg')
-    cv2.imshow('Original Image', image)
-    h, w, c = image.shape
-    print("原始图片 宽:%s 高:%s" % (w, h))
+# 图片缩小
+down_width = 300
+down_height = 200
+down_points = (down_width, down_height)
+resized_down = cv2.resize(image, down_points, interpolation=cv2.INTER_LINEAR)
 
-    # 图片缩小
-    down_width = 300
-    down_height = 200
-    down_points = (down_width, down_height)
-    resized_down = cv2.resize(image, down_points, interpolation=cv2.INTER_LINEAR)
+# 图片放大
+up_width = 600
+up_height = 400
+up_points = (up_width, up_height)
+resized_up = cv2.resize(image, up_points, interpolation=cv2.INTER_LINEAR)
 
-    # 图片放大
-    up_width = 600
-    up_height = 400
-    up_points = (up_width, up_height)
-    resized_up = cv2.resize(image, up_points, interpolation=cv2.INTER_LINEAR)
+# Display images
+cv2.imshow('Resized Down by defining height and width', resized_down)
+cv2.waitKey()
+cv2.imshow('Resized Up image by defining height and width', resized_up)
+cv2.waitKey()
 
-    # Display images
-    cv2.imshow('Resized Down by defining height and width', resized_down)
-    cv2.waitKey()
-    cv2.imshow('Resized Up image by defining height and width', resized_up)
-    cv2.waitKey()
-
-    # press any key to close the windows
-    cv2.destroyAllWindows()
+# press any key to close the windows
+cv2.destroyAllWindows()
