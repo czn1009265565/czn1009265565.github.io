@@ -1,7 +1,7 @@
 ## Scrapy
 
 ### 简介
-![scrapy架构图](./imgs/scrapy.png)
+![scrapy架构图](../imgs/scrapy.png)
 
 ### 安装依赖
 
