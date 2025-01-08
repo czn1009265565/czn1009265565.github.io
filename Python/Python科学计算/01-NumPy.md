@@ -1,7 +1,10 @@
-# Numpy
+# NumPy
 
-### 数据类型
+## 背景
+NumPy是一个开源的Python库，主要用于科学计算和数值分析，提供了丰富的功能，
+包括多维数组处理、数学函数、线性代数、随机数生成等，且具备高性能的特点。
 
+## 数据类型
 - 布尔型（bool_）。用于表示逻辑值，可以是True或False
 - 整型。包括int8、int16、int32、int64等，表示有符号整数。这些类型分别代表不同大小的整数，例如，int8的值的范围是-128到127
 - 无符号整型。包括uint8、uint16、uint32、uint64等，用于表示无符号整数，例如，uint8的值的范围是0到255
@@ -11,86 +14,114 @@
 - 日期时间类型。datetime64，用于表示日期和时间
 - 时间间隔类型。timedelta64，表示两个时间点之间的间隔
 
-对于每种类型都有同名的转换函数可以将数据转为对应数据类型的数据。
+## 多维数组
+NumPy的核心是ndarray对象，它是一个多维数组。存储相同类型的元素，支持矢量化运算和广播功能。
 
-### ndarray
-一种多维数组对象。  
-一种通用的同构数据多维容器，所有的元素都必须是相同的类型，每个数组都有一个shape（维度）和dtype（类型）。  
+### 基础属性
+- `ndarray.ndim`: 数组的轴（维度）的个数。在Python世界中，维度的数量被称为rank。
+- `ndarray.shape`: 数组的维度。这是一个整数的元组，表示每个维度中数组的大小。对于有 *n* 行和 *m* 列的矩阵，``shape`` 将是 ``(n,m)``。因此，``shape`` 元组的长度就是rank或维度的个数 ``ndim``。
+- `ndarray.size`: 数组元素的总数。这等于 ``shape`` 的元素的乘积。
+- `ndarray.dtype`: 一个描述数组中元素类型的对象。可以使用标准的Python类型创建或指定dtype。另外NumPy提供它自己的类型。例如numpy.int32、numpy.int16和numpy.float64。
+- `ndarray.itemsize`: 数组中每个元素的字节大小。例如，元素为 ``float64`` 类型的数组的 ``itemsize`` 为8（=64/8），而 ``complex32`` 类型的数组的 ``itemsize`` 为4（=32/8）。它等于 ``ndarray.dtype.itemsize`` 。
+- `ndarray.data`: 该缓冲区包含数组的实际元素。通常，我们不需要使用此属性，因为我们将使用索引访问数组中的元素。
 
-**创建ndarray**  
+### 数组创建
+
 ```python
 import numpy as np
 
-# Python数组
-arr1 = np.array([1,2,3])
-arr2 = np.array([[1,2,3], [4,5,6]])
-# 函数
-arr_range = np.arange(10)
-arr_zeros1 = np.zeros(3)
-arr_zeros2 = np.zeros(3, 3)
-arr_ones1 = np.ones(3)
-arr_ones2 = np.ones(3, 3)
-```
+a = np.array([1, 2, 3])
+b = np.array([[1, 2], [3, 4]])
 
-**ndarray类型**  
-```python
-arr1 = np.array([1,2,3], dtype=np.int32)
-arr2 = np.zeros(3, dtype=np.int32)
-arr3 = np.ones(3, dtype=np.int32)
+# 显式指定数组类型
+c = np.array([[1, 2], [3, 4]], dtype=np.int32)
+c = c.astype(np.float32)
 
-# 类型转换
-arr1 = arr1.astype(np.float32)
+# 初始占位符
+d = np.zeros((3, 4))
+e = np.ones((3, 4))
+
+# 生成等间距序列
+# 指定步长 np.arange(start, stop, step)
+f = np.arange(0, 5, 0.5)
+# >>> [0. 0.5 1. 1.5 2. 2.5 3. 3.5 4. 4.5]
+
+# 指定数组个数 np.linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None, axis=0)
+g = np.linspace(0, 4.5, 10)
+# >>> [0. 0.5 1. 1.5 2. 2.5 3. 3.5 4. 4.5]
 ```
 
 ### 数组运算
 Numpy的矢量化运算是指对数组进行元素级别的操作，而无需使用循环。  
-数组与标量的算数运算会将标量值传播到各个元素。  
+数组与标量的算数运算会将标量值传播到各个元素。
+
 ```python
-# 算术运算
-arr1 = np.array([1,2,3])
-arr1 + 1
->>> array([2, 3, 4])
+import numpy as np
+
+A = np.array([[1, 1],[0, 1]])
+B = np.array([[2, 0],[3, 4]])
+
+A + 1
+# >>> array([[2,2],[1,2]])
+
+A * 2
+# >>> [[4,4],[2,4]]
+
+# 对应位置元素相乘
+A * B
+# >>> array([[2, 0],[0, 4]])
+
+# 矩阵点积
+E = A.dot(B)
+# >>> array([[2, 0],[0, 4]])
 
 # 布尔运算
-arr1 = np.array([1,2,3])
-arr1 > 1
->>> array([False,  True,  True])
-
-# 数组间运算
-arr1 = np.array([1,2,3])
-arr2 = np.array([4,5,6])
-arr1 * arr2
->>> array([ 4, 10, 18])
+A > 0
+# >>> array([[ True,  True],[False,  True]])
 ```
 
-### 切片索引
+### 索引、切片
 数组切片仅是原始数组的视图，对切片的修改会传递到原始数组
-```python
-arr1 = np.array([1,2,3])
-arr1[1:] = 4
-arr1
->>> array([1, 4, 4])
-```
 
-多维数组  
 ```python
+import numpy as np
+
 arr = np.arange(9)
-arr = arr.reshape((3,3))
-arr[:,1]
->>> array([1, 4, 7])
+arr[0]
+# >>> 0
+
+arr[:5]
+# >>> array([0, 1, 2, 3, 4])
+
+reshape = arr.reshape(3,3)
+# >>> array([[0, 1, 2],[3, 4, 5],[6, 7, 8]])
+
+reshape[:,:1]
+# >>> array([[0],[3],[6]])
+
+condition = arr > 5
+arr[condition]
+# >>> array([6, 7, 8])
 ```
 
-### 布尔索引
+### 数组拼接
 
 ```python
-arr = np.arange(9)
-arr[arr > 3]
->>> array([4, 5, 6, 7, 8])
-```
+import numpy as np
 
+a = np.array([[1, 2], [3, 4]])
+b = np.array([[5, 6], [7, 8]])
+# 垂直拼接
+np.vstack((a, b))
+# >>> array([[1, 2],[3, 4],[5, 6],[7, 8]])
+
+# 水平拼接
+np.hstack((a, b))
+# >>> array([[1, 2, 5, 6],[3, 4, 7, 8]])
+```
 
 ### 数学与统计函数
-**数学函数**  
+数学函数
 
 | 函数                               | 说明                          |
 |----------------------------------|-----------------------------|
@@ -106,7 +137,7 @@ arr[arr > 3]
 | np.cos/cosh/sin/sinh/tan/tanh    | 	计算数据各元素的普通型和双典型的三角函数       |
 | np.exp(a)	                       | 计算数组各元素的指数值                 |
 
-**统计函数**  
+统计函数 
 
 | 函数	                                | 说明                       |
 |------------------------------------|--------------------------|
@@ -121,7 +152,7 @@ arr[arr > 3]
 | ptp(a, axis=None)	                 | 计算数组a中元素最大值和最小值的差        |
 | median(a, axis=None)	              | 计算数组a中元素的中位数(中值)         |
 
-**随机数函数**  
+随机数函数  
 
 | 函数	                                               | 说明                                                |
 |---------------------------------------------------|---------------------------------------------------|
@@ -135,3 +166,4 @@ arr[arr > 3]
 | random.uniform(low=0.0, high=1.0, size=None)      | 产生均匀分布的数组,起始值为low,结束值为high,size为形状                |
 | random.normal(loc=0.0, scale=1.0, size=None)      | 产生正态分布的数组，loc为均值，scale为标准差，size为形状                |
 | random.poisson(lam=1.0, size=None)                | 产生泊松分布的数组，lam随机事件发生的概率，size为形状                    |
+
