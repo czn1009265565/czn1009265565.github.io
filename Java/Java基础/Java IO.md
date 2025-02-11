@@ -170,22 +170,28 @@ public class FileCopyTest {
         }
         // 记录结束时间
         long end = System.currentTimeMillis();
-        System.out.println("使用channel复制文件总耗时:" + (end - start) + " 毫秒");
+        System.out.println("使用zeroCopy文件总耗时:" + (end - start) + " 毫秒");
     }
 
     public static void filesCopy() {
+        long start = System.currentTimeMillis();
         Path sourcePath = Paths.get("movie.mp4");
-        Path destinationPath = Paths.get("backup.mp4");
+        Path destinationPath = Paths.get("backup2.mp4");
 
         try {
             Files.copy(sourcePath, destinationPath);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        // 记录结束时间
+        long end = System.currentTimeMillis();
+        System.out.println("使用Files.copy复制文件总耗时:" + (end - start) + " 毫秒");
     }
 
     public static void main(String[] args) {
-        streamCopy();
+//        streamCopy();
+        zeroCopy();
+        filesCopy();
     }
 }
 ```
