@@ -142,6 +142,48 @@ public class FileCopyTest {
         System.out.println("使用普通流复制文件总耗时:" + (end - start) + " 毫秒");
     }
 
+    public static void zeroCopy() {
+        long start = System.currentTimeMillis();
+        FileInputStream fis = null;
+        FileOutputStream fos = null;
+        try {
+            fis = new FileInputStream("movie.mp4");
+            fos = new FileOutputStream("backup.mp4");
+
+            FileChannel source = fis.getChannel();
+            FileChannel target = fos.getChannel();
+            //
+            target.transferFrom(source, 0, source.position());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fos != null) {
+                    fos.close();
+                }
+                if (fis != null) {
+                    fis.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        // 记录结束时间
+        long end = System.currentTimeMillis();
+        System.out.println("使用channel复制文件总耗时:" + (end - start) + " 毫秒");
+    }
+
+    public static void filesCopy() {
+        Path sourcePath = Paths.get("movie.mp4");
+        Path destinationPath = Paths.get("backup.mp4");
+
+        try {
+            Files.copy(sourcePath, destinationPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         streamCopy();
     }
