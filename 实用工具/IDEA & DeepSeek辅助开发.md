@@ -2,6 +2,8 @@
 
 ## 背景
 
+对于 Java 开发者而言，将 DeepSeek 集成到IDEA 中，就如同为自己的编程之路配备了一位智能助手，可以大幅提升开发效率。
+
 ## 前置环境
 
 1. IDEA 版本2023.3以上
@@ -18,9 +20,13 @@ File -> Settings -> Plugins -> MarketPlace
 
 ### 获取 API Key
 
-登陆注册后访问deepseek开放平台 `https://platform.deepseek.com/usage`
+公网账号: 登陆注册后访问deepseek开放平台 `https://platform.deepseek.com/usage`
+
+内网账号: 
 
 ### IDEA Settings配置
+
+File -> Settings -> Tools -> CodeGPT -> Providers -> Custom OpenAI
 
 1. 设置个人API Key 
 2. 修改Chat Completions
