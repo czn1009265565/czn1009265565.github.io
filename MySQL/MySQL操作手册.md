@@ -273,3 +273,69 @@ SELECT  *  FROM  (
 - ROW_NUMBER(): 返回结果集内的行号，每个分区从1开始计算，ORDER BY可确定在特定分区中为行分配唯一 ROW_NUMBER 的顺序
 - RANK(): 返回结果集的分区内每行的排序。行的排名是从1开始算。若2行具有相同的值，则该2行排名相同，但是下一个不同行的排名将跳过一个排名
 - DENSE_RANK(): 返回结果集的分区内每行的排序。行的排名是从1开始算。若2行具有相同的值，则该2行排名相同，但排名依旧连续
+
+### 递归查询
+递归查询是通过CTE来实现的。CTE至少包含两个查询部分:
+
+1. 非递归成员: 这是CTE的初始查询，它提供了递归的基础或起始点。
+2. 递归成员: 这个查询引用了CTE本身，用于生成递归结果。
+
+
+递归查询的执行过程如下:
+
+1. 执行非递归成员，返回初始结果集。
+2. 使用初始结果集作为输入，执行递归成员，生成新的结果。
+3. 将新的结果集与初始结果集合并。
+4. 重复步骤2和3，直到递归成员不再返回新的行
+
+样例数据
+```sql
+CREATE TABLE employees (
+   employee_id INT PRIMARY KEY,
+   employee_name VARCHAR(100),
+   manager_id INT
+);
+ 
+INSERT INTO employees (employee_id, employee_name, manager_id) VALUES
+(1, 'Alice', NULL),       -- Alice 是CEO，没有上级
+(2, 'Bob', 1),            -- Bob 是Alice的下属
+(3, 'Charlie', 1),        -- Charlie 是Alice的下属
+(4, 'David', 2),          -- David 是Bob的下属
+(5, 'Eve', 3);            -- Eve 是Charlie的下属
+```
+
+递归查询-父查子
+```sql
+WITH RECURSIVE employeecte AS (
+    -- 非递归成员
+    SELECT employee_id, manager_id, employee_name
+    FROM employees
+    WHERE manager_id IS NULL
+
+    UNION ALL
+
+    -- 递归成员
+    SELECT e.employee_id, e.manager_id, e.employee_name
+    FROM employees e
+             INNER JOIN employeecte ecte ON e.manager_id = ecte.employee_id
+)
+SELECT * FROM employeecte;
+```
+
+递归查询-子查父
+```sql
+WITH RECURSIVE employeecte AS (
+    -- 非递归成员
+    SELECT employee_id, manager_id, employee_name
+    FROM employees
+    WHERE employee_id = 5
+
+    UNION ALL
+
+    -- 递归成员
+    SELECT e.employee_id, e.manager_id, e.employee_name
+    FROM employees e
+             INNER JOIN employeecte ecte ON e.employee_id = ecte.manager_id
+)
+SELECT * FROM employeecte;
+```
