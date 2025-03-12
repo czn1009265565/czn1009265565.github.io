@@ -142,20 +142,16 @@ public class FileController {
         org.springframework.core.io.Resource resource = fileStorageService.loadFileAsResource(fileName);
 
         // Try to determine file's content type
-        String contentType = null;
+        String contentType;
         try {
             contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
         } catch (IOException ex) {
             log.info("Could not determine file type.");
-        }
-
-        // Fallback to the default content type if type could not be determined
-        if(contentType == null) {
             contentType = "application/octet-stream";
         }
 
-        // 解决中文变下划线问题
-        fileName = new String(resource.getFilename().getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
+        // 解决中文乱码问题
+        fileName = URLEncoder.encode(resource.getFilename(), "UTF-8");
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
