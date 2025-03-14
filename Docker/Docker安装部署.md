@@ -137,5 +137,6 @@ sudo systemctl restart docker
 2. 重启电脑
 3. 以管理员身份运行`wsl --set-default-version 2`，设置WSL默认版本
 4. 下载Docker Desktop for Windows
-5. 双击安装即可
-6. 验证 CMD执行 `docker -v`
+5. 双击安装即可，安装过程中可能需要等待WSL下载完成并开启
+6. Settings > General > 勾选 `Use WSL 2 based engine`
+7. 验证 CMD执行 `docker -v`
