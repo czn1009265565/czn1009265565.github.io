@@ -87,9 +87,7 @@ vim /etc/docker/daemon.json
 
 {
   "registry-mirrors": [
-    "https://hub-mirror.c.163.com",
-    "https://mirror.baidubce.com",
-    "https://4z8dhcx.mirror.aliyuncs.com"
+    "https://4z8dhcxb.mirror.aliyuncs.com"
   ]
 }
 ```
@@ -115,8 +113,8 @@ sudo mkdir -p /etc/systemd/system/docker.service.d
 
 ```shell
 [Service]
-Environment="HTTP_PROXY=http://proxy.example.com:8080/"
-Environment="HTTPS_PROXY=http://proxy.example.com:8080/"
+Environment="HTTP_PROXY=http://127.0.0.1:10809/"
+Environment="HTTPS_PROXY=http://127.0.0.1:10809/"
 Environment="NO_PROXY=localhost,127.0.0.1,.example.com"
 ```
 
