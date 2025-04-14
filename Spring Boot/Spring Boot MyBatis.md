@@ -125,7 +125,7 @@ public interface UserMapper {
 </mapper>
 ```
 
-更多的关于MyBatis动态SQL [查看文档](https://mybatis.org/mybatis-3/zh/dynamic-sql.html)
+更多的关于MyBatis动态SQL [查看文档](https://mybatis.org/mybatis-3/dynamic-sql.html)
 
 ### 转义符
 
