@@ -22,7 +22,7 @@ File -> Settings -> Plugins -> MarketPlace
 
 公网账号: 登陆注册后访问deepseek开放平台 `https://platform.deepseek.com/usage`
 
-内网账号: 
+本地模型: 
 
 ### IDEA Settings配置
 

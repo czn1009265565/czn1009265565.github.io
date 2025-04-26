@@ -107,7 +107,7 @@
 	* [Spark Java Word Count](大数据/Spark Java Word Count.md)
 	* [Spark SQL](大数据/Spark SQL.md)
 * [量化交易](量化交易/README.md)
-	* [数据篇](量化交易/数据篇.md)
+	* [数据篇](量化交易/2-5 数据获取)
 	* [交易指标](量化交易/交易指标.md)
 	* [择时策略](量化交易/2-3 择时策略.md)
 	* [选股策略](量化交易/2-2 选股策略.md)
