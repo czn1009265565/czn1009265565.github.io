@@ -13,7 +13,6 @@ Thymeleaf 是一个流行的Java模板引擎，提供了丰富的功能和简洁
 </dependency>
 ```
 
-
 ### application配置
 
 ```yaml
@@ -24,6 +23,9 @@ spring:
     encoding: UTF-8
     mode: HTML5
     cache: false
+  mvc:
+    # 静态文件路径配置
+    static-path-pattern: /static/**
 ```
 
 ### 创建模板文件
@@ -66,6 +68,19 @@ public class IndexController {
 ```
 
 ## Thymeleaf 标签
+
+### 静态文件引用
+
+```html
+<!-- 引用CSS -->
+<link rel="stylesheet" th:href="@{/static/css/style.css}" />
+ 
+<!-- 引用JavaScript -->
+<script th:src="@{/static/js/script.js}"></script>
+
+<!-- 引用图片 -->
+<img th:src="@{/static/images/logo.png}" alt="Logo" />
+```
 
 ### 变量表达式
 
