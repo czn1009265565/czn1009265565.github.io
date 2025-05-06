@@ -13,7 +13,7 @@ Java和Python是两种非常流行且广泛使用的编程语言，它们在不�
 
 1. 打开IntelliJ IDEA，点击顶部菜单栏的 File 选项，选择 Settings
 2. 在设置界面中，选择 Plugins，然后在右侧的搜索框中输入 Python
-3. 选择 Python Community Edition 插件，点击 Install 按钮进行安装
+3. 选择 Python 插件，点击 Install 按钮进行安装
 4. 安装完成后，重启IntelliJ IDEA，使插件生效
 
 ### 配置Python SDK
