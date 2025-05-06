@@ -9,7 +9,7 @@
 目的: 在IDEA中创建远程服务器连接
 ### 连接配置
 菜单路径: File => Settings => Tools => SSH Configurations  
-![SSH](imgs/SSH.png)  
+![SSH](../杂文/imgs/SSH.png)  
 填写对应远程服务器Host、Port、用户名、密码，连接测试成功后点击Apply保存连接信息。
 
 ### 远程终端
@@ -24,7 +24,7 @@ nohup java -jar ./target/spring-boot-examples-0.0.1-SNAPSHOT.jar &
 
 ### 连接配置
 菜单路径: File => Settings => Build, Execution, Deployment => Deployment  
-![SFTP](imgs/SFTP.png)  
+![SFTP](../杂文/imgs/SFTP.png)  
 
 #### Connection
 配置连接信息
@@ -60,7 +60,7 @@ nohup java -jar ./target/spring-boot-examples-0.0.1-SNAPSHOT.jar &
 1. IDEA 右上角编辑配置 `Edit Configurations`
 2. 新建远程 JVM Debug 配置 `Remote JVM Debug`
 3. 设置Host为远程Java服务器的IP地址或主机名、Port为占用的远程调试端口、选择对应的JDK 版本，IDEA 会自动生成一段远程调试参数
-   ![img.png](imgs/IDEA.png)
+   ![img.png](../杂文/imgs/IDEA.png)
 4. 在远程终端启动服务(注意点：调试参数需要放在`-jar`前面)  
    ```shell
    java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -jar ./target/spring-boot-examples-0.0.1-SNAPSHOT.jar
