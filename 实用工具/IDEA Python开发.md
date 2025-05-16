@@ -23,20 +23,13 @@ Java和Python是两种非常流行且广泛使用的编程语言，它们在不�
 3. 点击左上角的 + 按钮，选择 Python SDK
 4. 在弹出的窗口中，选择你已经安装的Python解释器的路径，点击 OK
 
-### 创建Python项目
-
-1. 在IntelliJ IDEA的欢迎界面中，点击 Create New Project
-2. 在新建项目的窗口中，选择 Python 作为项目类型
-3. 配置项目的基本信息，包括项目名称和存储路径
-4. 选择已经配置好的Python SDK，点击 Create 创建项目
-
 ### 配置虚拟环境
 
 1. 打开你已经创建的Python项目，点击顶部菜单栏的 File 选项，选择 Project Structure
 2. 在 Project Structure 窗口中，选择 Modules
-3. 选择你项目的模块，点击右侧的 Dependencies 选项卡
-4. 点击右上角的 + 按钮，选择 Add Python SDK
-5. 在弹出的窗口中，选择 New environment，然后选择 Virtualenv
+3. 选择你项目的模块
+4. 点击左上角的 + 按钮，选择 Add Python SDK
+5. 在弹出的窗口中，选择 New environment 或者 Existing environment，然后选择 Virtualenv
 6. 配置虚拟环境的基本信息，包括名称和存储路径，点击 OK
 
 ### 配置代码运行和调试
