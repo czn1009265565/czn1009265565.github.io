@@ -68,7 +68,14 @@ public class JacksonTypeHandler extends AbstractJsonTypeHandler<Object> {
 
     public static ObjectMapper getObjectMapper() {
         if (null == OBJECT_MAPPER) {
-            OBJECT_MAPPER = new ObjectMapper();
+            OBJECT_MAPPER = new ObjectMapper()
+                    // 支持Java8
+                    .registerModule(new JavaTimeModule())
+                    // 自定义日期时间序列化格式
+                    .setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"))
+                    // 遇到不在类定义中的属性，不抛出异常
+                    .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+
         }
 
         return OBJECT_MAPPER;
