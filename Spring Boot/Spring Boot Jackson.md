@@ -15,28 +15,28 @@ Spring Boot默认引入Jackson依赖，非Spring Boot则手动引入最新版本
 ```java
 @Configuration
 public class JacksonConfig {
-    @Bean
-    @Primary
-    @ConditionalOnMissingBean(ObjectMapper.class)
-    public ObjectMapper jacksonObjectMapper(Jackson2ObjectMapperBuilder builder) {
-        ObjectMapper objectMapper = builder.createXmlMapper(false).build();
+   @Bean
+   @Primary
+   @ConditionalOnMissingBean(ObjectMapper.class)
+   public ObjectMapper jacksonObjectMapper(Jackson2ObjectMapperBuilder builder) {
+      ObjectMapper objectMapper = builder.build();
 
-        // 通过该方法对mapper对象进行设置，所有序列化的对象都将按改规则进行系列化
-        // Include.Include.ALWAYS 默认
-        // Include.NON_DEFAULT 属性为默认值不序列化
-        // Include.NON_EMPTY 属性为 空（""） 或者为 NULL 都不序列化，则返回的json是没有这个字段的。这样对移动端会更省流量
-        // Include.NON_NULL 属性为NULL 不序列化,就是为null的字段不参加序列化
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        return objectMapper;
-    }
+      objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+      // 设置反序列化时忽略未知属性(否则存在未知属性时会抛出异常)
+      objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+      // 设置为null的字段不参加序列化
+      objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+      // 添加Java8时间模块支持
+      objectMapper.registerModule(new JavaTimeModule());
+
+      return objectMapper;
+   }
 }
 ```
 
 ### 序列化、反序列化
 ```
 ObjectMapper mapper = new ObjectMapper();
-// 反序列化时忽略不存在的JavaBean属性
-mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 Book book = new Book(1, "Java核心技术", "authorName", "123456", Arrays.asList("Java", "Network"));
 String json = mapper.writeValueAsString(book);
 System.out.println(json);
@@ -73,7 +73,7 @@ private LocalDateTime updateTime;
 ```
 
 LocalDateTimeSerializer
-```
+```java
 public class LocalDateTimeSerializer extends JsonSerializer<LocalDateTime> {
     
     @Override
@@ -85,7 +85,7 @@ public class LocalDateTimeSerializer extends JsonSerializer<LocalDateTime> {
 ```
 
 LocalDateTimeDeserializer
-```
+```java
 public class LocalDateTimeDeserializer extends JsonDeserializer<LocalDateTime> {
 
     @Override
