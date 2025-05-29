@@ -38,8 +38,7 @@ public abstract class AbstractJsonTypeHandler<T> extends BaseTypeHandler<T> {
 @Slf4j
 public class JacksonTypeHandler extends AbstractJsonTypeHandler<Object> {
     private static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
-    private static final DateTimeFormatter DATE_TIME_FORMATTER =
-            DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
 
     private static ObjectMapper OBJECT_MAPPER;
     private final Class<?> type;
@@ -72,7 +71,9 @@ public class JacksonTypeHandler extends AbstractJsonTypeHandler<Object> {
     public static ObjectMapper getObjectMapper() {
         if (null == OBJECT_MAPPER) {
             OBJECT_MAPPER = new ObjectMapper();
-            OBJECT_MAPPER.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+            // 设置Date类格式
+            OBJECT_MAPPER.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+            OBJECT_MAPPER.setDateFormat(new SimpleDateFormat(DATE_TIME_PATTERN));
             // 设置反序列化时忽略未知属性(否则存在未知属性时会抛出异常)
             OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             // 设置为null的字段不参加序列化

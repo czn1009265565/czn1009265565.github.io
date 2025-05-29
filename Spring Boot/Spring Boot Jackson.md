@@ -17,14 +17,15 @@ Spring Boot默认引入Jackson依赖，非Spring Boot则手动引入最新版本
 public class JacksonConfig {
    // 定义全局格式
    private static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
-   private static final DateTimeFormatter DATE_TIME_FORMATTER =
-           DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
+   private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
 
    @Bean
    public ObjectMapper objectMapper() {
       ObjectMapper objectMapper = new ObjectMapper();
 
-      objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+      // 设置Date类格式
+      objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+      objectMapper.setDateFormat(new SimpleDateFormat(DATE_TIME_PATTERN));
       // 设置反序列化时忽略未知属性(否则存在未知属性时会抛出异常)
       objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
       // 设置为null的字段不参加序列化
