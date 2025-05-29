@@ -15,20 +15,26 @@ Spring Boot默认引入Jackson依赖，非Spring Boot则手动引入最新版本
 ```java
 @Configuration
 public class JacksonConfig {
+   // 定义全局格式
+   private static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
+   private static final DateTimeFormatter DATE_TIME_FORMATTER =
+           DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
+
    @Bean
-   @Primary
-   @ConditionalOnMissingBean(ObjectMapper.class)
-   public ObjectMapper jacksonObjectMapper(Jackson2ObjectMapperBuilder builder) {
-      ObjectMapper objectMapper = builder.build();
+   public ObjectMapper objectMapper() {
+      ObjectMapper objectMapper = new ObjectMapper();
 
       objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
       // 设置反序列化时忽略未知属性(否则存在未知属性时会抛出异常)
       objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
       // 设置为null的字段不参加序列化
       objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-      // 添加Java8时间模块支持
-      objectMapper.registerModule(new JavaTimeModule());
 
+      // 添加Java8时间模块支持
+      JavaTimeModule javaTimeModule = new JavaTimeModule();
+      javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DATE_TIME_FORMATTER));
+      javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DATE_TIME_FORMATTER));
+      objectMapper.registerModule(javaTimeModule);
       return objectMapper;
    }
 }
