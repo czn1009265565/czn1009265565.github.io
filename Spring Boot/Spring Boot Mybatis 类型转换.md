@@ -37,6 +37,9 @@ public abstract class AbstractJsonTypeHandler<T> extends BaseTypeHandler<T> {
 ```java
 @Slf4j
 public class JacksonTypeHandler extends AbstractJsonTypeHandler<Object> {
+    private static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
+    private static final DateTimeFormatter DATE_TIME_FORMATTER =
+            DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
 
     private static ObjectMapper OBJECT_MAPPER;
     private final Class<?> type;
@@ -68,14 +71,17 @@ public class JacksonTypeHandler extends AbstractJsonTypeHandler<Object> {
 
     public static ObjectMapper getObjectMapper() {
         if (null == OBJECT_MAPPER) {
-            OBJECT_MAPPER = new ObjectMapper()
-                    // 支持Java8
-                    .registerModule(new JavaTimeModule())
-                    // 自定义日期时间序列化格式
-                    .setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"))
-                    // 遇到不在类定义中的属性，不抛出异常
-                    .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-
+            OBJECT_MAPPER = new ObjectMapper();
+            OBJECT_MAPPER.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+            // 设置反序列化时忽略未知属性(否则存在未知属性时会抛出异常)
+            OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            // 设置为null的字段不参加序列化
+            OBJECT_MAPPER.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+            // 添加Java8时间模块支持
+            JavaTimeModule javaTimeModule = new JavaTimeModule();
+            javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DATE_TIME_FORMATTER));
+            javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DATE_TIME_FORMATTER));
+            OBJECT_MAPPER.registerModule(javaTimeModule);
         }
 
         return OBJECT_MAPPER;
