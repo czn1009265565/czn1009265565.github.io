@@ -1,5 +1,7 @@
 # Java Calcite
-Apache Calcite 是一个动态的数据管理框架。提供了 SQL解析，SQL组装，SQL校验，SQL查询优化，以及数据库连接查询等典型数据库管理功能。
+Apache Calcite 是一个动态的数据管理框架。提供了 SQL解析，SQL组装，SQL校验，SQL查询优化，以及多数据源适配等典型数据库管理功能。
+
+核心组件包括: SQL Parser -> Validator -> Query Optimizer -> Query Execution
 
 ## SQL 解析
 Apache Calcite 提供了强大的 SQL 解析功能，可以将 SQL 字符串转换为抽象语法树 (AST)
@@ -25,7 +27,6 @@ public class SQLTest {
             System.out.println("Group by: " + select.getGroup());
             System.out.println("Order by: " + select.getOrderList());
         }
-
     }
 
     public static void main(String[] args) throws SqlParseException {
@@ -33,6 +34,15 @@ public class SQLTest {
     }
 }
 ```
+
+AST节点类型
+
+| 节点类型 | 对应类           | 描述                     |
+|------|---------------|------------------------|
+| 查询语句 | SqlSelect     | 包含SELECT/FROM/WHERE等子句 |
+| 表达式  | SqlCall       | 函数调用、运算符表达式            |
+| 标识符  | SqlIdentifier | 表名、列名等标识符              |
+| 字面量  | SqlLiteral    | 数值、字符串等常量              |
 
 ## SQL 组装
 
@@ -67,19 +77,8 @@ public class SQLTest {
                 groupByList.add(new SqlIdentifier(col.trim(), SqlParserPos.ZERO));
             }
         }
-        SqlSelect sqlSelect = new SqlSelect(SqlParserPos.ZERO,
-                null,
-                selectList,
-                from,
-                whereCondition,
-                groupByList,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null);
+        SqlSelect sqlSelect = new SqlSelect(SqlParserPos.ZERO, null, selectList, from, whereCondition, groupByList,
+                null, null, null, null, null, null, null);
         System.out.println(sqlSelect.toSqlString(CalciteSqlDialect.DEFAULT).getSql());
     }
     
@@ -91,6 +90,12 @@ public class SQLTest {
 
 ## SQL 查询优化
 Apache Calcite 提供了强大的 SQL 查询优化能力，可以将 SQL 查询转换为最优化的执行计划
+
+|规则类别|示例规则|优化效果|
+|谓词下推|FilterPushDown|减少数据传输量30-70%|
+|投影下推|ProjectPushDown|减少字段传输50-90%|
+|连接重排|JoinCommute|降低IO成本20-50%|
+|子查询解耦|SubQueryRemove|提升执行效率2-10倍|
 
 ```java
 public class SQLTest {
