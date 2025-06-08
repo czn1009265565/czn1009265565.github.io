@@ -76,8 +76,7 @@ conda env create -f environment.yml
 pip install --upgrade pip
 
 # 安装扩展包
-pip install jupyter -i https://mirrors.aliyun.com/pypi/simple
-pip install numpy pandas matplotlib
+pip install numpy pandas matplotlib jupyter -i https://mirrors.aliyun.com/pypi/simple
 pip install -r requirements.txt
 
 # 输出扩展包依赖
