@@ -77,8 +77,13 @@ public class SQLTest {
                 groupByList.add(new SqlIdentifier(col.trim(), SqlParserPos.ZERO));
             }
         }
+        // 分页设置
+        SqlNumericLiteral offset = SqlLiteral.createExactNumeric("0", SqlParserPos.ZERO);
+        SqlNumericLiteral limit = SqlLiteral.createExactNumeric("100", SqlParserPos.ZERO);
+        
         SqlSelect sqlSelect = new SqlSelect(SqlParserPos.ZERO, null, selectList, from, whereCondition, groupByList,
-                null, null, null, null, null, null, null);
+                null, null, null, null, offset, limit, null);
+        // 方言类型 MysqlSqlDialect.DEFAULT PostgresqlSqlDialect.DEFAULT等
         System.out.println(sqlSelect.toSqlString(CalciteSqlDialect.DEFAULT).getSql());
     }
     
