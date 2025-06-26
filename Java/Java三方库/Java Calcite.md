@@ -27,6 +27,11 @@ public class SQLTest {
             System.out.println("Group by: " + select.getGroup());
             System.out.println("Order by: " + select.getOrderList());
         }
+        
+        // 转换为对应PG语法
+        SqlDialect sqlDialect = PostgresqlSqlDialect.DEFAULT;
+        String translatedSQL = sqlNode.toSqlString(sqlDialect).getSql();
+        System.out.println("PG: " + translatedSQL);
     }
 
     public static void main(String[] args) throws SqlParseException {
