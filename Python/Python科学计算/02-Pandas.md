@@ -45,12 +45,16 @@ df = pd.DataFrame(data, columns=headers)
 ### 拼接
 
 ```python
+import pandas as pd
+
 columns = ["column1", "column2", "column3"]
 # 使用字典创建DataFrame
 df = pd.DataFrame(columns=columns)
 # 拼接新行
 series = pd.Series([1,2,3], index=columns)
 result = pd.concat([df, series.to_frame().T], ignore_index=True)
+# 垂直拼接
+df = pd.concat([df1, df2], ignore_index=True)
 ```
 
 #### Numpy数据创建
