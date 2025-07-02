@@ -89,7 +89,6 @@ spring:
       username: postgres
       password: postgres
 
-   # Quartz 的配置，对应 QuartzProperties 配置类
    quartz:
       # Scheduler 名字。默认为 schedulerName
       scheduler-name: clusteredScheduler
@@ -128,7 +127,9 @@ spring:
                   class: org.quartz.simpl.SimpleThreadPool
       # 使用 JDBC 的 JobStore 的时候，JDBC 的配置
       jdbc:
-         # 是否自动使用 SQL 初始化 Quartz 表结构。always,never
+         # 是否初始化 Quartz 表结构
+         # - always 服务重启删表重建
+         # - never 不做操作
          initialize-schema: always
 ```
 
@@ -139,25 +140,22 @@ spring:
 @Component
 public class MyJob extends QuartzJobBean {
 
-    @Override
-    protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
-        log.info("Job start!");
-    }
+   @Override
+   protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
+      JobDetail jobDetail = context.getJobDetail();
+      JobDataMap jobDataMap = jobDetail.getJobDataMap();
+      // 获取任务相关信息
+      Long jobId = jobDataMap.getLong(JobDataKeyEnum.JOB_ID.name());
+      String jobName = jobDataMap.getString(JobDataKeyEnum.JOB_HANDLER_NAME.name());
+      String jobParam = jobDataMap.getString(JobDataKeyEnum.JOB_HANDLER_PARAM.name());
+      log.info("Job start! jobName:{}", jobName);
+   }
 }
 ```
 
 ### 调度器
 
 ```java
-/**
- * {@link org.quartz.Scheduler} 的管理器，负责创建任务
- *
- * 考虑到实现的简洁性，我们使用 jobName 作为唯一标识，即：
- * 1. Job 的 {@link JobDetail#getKey()}
- * 2. Trigger 的 {@link Trigger#getKey()}
- *
- * 另外，jobName 对应到 Class.getSimpleName() 直接调用
- */
 @Service
 public class SchedulerManager {
 
@@ -173,14 +171,15 @@ public class SchedulerManager {
     * @param cronExpression CRON 表达式
     * @throws SchedulerException 添加异常
     */
-   public void addJob(Long jobId, Class<? extends Job> jobClass, String jobParam, String cronExpression)
+   public void addJob(Long jobId, String jobName, Class<? extends Job> jobClass, String jobParam, String cronExpression)
            throws SchedulerException {
-      String jobName = jobClass.getSimpleName();
       // 创建 JobDetail 对象
       JobDetail jobDetail = JobBuilder.newJob(jobClass)
               .usingJobData(JobDataKeyEnum.JOB_ID.name(), jobId)
-              .usingJobData(JobDataKeyEnum.JOB_HANDLER_NAME.name(), jobParam)
-              .withIdentity(jobName).build();
+              .usingJobData(JobDataKeyEnum.JOB_HANDLER_NAME.name(), jobName)
+              .usingJobData(JobDataKeyEnum.JOB_HANDLER_PARAM.name(), jobParam)
+              .withIdentity(jobName)
+              .build();
       // 创建 Trigger 对象
       Trigger trigger = this.buildTrigger(jobName, jobParam, cronExpression);
       // 新增调度
@@ -280,20 +279,27 @@ public enum JobDataKeyEnum {
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@TableName(value = "biz_job", autoResultMap = true)
 public class JobDO {
-    private Long id;
-    /** 任务名称 */
-    private String name;
-    /** 任务状态 0-初始化 1-开启 2-暂停 */
-    private Integer status;
-    /** 任务参数 */
-    private String jobParam;
-    /** CRON 表达式 */
-    private String cronExpression;
-    /** 最近一次任务开始时间 */
-    private LocalDateTime startTime;
-    /** 最近一次任务结束时间 */
-    private LocalDateTime endTime;
+   @TableId
+   private Long id;
+   /** 任务名称 */
+   private String name;
+   /** 任务状态 详情查看 0-准备中 1-执行中 2-成功 3-失败 4-手动停止 */
+   private Integer status;
+   /** 任务参数 */
+   private String jobParam;
+   /** CRON 表达式 */
+   private String cronExpression;
+   /** 任务类别 */
+   private Integer type;
+   /** 最近一次任务开始时间 */
+   private LocalDateTime startTime;
+   /** 最近一次任务结束时间 */
+   private LocalDateTime endTime;
+
+   private LocalDateTime createTime;
+   private LocalDateTime updateTime;
 }
 ```
 
@@ -311,7 +317,7 @@ public class ClusterJobInit implements ApplicationListener<ContextRefreshedEvent
       // 初始化调度任务
       try {
          long jobId = IdUtil.getSnowflakeNextId();
-         schedulerManager.addJob(jobId, MyJob.class, "", "*/5 * * * * ?");
+         schedulerManager.addJob(jobId, "myJob", MyJob.class, "", "*/5 * * * * ?");
       } catch (SchedulerException e) {
          throw new RuntimeException(e);
       }
