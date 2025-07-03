@@ -114,6 +114,21 @@ def index():
 | content_type    | 响应主体的媒体类型    |
 | content_length  | 响应主体的长度      |
 
+json对象
+
+```python
+from flask import jsonify
+
+@app.route('/api/data')
+def get_data():
+    data = {
+        'name': 'Alice',
+        'age': 25,
+        'is_active': True
+    }
+    return jsonify(data)
+```
+
 
 ### 模板
 #### 变量
@@ -582,11 +597,12 @@ ENTRYPOINT ["./boot.sh"]
 ```
 
 docker-compose.yml
+
 ```yml
 version: '3'
 services:
   flasky:
-    build: .
+    build: Python三方包
     ports:
       - "8000:5000"
     env_file: .env
