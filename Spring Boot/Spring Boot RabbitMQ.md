@@ -2,7 +2,7 @@
 
 
 ### 依赖配置
-```
+```xml
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-amqp</artifactId>
@@ -11,7 +11,7 @@
 
 ### application配置
 
-```
+```yml
 spring:
   rabbitmq:
     host: localhost # rabbitmq的连接地址
@@ -24,7 +24,7 @@ spring:
 
 ### 配置文件
 
-```
+```java
 @Configuration
 public class RabbitMqConfig {
 
@@ -54,7 +54,6 @@ public class RabbitMqConfig {
     public Queue queue() {
         return new Queue(DIRECT_QUEUE, true);
     }
-
 
     /**
      * Topic 模式
@@ -100,7 +99,7 @@ public class RabbitMqConfig {
 ### 生产者
 
 定义Message实体类
-```
+```java
 @Data
 public class Message {
     private Integer code;
@@ -117,7 +116,7 @@ public class Message {
 ```
 
 生产者示例
-```
+```java
 @Service
 public class MessageSender {
 
@@ -135,7 +134,7 @@ public class MessageSender {
 ```
 
 ### 消费者
-```
+```java
 @Slf4j
 @Component
 public class MessageListener {
