@@ -8,15 +8,20 @@ GitBook是一款基于Node.js的命令行工具，它为用户提供了一个利
 ## 安装部署
 
 ### 安装 Node
-
-[下载链接](https://nodejs.org/download/release/v10.23.0/node-v10.23.0-x64.msi)
-
 由于 `gitbook-cli` 已经停止维护了,因此我们需要下载停止维护前的Nodejs版本 `v10.23.0`
 
-安装完成后，命名查看版本信息 `node -v`，`npm -v`
+1. 下载Node.js<br>
+   ```https://nodejs.org/download/release/v10.23.0/node-v10.23.0-x64.msi```
+2. 安装执行
+3. 验证是否安装成功，查看对应版本信息<br>
+   ```shell
+   node -v
+   npm -v
+   ```
 
 ### 安装 gitbook-cli
-命令行安装
+
+命令行安装<br>
 ```shell
 npm install -g gitbook-cli
 ```
@@ -32,12 +37,14 @@ npm config delete proxy
 ## 创建电子书
 
 ### 初始化文件  
+执行初始化命令
 ```shell
 gitbook init
 ```
-`gitbook init` 执行成功会产生两个文件，目录：`SUMMARY.md`，第一篇文章：`README.md`
+执行成功会产生两个文件，目录：`SUMMARY.md`，第一篇文章：`README.md`
 
 ### 启动服务
+启动服务命令
 ```shell
 gitbook serve
 ```
@@ -75,21 +82,19 @@ gitbook serve
 2. ZeroTier 内网穿透方案 (需要一台闲置服务器，免费)
 3. GitHub Pages (配置简单，免费)
 
-### GitHub Pages
+## GitHub Pages
 GitHub Pages 是一项静态站点托管服务，它直接从 GitHub 上的仓库获取 HTML、CSS 和 JavaScript 文件，（可选）通过构建过程运行文件，然后发布网站。
 可以在 GitHub Pages 示例集合中看到 GitHub Pages 站点的示例。
 
-#### 新建项目
+### 新建项目
 1. GitHub 创建 `<username>.github.io`项目
 2. 拉取项目 `git clone <项目地址>`
 
-#### 构建书籍
+### 构建书籍
 
 1. 使用 `gitbook build` 将书籍内容输出到默认目录，也就是当前目录下的 `_book` 目录。
-2. 创建 gh-pages 分支 `git checkout -b gh-pages`
-
+2. 创建 gh-pages 分支 `git checkout -b gh-pages`<br>
    这样 `master` 分支就是书籍源代码，`gh-pages` 分支就是生成后的Html文件
-
 3. 删除除 `_book` 以外所有文件
 4. 将 `_book`下的文件放在根目录下
 5. 提交代码
