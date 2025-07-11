@@ -1,4 +1,4 @@
-# NumPy
+# Numpy
 
 ## 背景
 NumPy（Numerical Python的简称）是Python科学计算的基础包。
