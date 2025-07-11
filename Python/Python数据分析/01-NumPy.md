@@ -1,10 +1,31 @@
 # NumPy
 
 ## 背景
-NumPy是一个开源的Python库，主要用于科学计算和数值分析，提供了丰富的功能，
-包括多维数组处理、数学函数、线性代数、随机数生成等，且具备高性能的特点。
+NumPy（Numerical Python的简称）是Python科学计算的基础包。
+功能包括多维数组处理、数学函数、线性代数、随机数生成等，且具备高性能的特点。
 
-## 数据类型
+### 关键优势
+- 性能：底层用C实现，避免Python循环开销
+- 简洁语法：用矢量操作代替显式循环
+- 丰富功能：提供大量数学函数和线性代数运算
+- 内存效率：连续存储，支持大数组处理
+
+```python
+import numpy as np
+
+my_arr = np.arange(1000000)
+my_list = list(range(1000000))
+
+%time for _ in range(10): my_arr2 = my_arr * 2
+
+%time for _ in range(10): my_list2 = [x * 2 for x in my_list]
+```
+
+## 多维数组
+NumPy的核心是ndarray对象，它是一个多维数组。存储相同类型的元素，支持矢量化运算和广播功能。
+
+### 基础类型
+
 - 布尔型（bool_）。用于表示逻辑值，可以是True或False
 - 整型。包括int8、int16、int32、int64等，表示有符号整数。这些类型分别代表不同大小的整数，例如，int8的值的范围是-128到127
 - 无符号整型。包括uint8、uint16、uint32、uint64等，用于表示无符号整数，例如，uint8的值的范围是0到255
@@ -14,15 +35,12 @@ NumPy是一个开源的Python库，主要用于科学计算和数值分析，提
 - 日期时间类型。datetime64，用于表示日期和时间
 - 时间间隔类型。timedelta64，表示两个时间点之间的间隔
 
-## 多维数组
-NumPy的核心是ndarray对象，它是一个多维数组。存储相同类型的元素，支持矢量化运算和广播功能。
-
 ### 基础属性
 - `ndarray.ndim`: 数组的轴（维度）的个数。在Python世界中，维度的数量被称为rank。
-- `ndarray.shape`: 数组的维度。这是一个整数的元组，表示每个维度中数组的大小。对于有 *n* 行和 *m* 列的矩阵，``shape`` 将是 ``(n,m)``。因此，``shape`` 元组的长度就是rank或维度的个数 ``ndim``。
-- `ndarray.size`: 数组元素的总数。这等于 ``shape`` 的元素的乘积。
+- `ndarray.shape`: 数组的维度。这是一个整数的元组，表示每个维度中数组的大小。对于有 *n* 行和 *m* 列的矩阵，`shape` 将是 `(n,m)`。因此，`shape` 元组的长度就是rank或维度的个数 `ndim`。
+- `ndarray.size`: 数组元素的总数。这等于 `shape` 的元素的乘积。
 - `ndarray.dtype`: 一个描述数组中元素类型的对象。可以使用标准的Python类型创建或指定dtype。另外NumPy提供它自己的类型。例如numpy.int32、numpy.int16和numpy.float64。
-- `ndarray.itemsize`: 数组中每个元素的字节大小。例如，元素为 ``float64`` 类型的数组的 ``itemsize`` 为8（=64/8），而 ``complex32`` 类型的数组的 ``itemsize`` 为4（=32/8）。它等于 ``ndarray.dtype.itemsize`` 。
+- `ndarray.itemsize`: 数组中每个元素的字节大小。例如，元素为 `float64` 类型的数组的 `itemsize` 为8（=64/8），而 `complex32` 类型的数组的 `itemsize` 为4（=32/8）。它等于 `ndarray.dtype.itemsize` 。
 - `ndarray.data`: 该缓冲区包含数组的实际元素。通常，我们不需要使用此属性，因为我们将使用索引访问数组中的元素。
 
 ### 数组创建
@@ -44,11 +62,12 @@ e = np.ones((3, 4))
 # 生成等间距序列
 # 指定步长 np.arange(start, stop, step)
 f = np.arange(0, 5, 0.5)
-# >>> [0. 0.5 1. 1.5 2. 2.5 3. 3.5 4. 4.5]
+# [0. 0.5 1. 1.5 2. 2.5 3. 3.5 4. 4.5]
 
 # 指定数组个数 np.linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None, axis=0)
-g = np.linspace(0, 4.5, 10)
-# >>> [0. 0.5 1. 1.5 2. 2.5 3. 3.5 4. 4.5]
+g = np.linspace(0, 5, 10)
+# array([0.        , 0.55555556, 1.11111111, 1.66666667, 2.22222222,
+# 2.77777778, 3.33333333, 3.88888889, 4.44444444, 5.        ])
 ```
 
 ### 数组运算
@@ -62,22 +81,22 @@ A = np.array([[1, 1],[0, 1]])
 B = np.array([[2, 0],[3, 4]])
 
 A + 1
-# >>> array([[2,2],[1,2]])
+# array([[2,2],[1,2]])
 
 A * 2
-# >>> [[4,4],[2,4]]
+# [[4,4],[2,4]]
 
 # 对应位置元素相乘
 A * B
-# >>> array([[2, 0],[0, 4]])
+# array([[2, 0],[0, 4]])
 
 # 矩阵点积
 E = A.dot(B)
-# >>> array([[2, 0],[0, 4]])
+# array([[2, 0],[0, 4]])
 
 # 布尔运算
 A > 0
-# >>> array([[ True,  True],[False,  True]])
+# array([[ True,  True],[False,  True]])
 ```
 
 ### 索引、切片
@@ -87,21 +106,92 @@ A > 0
 import numpy as np
 
 arr = np.arange(9)
+# array([0, 1, 2, 3, 4, 5, 6, 7, 8])
+
 arr[0]
-# >>> 0
+# 0
 
 arr[:5]
-# >>> array([0, 1, 2, 3, 4])
+# array([0, 1, 2, 3, 4])
 
-reshape = arr.reshape(3,3)
-# >>> array([[0, 1, 2],[3, 4, 5],[6, 7, 8]])
+arr[7:] = 9
+# array([0, 1, 2, 3, 4, 5, 6, 9, 9])
+```
 
-reshape[:,:1]
-# >>> array([[0],[3],[6]])
+如果你想要得到的是ndarray切片的一份副本而非视图，就需要明确地进行复制操作
 
-condition = arr > 5
-arr[condition]
-# >>> array([6, 7, 8])
+```python
+import numpy as np
+
+arr = np.arange(9)
+
+backup = arr.copy()
+backup_slice = arr[:5].copy()
+```
+
+对于高维度数组,可以传入一个以逗号隔开的索引列表来进行选取
+
+```python
+import numpy as np
+
+arr2d = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+
+# 选取第二行，第一列的元素
+arr2d[1,0]
+# 4
+
+# 选取第二行
+arr2d[1,:]
+# array([4, 5, 6])
+
+# 选取第三列
+arr2d[:,2]
+# array([3, 6, 9])
+```
+
+布尔索引
+
+```python
+import numpy as np
+
+arr = np.arange(9)
+
+arr == 5
+# array([False, False, False, False, False,  True, False, False, False])
+arr > 5
+# array([False, False, False, False, False, False,  True,  True,  True])
+arr[arr > 5]
+# array([6, 7, 8])
+
+# 组合应用多个布尔条件，需要使用&（和）、|（或）之类的布尔算术运算符
+arr[(arr > 3) & (arr < 7)]
+# array([4, 5, 6])
+```
+
+### 数组转置和轴对换
+转置是重塑的一种特殊形式，它返回的是源数据的视图，行转列
+
+```python
+import numpy as np
+
+arr = np.arange(9)
+arr = arr.reshape(3,3)
+# array([[0, 1, 2],
+#        [3, 4, 5],
+#        [6, 7, 8]])
+
+arr.T
+# array([[0, 3, 6],
+#        [1, 4, 7],
+#        [2, 5, 8]])
+```
+在进行矩阵计算时，经常需要用到该操作，比如利用np.dot计算矩阵内积
+
+```python
+np.dot(arr.T, arr)
+# array([[45, 54, 63],
+#        [54, 66, 78],
+#        [63, 78, 93]])
 ```
 
 ### 数组拼接
@@ -120,7 +210,7 @@ np.hstack((a, b))
 # >>> array([[1, 2, 5, 6],[3, 4, 7, 8]])
 ```
 
-### 数学与统计函数
+### 通用函数
 数学函数
 
 | 函数                               | 说明                          |
