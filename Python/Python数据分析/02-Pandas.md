@@ -1,19 +1,144 @@
 # Pandas
 
+## 背景
+Pandas 是一个基于 NumPy 的 Python 数据分析库，
+提供了高效的数据结构和工具（如 DataFrame 和 Series），专门用于处理结构化数据（如表格、时间序列等）。
+
 ## Series
 Series是一种类似于一维数组的对象，它由一组数据（各种NumPy数据类型）以及一组与之相关的数据标签（即索引）组成。
 
+Series的字符串表现形式为：索引在左边，值在右边。
+
+### Series创建
 ```python
-i = ["a","b","c","d"]
-v = [1,2,3,4]
-t = pd.Series(v, index=i, name = "col_name")
-t
->>> 
-a    1
-b    2
-c    3
-d    4
-Name: col_name, dtype: int64
+import pandas as pd
+
+# 基础创建(默认索引)
+s1 = pd.Series([1,2,3,4])
+s1
+# 0    1
+# 1    2
+# 2    3
+# 3    4
+# dtype: int64
+
+# 自定义索引和列名
+index = ["a","b","c","d"]
+data = [1,2,3,4]
+s2 = pd.Series(data=data, index=index, name="col_name")
+s2
+# a    1
+# b    2
+# c    3
+# d    4
+# Name: col_name, dtype: int64
+
+# 字典创建(字典的 key 会自动成为 Series 的索引，value 为数据值)
+data = {'Alice': 25, 'Bob': 30, 'Charlie': 35}
+s3 = pd.Series(data)
+s3
+# Alice      25
+# Bob        30
+# Charlie    35
+# dtype: int64
+```
+
+### 索引与切片
+与普通NumPy数组相比，你可以通过索引的方式选取Series中的单个或一组值，更具有灵活性
+
+```python
+import pandas as pd
+
+s = pd.Series([10, 20, 30], index=['a', 'b', 'c'])
+
+# 单值访问
+s['a']
+# 10
+
+# 多值访问
+s[['a','b']]
+# a    10
+# b    20
+# dtype: int64
+
+# 位置访问
+s.iloc[0]
+# 10
+s.iloc[-1]
+# 30
+
+# 位置切片(不包含结束位置)
+s.iloc[0:2]
+# a    10
+# b    20
+# dtype: int64
+
+# 索引切片(包含结束标签)
+s.loc["a":"b"]
+# a    10
+# b    20
+# dtype: int64
+```
+
+使用NumPy函数或类似NumPy的运算（如根据布尔型数组进行过滤、标量乘法、应用数学函数等）都会保留索引值的链接
+
+```python
+s = pd.Series([10, 20, 30], index=['a', 'b', 'c'])
+
+s[s>10]
+# b    20
+# c    30
+# dtype: int64
+
+np.sqrt(s)
+# a    3.162278
+# b    4.472136
+# c    5.477226
+# dtype: float64
+```
+
+Series 运算操作（如加减乘除）会按索引自动对齐，未匹配的索引对应值为 NaN
+
+```python
+a = pd.Series([1, 2], index=['x', 'y'])
+b = pd.Series([3, 4], index=['y', 'z'])
+a + b
+# x    NaN
+# y    5.0
+# z    NaN
+# dtype: float64
+```
+
+Series的索引可以通过赋值的方式就地修改
+
+```python
+s = pd.Series([10, 20, 30], index=['a', 'b', 'c'])
+s.index =['d','e','f']
+s
+# d    10
+# e    20
+# f    30
+# dtype: int64
+```
+
+
+### 缺失值判断
+
+```python
+s = pd.Series([1,2,3,np.nan])
+pd.isnull(s)
+# 0    False
+# 1    False
+# 2    False
+# 3     True
+# dtype: bool
+
+pd.notnull(s)
+# 0     True
+# 1     True
+# 2     True
+# 3    False
+# dtype: bool
 ```
 
 ## DataFrame
