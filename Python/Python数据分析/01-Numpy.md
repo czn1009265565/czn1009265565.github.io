@@ -194,6 +194,43 @@ np.dot(arr.T, arr)
 #        [63, 78, 93]])
 ```
 
+### 条件选择
+numpy.where函数是三元表达式x if condition else y的矢量化版本
+
+```python
+import numpy as np
+
+arr = np.arange(9)
+
+# 1. 条件过滤
+np.where(arr > 4)
+# (array([5, 6, 7, 8], dtype=int64),)
+
+# 2. 条件替换(将所有不大于4的元素替换为-1)
+np.where(arr > 4, arr, -1)
+# array([-1, -1, -1, -1, -1,  5,  6,  7,  8])
+
+# 3. 条件选择
+x = np.array([1.1, 1.2, 1.3, 1.4, 1.5])
+y = np.array([2.1, 2.2, 2.3, 2.4, 2.5])
+condition = np.array([True, False, True, True, False])
+np.where(condition, x, y)
+# array([1.1, 2.2, 1.3, 1.4, 2.5])
+```
+
+### 去重及排序
+
+```python
+import numpy as np
+
+arr = np.array([4,4,3,3,2,2,1,1])
+np.unique(arr)
+# array([1, 2, 3, 4])
+
+np.sort(arr)
+# array([1, 1, 2, 2, 3, 3, 4, 4])
+```
+
 ### 数组拼接
 
 ```python
@@ -201,6 +238,14 @@ import numpy as np
 
 a = np.array([[1, 2], [3, 4]])
 b = np.array([[5, 6], [7, 8]])
+
+# 基础拼接函数 axis 0-垂直拼接 1-水平拼接 默认为0
+np.concatenate([a,b])
+# [[1 2]
+#  [3 4]
+#  [5 6]
+#  [7 8]]
+
 # 垂直拼接
 np.vstack((a, b))
 # >>> array([[1, 2],[3, 4],[5, 6],[7, 8]])
@@ -210,8 +255,25 @@ np.hstack((a, b))
 # >>> array([[1, 2, 5, 6],[3, 4, 7, 8]])
 ```
 
-### 通用函数
-数学函数
+### 统计函数
+
+| 函数                                          | 忽略NaN函数                       	                   | 说明                       |
+|---------------------------------------------|---------------------------------------------------|--------------------------|
+| sum(a,axis=None)                            | nansum(a,axis=None)	                              | 计算数组a元素之和                |
+| cumsum(a, axis=None)                        | nancumsum(a, axis=None)                           | 计算数组a的累积和                |
+| cumprod(a, axis=None)                       | nancumprod(a, axis=None)                          | 计算数组a的累积乘积               |
+| mean(a,axis=None)                           | nanmean(a,axis=None)	                             | 计算数组a的算数平均值              |
+| average(a,axis=None,weights=None)           | 	                                                 | 计算数组a相关元素的加权平均值          |
+| std(a,axis=None)                            | nanstd(a,axis=None)                               | 计算数组a相关元素的标准差            |
+| var(a,axis = None)                          | nanvar(a,axis = None)	                            | 计算数组a相关元素的方差             |
+| cov(a,axis = None)	                         |                                                   | 计算数组a相关元素的协方差            |
+| min(a, axis = None)/max(a, axis = None)	    | nanmin(a, axis = None)/nanmax(a, axis = None)     | 计算数组a中元素的最小值，最大值         |
+| argmin(a,axis = None)/argmax(a,axis = None) | nanargmin(a,axis = None)/nanargmax(a,axis = None) | 	计算数组a中元素的最小值，最大值的降一维后下标 |
+| ptp(a, axis=None)	                          |                                                   | 计算数组a中元素最大值和最小值的差        |
+| median(a, axis=None)	                       | nanmedian(a, axis=None)                           | 计算数组a中元素的中位数(中值)         |
+
+### 数学函数
+
 
 | 函数                               | 说明                          |
 |----------------------------------|-----------------------------|
@@ -227,22 +289,8 @@ np.hstack((a, b))
 | np.cos/cosh/sin/sinh/tan/tanh    | 	计算数据各元素的普通型和双典型的三角函数       |
 | np.exp(a)	                       | 计算数组各元素的指数值                 |
 
-统计函数 
 
-| 函数	                                | 说明                       |
-|------------------------------------|--------------------------|
-| sum(a,axis=None)	                  | 根据给定axis计算数组a相关元素之和      |
-| mean(a,axis=None)	                 | 根据给定axis计算数组a的算数平均值      |
-| average(a,axis=None,weights=None)	 | 根据给定axis计算数组a相关元素的加权平均值  |
-| std(a,axis=None)	                  | 根据给定轴axis计算数组a相关元素的标准差   |
-| var(a,axis = None)	                | 根据给定轴axis计算数组a相关元素的方差    |
-| cov(a,axis = None)	                | 根据给定轴axis计算数组a相关元素的协方差   |
-| min(a) max(a)	                     | 计算数组a中元素的最小值，最大值         |
-| argmin(a) argmax(a)                | 	计算数组a中元素的最小值，最大值的降一维后下标 |
-| ptp(a, axis=None)	                 | 计算数组a中元素最大值和最小值的差        |
-| median(a, axis=None)	              | 计算数组a中元素的中位数(中值)         |
-
-随机数函数  
+### 随机数函数  
 
 | 函数	                                               | 说明                                                |
 |---------------------------------------------------|---------------------------------------------------|
