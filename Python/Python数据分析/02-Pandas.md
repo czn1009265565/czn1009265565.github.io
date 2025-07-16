@@ -9,7 +9,7 @@ Series是一种类似于一维数组的对象，它由一组数据（各种NumPy
 
 Series的字符串表现形式为：索引在左边，值在右边。
 
-### Series创建
+### 创建
 ```python
 import pandas as pd
 
@@ -121,7 +121,6 @@ s
 # dtype: int64
 ```
 
-
 ### 缺失值判断
 
 ```python
@@ -148,23 +147,196 @@ DataFrame中的数据是以一个或多个二维块存放的（而不是列表�
 
 ### 创建
 
+基于字典创建
 ```python
-# 创建一个字典，其中包含不同的列和数据
+import pandas as pd
+
 data = {
-    'Column1': [1, 2, 3, 4],
-    'Column2': ['A', 'B', 'C', 'D'],
-    'Column3': [5.0, 6.5, 7.2, 8.8]
+    'Name': ['Alice', 'Bob', 'Charlie'],
+    'Age': [25, 30, 35],
+    'City': ['Beijing', 'Shanghai', 'Hangzhou']
 }
- 
-# 使用字典创建DataFrame
-df = pd.DataFrame(data)
+df1 = pd.DataFrame(data)
+df1
+#       Name  Age      City
+# 0    Alice   25   Beijing
+# 1      Bob   30  Shanghai
+# 2  Charlie   35  Hangzhou
+
+# 指定顺序
+df2 = pd.DataFrame(data, columns=['City', 'Name', 'Age'])
+df2
+#        City     Name  Age
+# 0   Beijing    Alice   25
+# 1  Shanghai      Bob   30
+# 2  Hangzhou  Charlie   35
+
+# 如果传入的列名在字典中不存在，则会产生缺失值
+df3 = pd.DataFrame(data, columns=['City', 'Name', 'Age','Sex'])
+df3
+#        City     Name  Age  Sex
+# 0   Beijing    Alice   25  NaN
+# 1  Shanghai      Bob   30  NaN
+# 2  Hangzhou  Charlie   35  NaN
+```
+
+基于列表创建
+```python
+data = [
+    ['Alice', 25, 'Beijing'],
+    ['Bob', 30, 'Shanghai'],
+    ['Charlie', 35, 'Hangzhou']
+]
+df4 = pd.DataFrame(data, columns=['Name', 'Age', 'City'])
+df4
+#       Name  Age      City
+# 0    Alice   25   Beijing
+# 1      Bob   30  Shanghai
+# 2  Charlie   35  Hangzhou
+
+# 指定索引
+df5 = pd.DataFrame(data, columns=['Name', 'Age', 'City'], index=['a','b','c'])
+df5
+#       Name  Age      City
+# a    Alice   25   Beijing
+# b      Bob   30  Shanghai
+# c  Charlie   35  Hangzhou
+```
+
+### 索引与切片
+通过索引方式返回的列只是相应数据的视图而已，并不是副本。
+因此，对返回的Series所做的任何就地修改全都会反映到源DataFrame上。
+
+```python
+import pandas as pd
 
 data = [
-    [1,2,3],
-    [4,5,6]
+    ['Alice', 25, 'Beijing'],
+    ['Bob', 30, 'Shanghai'],
+    ['Charlie', 35, 'Hangzhou']
 ]
-headers = ["c1", "c2", "c3"]
-df = pd.DataFrame(data, columns=headers)
+df = pd.DataFrame(data, columns=['Name', 'Age', 'City'], index=['a','b','c'])
+# 查看样例数据，默认前五条
+df.head()
+#       Name  Age      City
+# a    Alice   25   Beijing
+# b      Bob   30  Shanghai
+# c  Charlie   35  Hangzhou
+
+# 基于列名访问,返回整列
+df.Name
+df['Name']
+# a      Alice
+# b        Bob
+# c    Charlie
+# Name: Name, dtype: object
+
+# 基于标签的索引(行标签和列标签)，包含区间端点
+df.loc['a', :]
+# Name      Alice
+# Age          25
+# City    Beijing
+# Name: a, dtype: object
+
+# 基于下标位置索引访问，左闭右开，不包含右端点
+df.iloc[0, :]
+# Name      Alice
+# Age          25
+# City    Beijing
+# Name: a, dtype: object
+```
+
+列可以通过赋值的方式进行修改或新增
+```python
+df['Age'] = 30
+df
+#       Name  Age      City
+# a    Alice   30   Beijing
+# b      Bob   30  Shanghai
+# c  Charlie   30  Hangzhou
+
+df['Sex'] = 'male'
+df
+#       Name  Age      City   Sex
+# a    Alice   30   Beijing  male
+# b      Bob   30  Shanghai  male
+# c  Charlie   30  Hangzhou  male
+```
+
+将列表或数组赋值给某个列时，其长度必须跟DataFrame的长度相匹配。如果赋值的是一个Series，就会精确匹配DataFrame的索引，所有的空位都将被填上缺失值
+
+```python
+sex = pd.Series(['male','female','female'], index=['b','a','c'])
+df['Sex'] = sex
+df
+#       Name  Age      City     Sex
+# a    Alice   30   Beijing  female
+# b      Bob   30  Shanghai    male
+# c  Charlie   30  Hangzhou  female
+```
+
+del方法可以用来删除列(更推荐drop方法)
+
+```python
+del df['Sex']
+df
+#       Name  Age      City
+# a    Alice   30   Beijing
+# b      Bob   30  Shanghai
+# c  Charlie   30  Hangzhou
+```
+
+使用类似NumPy数组的方法，对DataFrame进行转置（交换行和列）
+
+```python
+df.T
+#             a         b         c
+# Name    Alice       Bob   Charlie
+# Age        30        30        30
+# City  Beijing  Shanghai  Hangzhou
+```
+
+跟Series相同，values属性也会以二维ndarray的形式返回DataFrame中的数据
+
+```python
+df.values
+# array([['Alice', 30, 'Beijing'],
+#        ['Bob', 30, 'Shanghai'],
+#        ['Charlie', 30, 'Hangzhou']], dtype=object)
+```
+
+### 重置索引
+```python
+# 重置行索引,默认为行索引
+df.reindex(index=['c','b','a'])
+#       Name  Age      City
+# c  Charlie   30  Hangzhou
+# b      Bob   30  Shanghai
+# a    Alice   30   Beijing
+
+# 重置列索引
+df.reindex(columns=['City', 'Name', 'Age'])
+df
+#        City     Name  Age
+# a   Beijing    Alice   30
+# b  Shanghai      Bob   30
+# c  Hangzhou  Charlie   30
+```
+
+### 删除索引
+```python
+# 删除行索引
+df.drop(index=['a'])
+#       Name  Age      City
+# b      Bob   30  Shanghai
+# c  Charlie   30  Hangzhou
+
+# 删除列索引
+df.drop(columns=['Name'])
+#    Age      City
+# a   30   Beijing
+# b   30  Shanghai
+# c   30  Hangzhou
 ```
 
 ### 拼接
@@ -180,11 +352,6 @@ series = pd.Series([1,2,3], index=columns)
 result = pd.concat([df, series.to_frame().T], ignore_index=True)
 # 垂直拼接
 df = pd.concat([df1, df2], ignore_index=True)
-```
-
-#### Numpy数据创建
-```python
-df = pd.DataFrame(np.random.randn(10,3), columns = ["Column1", "Column2", "Column3"], index = list("abcdefghij"))
 ```
 
 #### 读取CSV
