@@ -203,19 +203,19 @@ df5
 # c  Charlie   35  Hangzhou
 ```
 
-### 索引与切片
-通过索引方式返回的列只是相应数据的视图而已，并不是副本。
-因此，对返回的Series所做的任何就地修改全都会反映到源DataFrame上。
+### 基本功能
 
 ```python
 import pandas as pd
 
+# 初始化DataFrame
 data = [
     ['Alice', 25, 'Beijing'],
     ['Bob', 30, 'Shanghai'],
     ['Charlie', 35, 'Hangzhou']
 ]
 df = pd.DataFrame(data, columns=['Name', 'Age', 'City'], index=['a','b','c'])
+
 # 查看样例数据，默认前五条
 df.head()
 #       Name  Age      City
@@ -230,20 +230,6 @@ df['Name']
 # b        Bob
 # c    Charlie
 # Name: Name, dtype: object
-
-# 基于标签的索引(行标签和列标签)，包含区间端点
-df.loc['a', :]
-# Name      Alice
-# Age          25
-# City    Beijing
-# Name: a, dtype: object
-
-# 基于下标位置索引访问，左闭右开，不包含右端点
-df.iloc[0, :]
-# Name      Alice
-# Age          25
-# City    Beijing
-# Name: a, dtype: object
 ```
 
 列可以通过赋值的方式进行修改或新增
@@ -305,6 +291,42 @@ df.values
 #        ['Charlie', 30, 'Hangzhou']], dtype=object)
 ```
 
+### 索引与切片
+DataFrame引入了特殊的标签运算符标签索引loc和下标位置索引iloc。
+
+| 特性	     | loc                         | 	iloc                |
+|---------|-----------------------------|----------------------|
+| 索引类型	   | 标签（index/column names）      | 	下标位置                |
+| 区间包含性	  | 闭区间（包含端点）	                  | 左闭右开（不包含右端点）         |
+| 支持条件筛选	 | 直接支持（如 df.loc[df['A'] > 1]） | 	需转换为位置（如 nonzero()） |
+| 性能      | 	稍慢（需查找标签）                  | 	更快（直接访问位置）          |
+
+>注意点:通过索引方式返回的列只是相应数据的视图而已，并不是副本。因此，对返回的Series所做的任何就地修改全都会反映到源DataFrame上。
+
+```python
+# 基于标签的索引(行标签和列标签)，包含区间端点
+df.loc['a', :]
+# Name      Alice
+# Age          25
+# City    Beijing
+# Name: a, dtype: object
+df.loc['a', ['Name','Age']]
+# Name    Alice
+# Age        30
+# Name: a, dtype: object
+
+# 基于下标位置索引访问，左闭右开，不包含右端点
+df.iloc[0, :]
+# Name      Alice
+# Age          25
+# City    Beijing
+# Name: a, dtype: object
+df.iloc[0, [0,1]]
+# Name    Alice
+# Age        30
+# Name: a, dtype: object
+```
+
 ### 重置索引
 ```python
 # 重置行索引,默认为行索引
@@ -338,6 +360,234 @@ df.drop(columns=['Name'])
 # b   30  Shanghai
 # c   30  Hangzhou
 ```
+
+### 算数运算和数据对齐
+pandas最重要的一个功能是，它可以对不同索引的对象进行算术运算。
+在将对象相加时，如果存在不同的索引对，则结果的索引就是该索引对的并集。
+
+```python
+data1 = [
+    [1,2,3],
+    [4,5,6]
+]
+df1 = pd.DataFrame(data1, columns=['c1','c2','c3'], index=['a','b'])
+
+data2 = [
+    [7,8,9],
+    [10,11,12]
+]
+df2 = pd.DataFrame(data2, columns=['c1','c2','c3'], index=['b','c'])
+
+# 如果DataFrame对象相加，没有共用的列或行标签，结果都会是空
+df1+df2
+#      c1    c2    c3
+# a   NaN   NaN   NaN
+# b  11.0  13.0  15.0
+# c   NaN   NaN   NaN
+```
+
+### 算数运算与填充值
+在对不同索引的对象进行算术运算时，你可能希望当一个对象中某个轴标签在另一个对象中找不到时填充一个特殊值（比如0）
+
+```python
+df1.add(df2, fill_value=0)
+#      c1    c2    c3
+# a   1.0   2.0   3.0
+# b  11.0  13.0  15.0
+# c  10.0  11.0  12.0
+```
+
+以字母r开头，它会翻转参数  
+- add, radd 加法
+- sub, rsub 减法
+- div, rdiv 除法
+- floordiv, rfloordiv 地板除
+- mul, rmul 乘法
+- pow, rpow 指数
+
+### 函数与映射
+NumPy的ufuncs（元素级数组方法）也可用于操作pandas对象
+```python
+df = pd.DataFrame(np.random.randn(4, 3))
+df
+#           0         1         2
+# 0 -0.623919  0.657959  0.460313
+# 1  0.215846 -0.130751  0.012251
+# 2  0.241636 -0.849421 -0.700828
+# 3  2.880184  2.273270 -0.472849
+
+np.abs(df)
+#           0         1         2
+# 0  0.623919  0.657959  0.460313
+# 1  0.215846  0.130751  0.012251
+# 2  0.241636  0.849421  0.700828
+# 3  2.880184  2.273270  0.472849
+```
+另一个常见的操作是，将函数应用到由各列或行所形成的一维数组上。DataFrame的apply方法即可实现此功能。
+```python
+f = lambda x: x.mean()
+
+df.apply(f)
+# 0    0.678437
+# 1    0.487764
+# 2   -0.175278
+# dtype: float64
+```
+基本语法  
+```python
+DataFrame.apply(func, axis=0, raw=False, result_type=None, args=(), **kwargs)
+```
+- func: 应用的函数
+- axis:  
+  - axis=0 或 'index'（默认）: 对每一列应用函数
+  - axis=1 或 'columns': 对每一行应用函数
+
+类似的applymap方法可以实现对DataFrame中的每个元素进行转换
+```python
+f = lambda x: '%.2f' % x
+df.applymap(f)
+#        0      1      2
+# 0  -0.62   0.66   0.46
+# 1   0.22  -0.13   0.01
+# 2   0.24  -0.85  -0.70
+# 3   2.88   2.27  -0.47
+```
+
+### 排序与排名
+
+```python
+df = pd.DataFrame(np.random.randn(3, 3), columns=['c','b','a'], index=['three','two','one'])
+df
+#               c         b         a
+# three -0.083204  1.543056 -0.232281
+# two    1.659153 -0.691435  0.266102
+# one    0.527569 -0.883109  1.313007
+
+# 根据行索引排序
+df.sort_index()
+#               c         b         a
+# one    0.527569 -0.883109  1.313007
+# three -0.083204  1.543056 -0.232281
+# two    1.659153 -0.691435  0.266102
+
+# 根据列索引排序
+df.sort_index(axis=1)
+#               a         b         c
+# three -0.232281  1.543056 -0.083204
+# two    0.266102 -0.691435  1.659153
+# one    1.313007 -0.883109  0.527569
+
+# 根据行索引倒序
+df.sort_index(ascending=False)
+#               c         b         a
+# two    1.659153 -0.691435  0.266102
+# three -0.083204  1.543056 -0.232281
+# one    0.527569 -0.883109  1.31300
+
+# 根据列值排序
+df.sort_values(by='a')
+#               c         b         a
+# three -0.083204  1.543056 -0.232281
+# two    1.659153 -0.691435  0.266102
+# one    0.527569 -0.883109  1.313007
+
+# 根据多列排序
+df.sort_values(by=['a','b'])
+#               c         b         a
+# three -0.083204  1.543056 -0.232281
+# two    1.659153 -0.691435  0.266102
+# one    0.527569 -0.883109  1.313007
+```
+
+接下来介绍Series和DataFrame的rank方法
+```python
+DataFrame.rank(
+    axis=0,                  # 排名方向：0按列排名，1按行排名
+    method='average',        # 排名方法（见下文）
+    numeric_only=None,       # 是否仅对数值列排名
+    na_option='keep',        # 缺失值处理方式
+    ascending=True,          # 是否升序排名
+    pct=False                # 是否返回百分比排名
+)
+```
+1. method（排名方法）  
+   - 'average'	默认值，相同值取平均排名（如1, 2, 2 → 1, 2.5, 2.5）
+   - 'min'	相同值取最小排名（如1, 2, 2 → 1, 2, 2）
+   - 'max'	相同值取最大排名（如1, 2, 2 → 1, 3, 3）
+   - 'first'	按数据出现顺序分配排名（如1, 2, 2 → 1, 2, 3）
+   - 'dense'	相同值排名相同，但后续排名不跳跃（如1, 2, 2 → 1, 2, 2；下一个是3）
+2. na_option（缺失值处理）  
+   - 'keep'：保留缺失值，不参与排名（默认）
+   - 'top'：缺失值排在最前
+   - 'bottom'：缺失值排在最后
+3. pct（百分比排名）  
+   - True：返回值的百分位排名（范围[0, 1]）
+
+```python
+scores = pd.DataFrame({
+    'Name': ['Alice', 'Bob', 'Charlie', 'David'],
+    'Score': [85, 92, 85, 78]
+})
+scores['Rank'] = scores['Score'].rank(ascending=False, method='min')
+#       Name  Score  Rank
+# 0    Alice     85   2.0
+# 1      Bob     92   1.0
+# 2  Charlie     85   2.0
+# 3    David     78   4.0
+
+scores.sort_values(by='Rank')
+#       Name  Score  Rank
+# 1      Bob     92   1.0
+# 0    Alice     85   2.0
+# 2  Charlie     85   2.0
+# 3    David     78   4.0
+```
+
+### 汇总统计
+DataFrame对象拥有一组常用的数学和统计方法，如均值、标准差、分位数等。
+
+```python
+df = pd.DataFrame({
+    'A': [1, 2, 3, 4, 5],
+    'B': [10, 20, 30, 40, 50],
+    'C': ['X', 'Y', 'X', 'Y', 'X']  # 非数值列自动忽略
+})
+
+# 针对Series或DataFrame列计算汇总统计
+df.describe()
+#               A          B
+# count  5.000000   5.000000
+# mean   3.000000  30.000000
+# std    1.581139  15.811388
+# min    1.000000  10.000000
+# 25%    2.000000  20.000000
+# 50%    3.000000  30.000000
+# 75%    4.000000  40.000000
+# max    5.000000  50.000000
+```
+
+| 方法            | 说明                        |
+|---------------|---------------------------|
+| count         | 非NA值的数量                   |
+| describe      | 针对Series或DataFrame列计算汇总统计 |
+| min/max       | 计算最小值和最大值                 |
+| argmin/argmax | 计算获取到的最小值和最大值的索引位置        |
+| idxmin/idxmax | 计算获取到的最小值和最大值的索引值         |
+| quantile      | 计算样本的分位数(0-1)             |
+| sum           | 值的总和                      |
+| mean          | 值的平均值                     |
+| median        | 值的算数中位数                   |
+| mad           | 根据平均值计算平均绝对离差             |
+| var           | 样本值的方差                    |
+| std           | 样本值的标准差                   |
+| skew          | 样本值的偏度(三阶矩)               |
+| kurt          | 样本值的峰度(四阶矩)               |
+| cumsum        | 样本值的累计和                   |
+| cummin/cummax | 样本值的累计最小值和累计最大值           |
+| cumprod       | 样本值的累计积                   |
+| diff          | 计算一阶差分                    |
+| pct_change    | 计算百分数变化                   |
+
 
 ### 拼接
 
@@ -466,14 +716,4 @@ index2 = pd.bdate_range(start, end)
 
 # 根据频率和周期
 pd.date_range(start, periods=10, freq='D')
-```
-
-#### 切片索引
-
-```python
-# 字符串索引
-df['2021-01-01':'2021-02-01']
-
-# 精确索引
-df[datetime.datetime(2021, 1, 1):datetime.datetime(2021, 2, 1)]
 ```
