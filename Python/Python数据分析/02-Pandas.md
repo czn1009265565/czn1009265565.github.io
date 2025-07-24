@@ -589,131 +589,87 @@ df.describe()
 | pct_change    | 计算百分数变化                   |
 
 
-### 拼接
+### 相关系数与协方差
 
+Series的corr和cov方法用于计算两个Series中重叠的、非NA的、按索引对齐的值的相关系数或协方差
 ```python
-import pandas as pd
+df = pd.DataFrame(data=np.random.rand(10,2),columns=['A','B'])
+df.head()
+#           A         B
+# 0  0.145299  0.589530
+# 1  0.348180  0.407578
+# 2  0.961118  0.358217
+# 3  0.080754  0.724280
+# 4  0.456072  0.269244
 
-columns = ["column1", "column2", "column3"]
-# 使用字典创建DataFrame
-df = pd.DataFrame(columns=columns)
-# 拼接新行
-series = pd.Series([1,2,3], index=columns)
-result = pd.concat([df, series.to_frame().T], ignore_index=True)
-# 垂直拼接
-df = pd.concat([df1, df2], ignore_index=True)
+df['A'].corr(df['B'])
+# -0.38845939898319237
+
+df['A'].cov(df['B'])
+# -0.0348801705940428
 ```
 
-#### 读取CSV
+DataFrame的corr和cov方法将分别计算列与列之间的相关系数或协方差矩阵
+```python
+df.corr()
+#           A         B
+# A  1.000000 -0.388459
+# B -0.388459  1.000000
 
-CSV文件示例:  
-```csv
-"date","close","volume","open","high","low"
-2018/10/23,23.230,17943360.0000,22.610,23.5900,22.3300
-2018/10/22,23.540,13934080.0000,23.860,24.1100,23.3000
-2018/10/19,23.010,12953670.0000,23.940,23.9499,22.9500
-2018/10/18,23.330,15580080.0000,23.500,24.1321,23.2200
-2018/10/17,23.680,15368750.0000,24.520,24.6100,23.4600
-2018/10/16,24.630,11679180.0000,24.500,24.7000,24.0800
-2018/10/15,24.140,11132030.0000,24.110,24.6400,23.8000
-2018/10/12,24.450,20191050.0000,24.540,24.9000,23.7400
+df.cov()
+#           A         B
+# A  0.099861 -0.034880
+# B -0.034880  0.080736
 ```
 
+DataFrame的corrwith方法可以计算其列或行跟另一个Series或DataFrame之间的相关系数
 ```python
-df = pd.read_csv("jd.csv")
+df.corrwith(df['A'])
+# A    1.000000
+# B   -0.388459
 
-# 指定逗号分隔符
-df = pd.read_csv("jd.csv", sep=",")
-# 指定第一行作为表头
-df = pd.read_csv("jd.csv", header=0)
-# 自定义表头
-df = pd.read_csv("jd.csv", header=0, names=["日期","收盘价","数量","开盘价","最高价","最低价"])
-# 指定date列做为index
-df = pd.read_csv("jd.csv", index_col=['date'])
+df.corrwith(df)
+# A    1.0
+# B    1.0
+
+df.corrwith(df, axis=1)
+# 0    1.0
+# 1    1.0
+# 2    1.0
+# 3    1.0
+# 4    1.0
+# 5    1.0
+# 6    1.0
+# 7    1.0
+# 8    1.0
+# 9    1.0
 ```
 
-**公共参数介绍:**  
-- sep: 指定分隔符。如果不指定参数，则会尝试使用逗号分隔
-- header: 指定作为列名的行，默认0，即取第一行，数据为列名行以下的数据；若数据不含列名，则设定 header = None
-- names: 指定结果的列名列表，如果数据文件中没有列标题行，就需要执行header=None
-- index_col: 用作行索引的列编号或者列名，如果给定一个序列则有多个行索引
+### 唯一值与值计数
 
-**转存CSV**  
+unique函数可以返回Series中的唯一值数组
 ```python
-df.to_csv("jd2.csv", index=False)
+s1 = pd.Series(['c', 'a', 'd', 'a', 'a', 'b', 'b', 'c', 'c'])
+uniques = s1.unique()
+uniques
+# array(['c', 'a', 'd', 'b'], dtype=object)
 ```
 
-#### 读取Excel
+value_counts()函数，用于统计DataFrame/Series中每个唯一值出现的次数
 ```python
-df = pd.read_excel('../data/bikes.xlsx', sheet_name="Sheet1")
-```
+s1 = pd.Series(['c', 'a', 'd', 'a', 'a', 'b', 'b', 'c', 'c'])
+d1 = pd.DataFrame(data=np.random.rand(2,2),columns=['A','B'])
 
-**转存Excel**  
-```python
-df.to_excel("jd2.xlsx",sheet_name="Sheet1", index=False)
-```
+s1.value_counts()
+# c    3
+# a    3
+# b    2
+# d    1
+# Name: count, dtype: int64
 
-### 属性
-
-#### columns
-columns属性可以获得DataFrame有那些列，即DataFrame的表头
-```python
-df.columns
->>>
-Index(['date', 'close', 'volume', 'open', 'high', 'low'], dtype='object')
-```
-
-#### shape
-shape属性是描述DataFrame的形状的。
-```python
-df.shape
->>>
-# 行,列
-(8,6)
-```
-
-#### size
-size属性返回的是DataFrame的value的个数
-```python
-df.size
->>>
-48
-```
-
-#### values
-当前DataFrame的数据,是numpy.ndarray类型
-
-```python
-df.values
-```
-
-### 时间序列
-
-时间序列是指多个时间点上形成的数值序列，它既可以是定期的，也可以是不定期出现的。
-
-#### 创建时间序列
-Pandas 支持解析时间格式字符串、`np.datetime64`、`datetime.datetime` 等多种时间序列数据,
-生成 `DatetimeIndex`、`TimedeltaIndex` 、`PeriodIndex` 等定频日期与时间段序列。
-
-```python
-import datetime
-import numpy as np
-import pandas as pd
-
-dti = pd.to_datetime(['2024-04-24',np.datetime64('2024-04-25'), datetime.datetime(2024,4,26)])
-```
-
-#### 生成定频时间戳
-- date_range 默认的频率是日历日
-- bdate_range 的默认频率是工作日
-
-```python
-# 根据起始和结束日期
-start = datetime.datetime(2011, 1, 1)
-end = datetime.datetime(2012, 1, 1)
-index1 = pd.date_range(start, end)
-index2 = pd.bdate_range(start, end)
-
-# 根据频率和周期
-pd.date_range(start, periods=10, freq='D')
+d1.value_counts()
+# A         B
+# 0.176576  0.597745    1
+# 0.941797  0.854708    1
+# Name: count, dtype: int64
 ```
