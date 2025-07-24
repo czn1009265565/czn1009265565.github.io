@@ -1,10 +1,10 @@
 # Jetbrains全家桶
 
-开源工具: `https://github.com/libin9iOak/ja-netfilter-all.git`
+开源工具: `https://github.com/v-JiangNan/ja-netfilter-modified`
 
 ## 步骤
 
-1. `git clone https://github.com/libin9iOak/ja-netfilter-all.git`
+1. `git clone https://github.com/v-JiangNan/ja-netfilter-modified`
 2. 官网下载IDEA即可
 3. 执行 script路径下 `install-all-users.vbs`
 4. 注册码激活或服务器激活任选其一
