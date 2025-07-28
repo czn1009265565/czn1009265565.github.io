@@ -160,6 +160,130 @@ pd.read_csv('ex4.csv', na_values={"City":['NULL','unknown'], "Age":['0']})
 # 3      Tom   NaN       NaN
 ```
 
-
 ## 分批读取
 处理大型数据集时，分批读取是解决内存限制的有效方法
+
+这里先生成模拟数据
+```python
+import pandas as pd
+
+data = {
+    'order_id': [f'ORD_{i:05d}' for i in range(1, 10001)],
+    'product': [f'Product_{i%100}' for i in range(10000)],
+    'quantity': [i%10 + 1 for i in range(10000)],
+    'price': [round((i%100 + 1) * 1.5, 2) for i in range(10000)]
+}
+
+df = pd.DataFrame(data)
+df.to_csv('ex5.csv', index=False)
+```
+
+读取指定行数  
+```python
+pd.read_csv('ex5.csv', nrows=5)
+#     order_id    product  quantity  price
+# 0  ORD_00001  Product_0         1    1.5
+# 1  ORD_00002  Product_1         2    3.0
+# 2  ORD_00003  Product_2         3    4.5
+# 3  ORD_00004  Product_3         4    6.0
+# 4  ORD_00005  Product_4         5    7.5
+```
+
+逐块读取
+```python
+chunker = pd.read_csv('ex5.csv',chunksize=1000)
+chunker
+# <pandas.io.parsers.readers.TextFileReader at 0x21f511b8a30>
+```
+
+逐块迭代,统计商品总价
+```python
+chunker = pd.read_csv('ex5.csv', chunksize=1000)
+
+tot = pd.Series([])
+for piece in chunker:
+    tot = tot.add(piece.groupby('product')['price'].sum(), fill_value=0)
+
+tot = tot.sort_values(ascending=False)
+```
+
+## 输出文本格式
+
+```python
+df = pd.read_csv('ex5.csv')
+# 使用逗号分隔
+df.to_csv('ex6.csv')
+
+# 指定分隔符
+df.to_csv('ex6.csv', sep='|')
+
+# 不写入行索引与列索引
+df.to_csv('ex6.csv', index=False, header=False)
+
+# 缺失值填充字符
+df.to_csv('ex6.csv', na_rep='NULL')
+
+# 指定输出的列
+df.to_csv('ex6.csv', columns=['product','quantity','price'])
+```
+
+## JSON 数据
+JSON已经成为通过HTTP请求在Web浏览器和其他应用程序之间发送数据的标准格式之一。
+
+让我们回忆下之前通过字典创建DataFrame的方式
+```python
+import json
+import pandas as pd
+
+jsonstr = """
+{
+  "Name": ["Alice", "Bob", "Charlie"],
+  "Age": [25, 30, 35],
+  "City": ["Beijing", "Shanghai", "Hangzhou"]
+}
+"""
+data = json.loads(jsonstr)
+pd.DataFrame(data)
+#       Name  Age      City
+# 0    Alice   25   Beijing
+# 1      Bob   30  Shanghai
+# 2  Charlie   35  Hangzhou
+```
+
+
+`read_json` 函数可以自动将特别格式的JSON数据集转换为Series或DataFrame
+```python
+# 读取记录式(最常用)
+# [{"col1":1,"col2":"a"}, {"col1":2,"col2":"b"}]
+pd.read_json('ex7.json', orient='records')
+#    col1 col2
+# 0     1    a
+# 1     2    b
+
+# 读取列索引格式
+# {"col1":{"row1":1,"row2":2}, "col2":{"row1":"a","row2":"b"}}
+pd.read_json('ex7.json')
+#       col1 col2
+# row1     1    a
+# row2     2    b
+
+# 读取行索引格式
+# {"row1":{"col1":1,"col2":"a"}, "row2":{"col1":2,"col2":"b"}}
+pd.read_json('ex7.json', orient='index')
+#       col1 col2
+# row1     1    a
+# row2     2    b
+
+# 读取值式
+# [["a","b"], [1,2]]
+pd.read_json('ex7.json', orient='values')
+#    0  1
+# 0  a  b
+# 1  1  2
+```
+
+## XML 与 HTML
+Python有许多可以读写常见的HTML和XML格式数据的库，包括lxml、Beautiful Soup和html5lib。
+lxml的速度比较快，但其它的库处理有误的HTML或XML文件更好。
+
+`read_html` 函数可以使用lxml和Beautiful Soup自动将HTML文件中的表格解析为DataFrame对象
