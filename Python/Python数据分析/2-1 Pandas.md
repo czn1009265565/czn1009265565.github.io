@@ -441,6 +441,8 @@ DataFrame.apply(func, axis=0, raw=False, result_type=None, args=(), **kwargs)
 - axis:  
   - axis=0 或 'index'（默认）: 对每一列应用函数
   - axis=1 或 'columns': 对每一行应用函数
+- args: 传递给函数的位置参数
+- kwargs: 传递给函数的关键字参数
 
 类似的applymap方法可以实现对DataFrame中的每个元素进行转换
 ```python
@@ -672,68 +674,4 @@ d1.value_counts()
 # 0.176576  0.597745    1
 # 0.941797  0.854708    1
 # Name: count, dtype: int64
-```
-
-### 缺失值处理
-在 pandas 中，`NaN`（Not a Number）用于表示缺失或不可用的数据
-
-```python
-import numpy as np
-import pandas as pd
-
-df = pd.DataFrame({'A': [1, 2, np.nan], 'B': [np.nan, None, 5]})
-df.head()
-#      A    B
-# 0  1.0  NaN
-# 1  2.0  NaN
-# 2  NaN  5.0
-```
-
-检测缺失值  
-```python
-# isnull() 与 isna() 等价
-df.isnull()
-#        A      B
-# 0  False   True
-# 1  False   True
-# 2   True  False
-
-# notnull() 与 notna() 等价
-df.notnull()
-#        A      B
-# 0   True  False
-# 1   True  False
-# 2  False   True
-```
-
-删除缺失值  
-```python
-# 删除包含缺失值的行
-df.dropna(axis=0) 
-
-# 删除包含缺失值的列
-df.dropna(axis=1)
-
-# 删除全为缺失值的行
-df.dropna(how='all', axis=0)
-
-# 删除全为缺失值的列
-df.dropna(how='all', axis=1)
-```
-
-填充缺失值  
-```python
-# 用固定值填充
-df.fillna(0)
-
-# 前向填充（用前一行的值）
-df.fillna(method='ffill') 
-
-# 后向填充（用后一行的值）
-df.fillna(method='bfill')
-
-# 用统计值填充
-df.fillna(df.mean())    # 均值填充
-df.fillna(df.median())  # 中位数填充
-df.fillna(df.mode())    # 众数填充
 ```
