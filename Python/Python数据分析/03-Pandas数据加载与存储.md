@@ -286,4 +286,59 @@ pd.read_json('ex7.json', orient='values')
 Python有许多可以读写常见的HTML和XML格式数据的库，包括lxml、Beautiful Soup和html5lib。
 lxml的速度比较快，但其它的库处理有误的HTML或XML文件更好。
 
-`read_html` 函数可以使用lxml和Beautiful Soup自动将HTML文件中的表格解析为DataFrame对象
+```shell
+pip install lxml beautifulsoup4 html5lib
+```
+
+`read_html` 函数适用于小型数据集、且符合表格数据格式。否则还是更推荐scrapy或requests实现数据爬取
+```html
+<table class="..." id="..." ...>
+     <tbody>
+        <tr>
+            <td>...</td>
+        </tr>
+        <tr>...</tr>
+    </tbody>
+</table>
+```
+
+## Microsoft Excel
+
+`read_excel` 函数支持读取存储在Excel中的表格型数据。
+这两个工具分别使用扩展包xlrd和openpyxl读取XLS和XLSX文件
+
+```shell
+pip install xlrd openpyxl
+```
+
+```python
+df = pd.read_excel('ex8.xlsx', 'Sheet1')
+
+df.to_excel('ex9.xlsx', sheet_name="Sheet1", index=False)
+```
+
+
+## 数据库交互
+
+在商业场景下，大多数数据可能不是存储在文本或Excel文件中。
+基于SQL的关系型数据库（如SQL Server、PostgreSQL和MySQL等）使用更为常见。
+
+```python
+import pandas as pd
+from sqlalchemy import create_engine
+
+# 创建连接引擎，这里以MySQL为例
+engine = create_engine('mysql+pymysql://user:password@localhost:3306/db_name')
+
+# 读取数据
+df = pd.read_sql('select * from article', engine)
+```
+
+连接字符串示例
+
+| 数据库类型      | 链接字符串格式                                    |
+|------------|--------------------------------------------|
+| MySQL      | mysql+pymysql://user:pass@host:port/db     |
+| PostgreSQL | postgresql+psycopg2://user:pass@host/db    |
+| SQLite     | sqlite:///path/to/database.db              |
+| Oracle     | oracle+cx_oracle://user:pass@host:port/sid |
