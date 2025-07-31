@@ -455,6 +455,25 @@ df.applymap(f)
 # 3   2.88   2.27  -0.47
 ```
 
+map方法口适用于 `Series` 中的每个元素进行映射或转换
+```python
+# 格式化
+df.iloc[0, :].map(lambda x: '%.2f' % x)
+# 0    -0.62
+# 1     0.66
+# 2     0.46
+# Name: 0, dtype: object
+
+# 修改列名
+df.columns = df.columns.map(lambda x: 'column_' + x)
+df
+#    column_0  column_1  column_2
+# 0 -0.623919  0.657959  0.460313
+# 1  0.215846 -0.130751  0.012251
+# 2  0.241636 -0.849421 -0.700828
+# 3  2.880184  2.273270 -0.472849
+```
+
 ### 排序与排名
 
 ```python
