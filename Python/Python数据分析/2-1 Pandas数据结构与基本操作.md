@@ -475,6 +475,19 @@ df
 ```
 
 ### 排序与排名
+```python
+DataFrame.sort_index(
+   axis=0,               # 排序轴, 0（行，默认）或 1（列）
+   level=None,           # 多级索引的层级, 从0开始
+   ascending=True,       # 升序或降序
+   inplace=False,        # 是否原地修改
+   kind='quicksort',     # 排序算法
+   na_position='last',   # NaN值的位置
+   sort_remaining=True,  # 多级索引时是否排序剩余层级
+   ignore_index=False,   # 是否忽略原索引
+   key=None              # 自定义排序键函数
+)
+```
 
 ```python
 df = pd.DataFrame(np.random.randn(3, 3), columns=['c','b','a'], index=['three','two','one'])
