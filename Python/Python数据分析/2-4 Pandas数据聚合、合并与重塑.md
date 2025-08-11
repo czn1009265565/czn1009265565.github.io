@@ -176,7 +176,7 @@ df.reset_index()
 2. `pd.concat` 以沿着一条轴将多个对象堆叠到一起
 3. `combine_first` 用调用对象（self）中的非空值填充目标对象（参数传入的对象）中的空值
 
-大数据集推荐使用 `merge()` 而非 `concat()`，性能更优
+大数据集推荐使用 `merge()`，相较于`concat()`，性能更优
 
 ### 数据库风格合并
 
@@ -271,4 +271,165 @@ df1.join(df2)
 ```
 
 ## 轴向连接
+concat纵向拼接Series值和索引
+```python
+s1 = pd.Series([0, 1], index=['a', 'b'])
+s2 = pd.Series([2, 3, 4], index=['c', 'd', 'e'])
 
+pd.concat([s1, s2])
+# a    0
+# b    1
+# c    2
+# d    3
+# e    4
+```
+
+concat横向拼接Series，通过传入 `axis=1`
+```python
+pd.concat([s1, s2], axis=1)
+#      0    1
+# a  0.0  NaN
+# b  1.0  NaN
+# c  NaN  2.0
+# d  NaN  3.0
+# e  NaN  4.0
+```
+
+DataFrame纵向合并
+```python
+df1 = pd.DataFrame(data={"A":[1,2],"B":[3,4]})
+df2 = pd.DataFrame(data={"A":[5,6],"B":[7,8]})
+
+pd.concat([df1, df2])
+#    A  B
+# 0  1  3
+# 1  2  4
+# 0  5  7
+# 1  6  8
+```
+这里可以看到行索引重复了，可以使用 `ignore_index=True` 重置索引  
+```python
+pd.concat([df1, df2], ignore_index=True)
+#    A  B
+# 0  1  3
+# 1  2  4
+# 2  5  7
+# 3  6  8
+```
+
+DataFrame横向拼接  
+```python
+pd.concat([df1, df2], axis=1)
+#    A  B  A  B
+# 0  1  3  5  7
+# 1  2  4  6  8
+```
+
+不同列名的情况
+```python
+df1 = pd.DataFrame(data={"A":[1,2],"B":[3,4]})
+df2 = pd.DataFrame(data={"A":[5,6],"C":[7,8]})
+
+pd.concat([df1, df2], ignore_index=True)
+#    A    B    C
+# 0  1  3.0  NaN
+# 1  2  4.0  NaN
+# 2  5  NaN  7.0
+# 3  6  NaN  8.0
+```
+
+交集与并集
+```python
+pd.concat([df1, df2], ignore_index=True, join='inner')
+#    A
+# 0  1
+# 1  2
+# 2  5
+# 3  6
+
+pd.concat([df1, df2], ignore_index=True, join='outer')
+#    A    B    C
+# 0  1  3.0  NaN
+# 1  2  4.0  NaN
+# 2  5  NaN  7.0
+# 3  6  NaN  8.0
+```
+
+## 重塑层次化索引
+
+1. stack()  
+   - 作用: 将列索引的某一层级“压缩”到行索引中（从宽格式变长格式）。
+   - 结果: 生成一个多层索引（MultiIndex）的 Series 或 DataFrame。
+   - 适用场景: 将多列数据聚合成单列（如变量名和值分离）。
+2. unstack()  
+   - 作用: 将行索引的某一层级“展开”到列索引中（从长格式变宽格式）。
+   - 结果: 减少行索引层级，增加列索引层级。
+   - 适用场景: 将聚合后的数据展开为交叉表形式。
+
+```python
+data = {
+    'A': [1, 2, 3],
+    'B': [4, 5, 6]
+}
+df = pd.DataFrame(data, index=['row1', 'row2', 'row3'])
+df
+#       A  B
+# row1  1  4
+# row2  2  5
+# row3  3  6
+```
+
+压缩最内层列索引到行索引
+```python
+df.stack()
+# row1  A    1
+#       B    4
+# row2  A    2
+#       B    5
+# row3  A    3
+#       B    6
+# dtype: int64
+```
+
+展开最内层行索引到列索引  
+```python
+df.stack().unstack()
+#       A  B
+# row1  1  4
+# row2  2  5
+# row3  3  6
+```
+
+### 经典应用场景
+将宽表转换为长表  
+```python
+wide_df = pd.DataFrame({
+    'Date': ['2023-01-01', '2023-01-02'],
+    'AAPL': [150, 152],
+    'GOOG': [2800, 2850]
+}).set_index('Date')
+wide_df
+#             AAPL  GOOG
+# Date
+# 2023-01-01   150  2800
+# 2023-01-02   152  2850
+
+long_df = wide_df.stack().reset_index(name='Price')
+long_df.columns = ['Date', 'Stock', 'Price']
+long_df
+#          Date Stock  Price
+# 0  2023-01-01  AAPL    150
+# 1  2023-01-01  GOOG   2800
+# 2  2023-01-02  AAPL    152
+# 3  2023-01-02  GOOG   2850
+```
+
+将长表转换回宽表
+```python
+df = long_df.set_index(['Date','Stock']).unstack()
+df.columns = df.columns.map('_'.join)
+#             Price_AAPL  Price_GOOG
+# Date
+# 2023-01-01         150        2800
+# 2023-01-02         152        2850
+```
