@@ -73,6 +73,10 @@ public class FilesTest {
         // 写入文件
         Files.write(target, bytes);
         Files.write(target, content);
+        
+        // 基于Path对象获取输入输出流
+        InputStream inputStream = Files.newInputStream(path);
+        OutputStream outputStream = Files.newOutputStream(path);
     }
 }
 ```
