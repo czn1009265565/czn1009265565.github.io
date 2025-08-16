@@ -121,7 +121,7 @@
 	* [Charles](杂文/Charles.md)
 	* [Code View](杂文/Code Review.md)
 	* [GitBook](杂文/GitBook.md)
-	* [Jetbrains全家桶](杂文/Jetbrains全家桶.md)
+	* [Jetbrains全家桶](杂文/IDEA激活.md)
 	* [Microsoft全家桶](杂文/Microsoft全家桶.md)
 	* [Zerotier](杂文/ZeroTier.md)
 * [环境部署](环境部署/README.md)
