@@ -209,9 +209,10 @@ element = WebDriverWait(driver, 10).until(
 ```python
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
-import time
 
 # 初始化浏览器
 chrome_options = Options()
@@ -231,10 +232,9 @@ try:
     search_box.send_keys(Keys.RETURN)
     
     # 等待结果加载
-    time.sleep(2)
-    
-    # 获取搜索结果
-    results = driver.find_elements(By.CSS_SELECTOR, "h3.c-title")
+    results = WebDriverWait(driver, 3).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, "h3.c-title"))
+    )
     for result in results[:5]:
         print(result.text)
         
