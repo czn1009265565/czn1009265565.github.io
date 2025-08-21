@@ -273,11 +273,8 @@ if __name__ == "__main__":
 import threading
 import time
 
-# 创建Event实例
-event = threading.Event()
 
-
-def start_up():
+def start_up(event):
     print("线程%s开启"%threading.current_thread().name)
     event.clear()
     while not event.is_set():
@@ -286,18 +283,19 @@ def start_up():
     print("线程%s关闭" % threading.current_thread().name)
 
 
-def shutdown():
+def shutdown(event):
     event.set()
 
 
 if __name__ == "__main__":
+    event = threading.Event()
     # 启动线程
-    job1 = threading.Thread(target=start_up, name="start_up")
+    job1 = threading.Thread(target=start_up, args=(event, ), name="start_up")
     job1.start()
 
     time.sleep(10)
     # 关闭线程
-    job2 = threading.Thread(target=shutdown, name="shutdown")
+    job2 = threading.Thread(target=shutdown, args=(event, ), name="shutdown")
     job2.start()
 ```
 
