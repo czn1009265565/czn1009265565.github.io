@@ -76,8 +76,10 @@
 ```python
 import re
 
-re.search(r'<.*>', '<a> <b>').group()   # 贪婪: '<a> <b>'
-re.search(r'<.*?>', '<a> <b>').group()  # 非贪婪: '<a>'
+re.search(r'<.*>', '<a> <b>').group()
+# 贪婪: '<a> <b>'
+re.search(r'<.*?>', '<a> <b>').group()
+# 非贪婪: '<a>'
 ```
 
 ### 2. 预编译正则表达式
@@ -104,6 +106,7 @@ pattern.findall('a1b22')
 1. 提取邮箱  
 ```python
 re.findall(r'\b[\w.-]+@[\w.-]+\.\w+\b', 'user@example.com')
+# ['user@example.com']
 ```
 2. 密码验证  
 ```python
@@ -112,5 +115,6 @@ re.fullmatch(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$', password)
 ```
 3. 日期格式转换  
 ```python
-re.sub(r'(\d{4})-(\d{2})-(\d{2})', r'\3/\2/\1', '2023-05-21')  # → '21/05/2023'
+re.sub(r'(\d{4})-(\d{2})-(\d{2})', r'\3/\2/\1', '2023-05-21')  
+# 21/05/2023
 ```
