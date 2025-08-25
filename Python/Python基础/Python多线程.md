@@ -282,7 +282,6 @@ def start_up(event):
         event.wait(3)
     print("线程%s关闭" % threading.current_thread().name)
 
-
 def shutdown(event):
     event.set()
 
@@ -297,6 +296,10 @@ if __name__ == "__main__":
     # 关闭线程
     job2 = threading.Thread(target=shutdown, args=(event, ), name="shutdown")
     job2.start()
+    
+    # 判断线程是否存活
+    time.sleep(5)
+    print(job1.is_alive())
 ```
 
 ## 线程池
