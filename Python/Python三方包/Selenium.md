@@ -6,7 +6,7 @@ Selenium 是一个强大的 Web 自动化测试工具，可以模拟用户操作
 ### 1. 安装依赖包
 
 ```shell
-pip install selenium
+pip install selenium -i https://mirrors.aliyun.com/pypi/simple
 ```
 
 ### 2. 下载浏览器驱动
