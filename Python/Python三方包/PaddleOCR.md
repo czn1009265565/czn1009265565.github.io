@@ -1,52 +1,37 @@
 # PaddleOCR
-本文Python环境为3.10.10
 
-### 环境部署
+## 环境部署
+Python环境为3.10
 
-#### 安装PaddlePaddle
+### PaddlePaddle
+PaddlePaddle（PArallel Distributed Deep LEarning）是百度开源的深度学习框架，
+类似于 TensorFlow 和 PyTorch。它提供了一套完整的工具和接口，用于构建、训练和部署深度学习模型。
 
+
+安装依赖包  
 ```shell
-# 机器安装的是CUDA9或CUDA10，则安装GPU版
-python3 -m pip install paddlepaddle-gpu -i https://mirror.baidu.com/pypi/simple
 # CPU版
-python3 -m pip install paddlepaddle -i https://mirror.baidu.com/pypi/simple
+pip install paddlepaddle -i https://mirrors.aliyun.com/pypi/simple
+
+# GPU版（需 CUDA 11.2+）
+pip install paddlepaddle-gpu -i https://mirrors.aliyun.com/pypi/simple
 ```
 
-#### 安装PaddleOCR whl包
+### 安装PaddleOCR
+PaddleOCR 是基于 PaddlePaddle 开发的 OCR 工具库，专注于文本检测、识别和方向分类
 
+核心功能:  
+- 文本检测（Detection）: 定位图像中的文本区域（如 DBNet、EAST）
+- 文本识别（Recognition）: 将检测到的文本区域转换为可读文本（如 CRNN、SVTR）
+- 方向分类（Classification）: 判断文本方向（0°、90°、180°、270°）
+- 多语言支持: 中文、英文、法语、日语等 80+ 语言
+
+模型系列:  
+- PP-OCR系列: 轻量级模型（如 PP-OCRv4、PP-OCRv5）。
+- PP-Structure: 文档结构化分析（表格、标题、段落提取）。
+
+安装依赖包  
 ```shell
-pip install "paddleocr==2.7.0" -i https://mirror.baidu.com/pypi/simple
+pip install "paddleocr" --upgrade -i https://mirrors.aliyun.com/pypi/simple
 ```
 
-### 脚本示例
-
-```python
-from paddleocr import PaddleOCR, draw_ocr
-
-# Paddleocr支持的多语言通过修改lang参数进行切换 
-# 例如`ch`, `en`, `fr`, `german`, `korean`, `japan`
-# 只需要执行一次，将模型加载至内存中
-ocr = PaddleOCR(use_angle_cls=True, lang="ch")
-
-img_path = './catch.png'
-result = ocr.ocr(img_path, cls=True)
-for idx in range(len(result)):
-    res = result[idx]
-    for line in res:
-        print(line)
-```
-
-### 模型下载
-[模型列表](https://github.com/PaddlePaddle/PaddleOCR/blob/main/doc/doc_ch/models_list.md)
-
-**中文检测模型:**  
-ch_PP-OCRv4_server_det  
-
-**中文识别模型:**  
-ch_PP-OCRv4_server_rec
-
-```python
-ocr = PaddleOCR(use_angle_cls=True, lang="ch", 
-                det_model_dir="./ch_PP-OCRv4_det_server_infer", 
-                rec_model_dir="./ch_PP-OCRv4_rec_server_infer")
-```
