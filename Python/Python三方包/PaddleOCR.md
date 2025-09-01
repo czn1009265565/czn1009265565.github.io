@@ -35,3 +35,57 @@ PaddleOCR 是基于 PaddlePaddle 开发的 OCR 工具库，专注于文本检测
 pip install "paddleocr" --upgrade -i https://mirrors.aliyun.com/pypi/simple
 ```
 
+### 模型下载
+
+文本检测模型
+```
+https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/PP-OCRv5_server_det_infer.tar
+```
+
+文本识别模型
+```
+https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0.0/PP-OCRv5_server_rec_infer.tar
+```
+
+
+## 代码实例
+
+自动下载模型
+```python
+from paddleocr import PaddleOCR
+
+ocr = PaddleOCR(
+    text_detection_model_name="PP-OCRv5_server_det",
+    text_recognition_model_name="PP-OCRv5_server_rec",
+    use_doc_orientation_classify=False,
+    use_doc_unwarping=False,
+    use_textline_orientation=False,
+    lang="ch"
+)
+
+image_path = "img.png"
+result = ocr.predict(image_path)
+texts = result[0].json.get('res').get('rec_texts')
+print(texts)
+```
+
+配置本地模型
+```python
+from paddleocr import PaddleOCR
+
+ocr = PaddleOCR(
+    text_detection_model_dir=r"model/PP-OCRv5_server_det_infer",
+    text_recognition_model_dir=r"model/PP-OCRv5_server_rec_infer",
+    use_doc_orientation_classify=False,
+    use_doc_unwarping=False,
+    use_textline_orientation=False,
+    lang="ch"
+)
+
+image_path = "img.png"
+result = ocr.predict(image_path)
+texts = result[0].json.get('res').get('rec_texts')
+print(texts)
+```
+
+
