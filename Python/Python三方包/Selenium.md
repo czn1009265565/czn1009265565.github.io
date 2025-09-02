@@ -218,7 +218,10 @@ from selenium.webdriver.chrome.options import Options
 chrome_options = Options()
 chrome_options.add_argument("--headless")  # 启用无头模式
 chrome_options.add_argument("--disable-gpu")  # 禁用 GPU 加速
-driver = webdriver.Chrome(options=chrome_options)
+chrome_options.add_argument("--no-sandbox")  # 禁用沙盒
+chrome_options.add_argument("--disable-dev-shm-usage")  # 通常与--no-sandbox搭配使用，解决资源限制问题
+driver_path = "/path/to/chromedriver"
+driver = webdriver.Chrome(executable_path=driver_path, options=chrome_options)
 
 try:
     # 打开百度
