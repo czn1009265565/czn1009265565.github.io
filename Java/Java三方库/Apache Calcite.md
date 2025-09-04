@@ -1,4 +1,4 @@
-# Java Calcite
+# Apache Calcite
 Apache Calcite 是一个动态的数据管理框架。提供了 SQL解析，SQL组装，SQL校验，SQL查询优化，以及多数据源适配等典型数据库管理功能。
 
 核心组件包括: SQL Parser -> Validator -> Query Optimizer -> Query Execution
