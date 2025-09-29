@@ -1,6 +1,6 @@
 # Docker安装部署
 
-## Linux
+## Centos
 
 ### 系统要求
 Docker 支持 64 位版本 CentOS 7/8，并且要求内核版本不低于 3.10。 CentOS 7 满足最低内核的要求，但由于内核版本比较低，部分功能（如 overlay2 存储层驱动）无法使用，并且部分功能可能不太稳定.
@@ -125,16 +125,47 @@ sudo systemctl daemon-reload
 sudo systemctl restart docker
 ```
 
-## Windows
+## Ubuntu
 
-本文介绍基于WSL2安装Docker Desktop
+1. 更新系统包索引
+```shell
+sudo apt update
+```
 
-1. 打开控制面板,勾选如下两项:  
-   1. 基于Linux的Windows子系统
-   2. 虚拟机平台
-2. 重启电脑
-3. 以管理员身份运行`wsl --set-default-version 2`，设置WSL默认版本
-4. 下载Docker Desktop for Windows
-5. 双击安装即可，安装过程中可能需要等待WSL下载完成并开启
-6. Settings > General > 勾选 `Use WSL 2 based engine`
-7. 验证 CMD执行 `docker -v`
+2. 安装依赖包
+
+```shell
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+```
+
+3. 添加 Docker 官方 GPG 密钥
+
+```shell
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+```
+
+4. 添加 Docker 软件源
+
+```shell
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
+
+5. 更新包索引并安装 Docker
+
+```shell
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io
+```
+
+6. 启动并设置 Docker 开机自启
+
+```shell
+sudo systemctl start docker
+sudo systemctl enable docker
+```
+
+7. 验证安装
+
+```shell
+sudo docker --version
+```
