@@ -158,6 +158,72 @@ ResultSet 接口表示 select 查询语句得到的结果集，该结果集封�
 
 ## 功能实现
 
+### 获取表元数据
+
+```java
+public class TableMetaService {
+
+    /**
+     * 数据库连接信息
+     */
+    private static final String URL = "jdbc:mysql://localhost:3306/dbname";
+    private static final String USERNAME = "username";
+    private static final String PASSWORD = "password";
+
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(URL, USERNAME, PASSWORD);
+    }
+
+    public static List<TableInfo> getAllTables() throws SQLException {
+        List<TableInfo> tables = new ArrayList<>();
+
+        try (Connection conn = getConnection()) {
+            DatabaseMetaData metaData = conn.getMetaData();
+
+            // 获取所有表
+            ResultSet rs = metaData.getTables(null, null, "%", new String[]{"TABLE"});
+
+            while (rs.next()) {
+                TableInfo table = new TableInfo();
+                table.setTableCatalog(rs.getString("TABLE_CAT"));
+                table.setTableSchema(rs.getString("TABLE_SCHEM"));
+                table.setTableName(rs.getString("TABLE_NAME"));
+                table.setTableType(rs.getString("TABLE_TYPE"));
+                table.setRemarks(rs.getString("REMARKS"));
+                tables.add(table);
+            }
+        }
+        return tables;
+    }
+
+    public static List<ColumnInfo> getTableColumns(String tableName) throws SQLException {
+        List<ColumnInfo> columns = new ArrayList<>();
+
+        try (Connection conn = getConnection()) {
+            DatabaseMetaData metaData = conn.getMetaData();
+
+            ResultSet rs = metaData.getColumns(null, null, tableName, "%");
+
+            while (rs.next()) {
+                ColumnInfo column = new ColumnInfo();
+                column.setColumnName(rs.getString("COLUMN_NAME"));
+                column.setDataType(rs.getInt("DATA_TYPE"));
+                column.setTypeName(rs.getString("TYPE_NAME"));
+                column.setColumnSize(rs.getInt("COLUMN_SIZE"));
+                column.setDecimalDigits(rs.getInt("DECIMAL_DIGITS"));
+                column.setNullable(rs.getInt("NULLABLE"));
+                column.setRemarks(rs.getString("REMARKS"));
+                column.setColumnDefault(rs.getString("COLUMN_DEF"));
+                column.setIsAutoIncrement(rs.getString("IS_AUTOINCREMENT"));
+                columns.add(column);
+            }
+        }
+        return columns;
+    }
+}
+```
+
+
 ### 事务管理
 Connection对象支持事务管理。事务是一组SQL操作，要么全部成功，要么全部失败。
 通过Connection对象，可以开启手动提交或回滚事务。
