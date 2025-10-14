@@ -1,7 +1,19 @@
-## Spring Boot EasyExcel
+# Spring Boot EasyExcel
+`EasyExcel` 是阿里巴巴开源的一个基于 `Java` 的、简单、省内存的读写 `Excel` 的开源工具。
 
-### 引入依赖
+推荐使用场景:  
+- 大数据量 Excel 导入导出（万行以上）
+- 内存敏感的环境
+- Web 环境下的文件下载
+- 需要高性能读写的业务场景
 
+不适用场景(Apache POI):  
+- 需要复杂 Excel 操作（如图表、公式等）
+- 需要修改现有 Excel 模板的复杂场景
+- 对样式有极高要求的场景
+
+
+## 引入依赖
 ```
 <dependency>
     <groupId>com.alibaba</groupId>
@@ -13,54 +25,16 @@
     <groupId>org.projectlombok</groupId>
     <artifactId>lombok</artifactId>
 </dependency>
-
-<dependency>
-    <groupId>cn.hutool</groupId>
-    <artifactId>hutool-all</artifactId>
-    <version>5.8.20</version>
-</dependency>
 ```
 
-### 工具类
+## 核心注解
 
-```java
-public class ExcelUtils {
+- `@ExcelProperty` 定义列名及排序
+- `@ExcelIgnore` 忽略注释字段导入导出
+- `@NumberFormat` 小数格式
+- `@DateTimeFormat` 日期格式
 
-    /**
-     * 将列表以 Excel 响应给前端
-     *
-     * @param response 响应
-     * @param filename 文件名
-     * @param sheetName Excel sheet 名
-     * @param head Excel head 头
-     * @param data 数据列表哦
-     * @param <T> 泛型，保证 head 和 data 类型的一致性
-     * @throws IOException 写入失败的情况
-     */
-    public static <T> void write(HttpServletResponse response, String filename, String sheetName,
-                                 Class<T> head, List<T> data) throws IOException {
-
-        // 设置 header 和 contentType。写在最后的原因是，避免报错时，响应 contentType 已经被修改了
-        response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(filename, "UTF-8"));
-        response.setContentType("application/vnd.ms-excel;charset=UTF-8");
-        // 输出 Excel
-        EasyExcel.write(response.getOutputStream(), head)
-                .autoCloseStream(false) // 不要自动关闭，交给 Servlet 自己处理
-                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy()) // 基于 column 长度，自动适配。最大 255 宽度
-                .sheet(sheetName).doWrite(data);
-    }
-
-    public static <T> List<T> read(MultipartFile file, Class<T> head) throws IOException {
-        return EasyExcel.read(file.getInputStream(), head, null)
-                .autoCloseStream(false)  // 不要自动关闭，交给 Servlet 自己处理
-                .doReadAllSync();
-    }
-}
-```
-
-### 导入导出实例
-
-#### 实体类
+## 定义实体类
 
 ```java
 @Data
@@ -68,133 +42,224 @@ public class ExcelUtils {
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserImportExcelVO {
-
-    @ExcelProperty("登录名称")
+    @ExcelProperty(value = "用户名", index=0)
     private String username;
 
-    @ExcelProperty("用户名称")
-    private String nickname;
-
-    @ExcelProperty("部门编号")
-    private Long deptId;
-
-    @ExcelProperty("用户邮箱")
+    @ExcelProperty(value = "用户邮箱", index=1)
     private String email;
 
-    @ExcelProperty("手机号码")
+    @ExcelProperty(value = "手机号码", index=2)
     private String mobile;
 
-    @ExcelProperty(value = "用户性别", converter = DictConvert.class)
-    @DictFormat(value = "sex")
-    private Integer sex;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @ExcelProperty(value = "创建时间", converter = LocalDateTimeConverter.class, index = 3)
+    private LocalDateTime createTime;
 }
 ```
 
-#### 字典转换注解
+## 定义转换器
 
 ```java
-@Target({ElementType.FIELD})
-@Retention(RetentionPolicy.RUNTIME)
-@Inherited
-public @interface DictFormat {
-
-    /**
-     * 例如说，SysDictTypeConstants、InfDictTypeConstants
-     *
-     * @return 字典类型
-     */
-    String value();
-
-}
-```
-
-#### 字典转换类
-
-```java
-@Slf4j
-public class DictConvert implements Converter<Object> {
-    // 生产环境查询字典表
-    public static Map<String, Map<String, String>> LableMap = Collections.singletonMap("sex", Collections.singletonMap("男", "1"));
-    public static Map<String, Map<String, String>> valueMap = Collections.singletonMap("sex", Collections.singletonMap("1", "男"));
+public class LocalDateTimeConverter implements Converter<LocalDateTime> {
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @Override
     public Class<?> supportJavaTypeKey() {
-        throw new UnsupportedOperationException("暂不支持，也不需要");
+        return LocalDateTime.class;
     }
 
     @Override
     public CellDataTypeEnum supportExcelTypeKey() {
-        throw new UnsupportedOperationException("暂不支持，也不需要");
+        return CellDataTypeEnum.STRING;
     }
 
     @Override
-    public Object convertToJavaData(ReadCellData readCellData, ExcelContentProperty contentProperty,
-                                    GlobalConfiguration globalConfiguration) {
-
-
-        // 使用字典解析
-        String type = getType(contentProperty);
-        String label = readCellData.getStringValue();
-        String value = LableMap.getOrDefault(type, Collections.emptyMap()).get(label);
-        if (value == null) {
-            log.error("[convertToJavaData][type({}) 解析异常 label({})]", type, label);
-            return null;
-        }
-        // 将 String 的 value 转换成对应的属性
-        Class<?> fieldClazz = contentProperty.getField().getType();
-        return Convert.convert(fieldClazz, value);
+    public LocalDateTime convertToJavaData(ReadConverterContext<?> context) {
+        String stringValue = context.getReadCellData().getStringValue();
+        return LocalDateTime.parse(stringValue, formatter);
     }
 
     @Override
-    public WriteCellData<String> convertToExcelData(Object object, ExcelContentProperty contentProperty,
-                                                    GlobalConfiguration globalConfiguration) {
-        // 空时，返回空
-        if (object == null) {
-            return new WriteCellData<>("");
-        }
-
-        // 使用字典格式化
-        String type = getType(contentProperty);
-        String value = String.valueOf(object);
-        String label = valueMap.getOrDefault(type, Collections.emptyMap()).get(value);
-        if (label == null) {
-            log.error("[convertToExcelData][type({}) 转换异常 label({})]", type, value);
-            return new WriteCellData<>("");
-        }
-        // 生成 Excel 小表格
-        return new WriteCellData<>(label);
-    }
-
-    private static String getType(ExcelContentProperty contentProperty) {
-        return contentProperty.getField().getAnnotation(DictFormat.class).value();
+    public WriteCellData<?> convertToExcelData(WriteConverterContext<LocalDateTime> context) {
+        return new WriteCellData<>(context.getValue().format(formatter));
     }
 }
 ```
 
-#### Controller
+## 写入Excel
+### 写入实体类
 
 ```java
-@RestController
-@RequestMapping(value = "excel")
-public class ExcelController {
+public static void entity() {
+    UserImportExcelVO userImportExcelVO = UserImportExcelVO.builder()
+            .username("admin")
+            .email("admin@gmail.com")
+            .mobile("123")
+            .createTime(LocalDateTime.now())
+            .build();
+    List<UserImportExcelVO> userImportExcelVOList = Arrays.asList(userImportExcelVO);
 
-    @PostMapping(value = "read")
-    public String read(UserImportForm userImportForm) throws IOException {
-        List<UserImportExcelVO> userImportExcelVOList = ExcelUtils.read(userImportForm.getFile(), UserImportExcelVO.class);
-        return "success";
-    }
+    EasyExcel.write("fileName.xlsx")
+            .head(UserImportExcelVO.class)
+            .registerConverter(new LocalDateTimeConverter())
+            .sheet("SheetName")
+            .doWrite(userImportExcelVOList);
+}
+```
 
-    @GetMapping(value = "write")
-    public void write(HttpServletResponse response) throws IOException {
-        UserImportExcelVO build = UserImportExcelVO.builder()
-                .username("admin")
-                .nickname("admin")
-                .deptId(1L)
-                .email("@")
-                .mobile("10086")
-                .sex(1)
+### 复杂表头
+
+```java
+public static void multipleHead() {
+    List<List<String>> head = new ArrayList<>();
+
+    head.add(Arrays.asList("用户基本信息", "用户名"));
+    head.add(Arrays.asList("联系信息", "邮箱"));
+    head.add(Arrays.asList("联系信息", "手机号"));
+    head.add(Arrays.asList("时间", "创建时间"));
+    // 数据
+    List<List<Object>> data = new ArrayList<>();
+    data.add(Arrays.asList("张三", "zhangsan@qq.com", "123", LocalDateTime.now()));
+    data.add(Arrays.asList("李四", "lisi@qq.com", "123", LocalDateTime.now()));
+
+    EasyExcel.write("fileName.xlsx")
+            .head(head)
+            .sheet("SheetName")
+            .doWrite(data);
+}
+```
+
+### 分批写入
+
+```java
+public static void batch() {
+    ExcelWriter excelWriter = null;
+    try {
+        excelWriter = EasyExcel.write("fileName.xlsx")
                 .build();
-        ExcelUtils.write(response, "用户导入模板.xls", "用户列表", UserImportExcelVO.class, Collections.singletonList(build));
+        WriteSheet writeSheet = EasyExcel.writerSheet("SheetName")
+                .head(UserImportExcelVO.class)
+                .build();
+        // 总数与批处理数量
+        int totalCount = 10;
+        int batchSize = 1;
+        for (int i = 0; i < totalCount; i += batchSize) {
+            // 分页查询数据
+            List<UserImportExcelVO> batchData = Collections.singletonList(UserImportExcelVO.builder()
+                    .username("admin")
+                    .email("admin@gmail.com")
+                    .mobile("123")
+                    .createTime(LocalDateTime.now())
+                    .build());
+
+            // 写入当前批次数据
+            excelWriter.write(batchData, writeSheet);
+            System.out.println("已写入第 " + ((i / batchSize) + 1) + " 批数据，共 " + batchData.size() + " 条");
+        }
+        System.out.println("导出完成");
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        if (excelWriter != null) {
+            excelWriter.finish();
+        }
     }
+}
+```
+
+### 文件下载
+
+```java
+public static void download(HttpServletResponse response) {
+    UserImportExcelVO userImportExcelVO = UserImportExcelVO
+            .builder()
+            .username("admin")
+            .email("admin@gmail.com")
+            .mobile("123")
+            .createTime(LocalDateTime.now())
+            .build();
+
+    try {
+        response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode("result.xlsx", "UTF-8"));
+        response.setContentType("application/vnd.ms-excel;charset=UTF-8");
+        EasyExcel.write(response.getOutputStream())
+                .head(UserImportExcelVO.class)
+                .autoCloseStream(false)
+                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+                .sheet("SheetName")
+                .doWrite(Collections.singletonList(userImportExcelVO));
+    } catch (Exception e){
+        e.printStackTrace();
+    }
+}
+```
+
+## 读取Excel
+
+### 同步读取
+适用于小文件
+
+```java
+public static List<UserImportExcelVO> syncRead() {
+    String fileName = "input.xlsx";
+    List<UserImportExcelVO> dataList = new ArrayList<>();
+    try {
+         dataList = EasyExcel.read(fileName)
+                .head(UserImportExcelVO.class)
+                .sheet()
+                .doReadSync();
+        System.out.println("同步读取数据量: " + dataList.size());
+    } catch (Exception e) {
+        e.printStackTrace();
+        
+    }
+    return dataList;
+}
+```
+
+### 使用监听器读取
+
+自定义监听器
+```java
+/**
+ * 监听器
+ */
+public class UserImportExcelVOListener extends AnalysisEventListener<UserImportExcelVO> {
+    private List<UserImportExcelVO> dataList = new ArrayList<>();
+
+    @Override
+    public void invoke(UserImportExcelVO data, AnalysisContext context) {
+        dataList.add(data);
+        System.out.println("read data: " + data);
+    }
+
+    @Override
+    public void doAfterAllAnalysed(AnalysisContext context) {
+        System.out.println("read complete，size: " + dataList.size());
+    }
+
+    public List<UserImportExcelVO> getDataList() {
+        return dataList;
+    }
+}
+```
+
+数据读取
+```java
+public static List<UserImportExcelVO> listenerRead() {
+    String fileName = "input.xlsx";
+    List<UserImportExcelVO> result = new ArrayList<>();
+    UserImportExcelVOListener listener = new UserImportExcelVOListener();
+    try {
+        EasyExcel.read(fileName, UserImportExcelVO.class, listener)
+                .sheet()
+                .doRead();
+
+        result = listener.getDataList();
+        System.out.println("last data size: " + result.size());
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return result;
 }
 ```
