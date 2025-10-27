@@ -225,12 +225,18 @@ public static List<UserImportExcelVO> syncRead() {
  * 监听器
  */
 public class UserImportExcelVOListener extends AnalysisEventListener<UserImportExcelVO> {
+    private static final int BATCH_COUNT = 1000;
     private List<UserImportExcelVO> dataList = new ArrayList<>();
 
     @Override
     public void invoke(UserImportExcelVO data, AnalysisContext context) {
         dataList.add(data);
         System.out.println("read data: " + data);
+        // 大文件分批处理避免内存溢出
+        if (dataList.size() >= BATCH_COUNT) {
+            processBatchData();
+            dataList.clear();
+        }
     }
 
     @Override
@@ -240,6 +246,10 @@ public class UserImportExcelVOListener extends AnalysisEventListener<UserImportE
 
     public List<UserImportExcelVO> getDataList() {
         return dataList;
+    }
+    
+    public void processBatchData() {
+        // TODO 批处理数据
     }
 }
 ```
