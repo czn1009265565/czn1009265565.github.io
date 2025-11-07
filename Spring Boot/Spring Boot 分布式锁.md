@@ -4,19 +4,7 @@
 
 ## Redis与Zookeeper区别
 
-Redis与Zookeeper均可以实现分布式锁，但各有其优缺点。
-
-### Redis
-
-Redis 分布式锁适用于对性能要求较高的场景，例如短期的锁定操作、高并发请求和对并发性能有较高要求的情况。
-由于Redis的简单性和高性能，它在大多数场景下都是一个不错的选择。
-但需要注意的是，由于Redis是内存数据库，如果持有锁的客户端发生故障或网络问题，可能会导致锁丢失或死锁的问题。
-
-### ZooKeeper
-
-ZooKeeper 分布式锁适用于对可靠性和顺序性要求较高的场景。它提供了强一致性和顺序性的保证，适用于需要严格的锁顺序访问的场景。
-ZooKeeper的分布式锁实现相对复杂一些，但提供了更多的功能和保证，如阻塞等待、超时处理、重入锁等。如果你的应用程序需要这些高级功能，ZooKeeper是一个较好的选择。
-但需要注意的是，ZooKeeper的部署和维护相对复杂，并且性能较低，因此在对性能要求较高的场景下可能不太适合使用。
+[分布式锁](分布式/1-3 分布式锁.md)
 
 ## Spring Boot Redisson
 
@@ -194,21 +182,15 @@ public class SecKillController {
 ```xml
 <dependencies>
     <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-aop</artifactId>
+        <groupId>org.apache.curator</groupId>
+        <artifactId>curator-framework</artifactId>
+        <version>5.5.0</version>
     </dependency>
 
-    <!-- curator 版本4.1.0 对应 zookeeper 版本 3.5.x -->
-    <!-- curator 与 zookeeper 版本对应关系：https://curator.apache.org/zk-compatibility.html -->
     <dependency>
         <groupId>org.apache.curator</groupId>
         <artifactId>curator-recipes</artifactId>
-        <version>4.1.0</version>
-    </dependency>
-
-    <dependency>
-        <groupId>cn.hutool</groupId>
-        <artifactId>hutool-all</artifactId>
+        <version>5.5.0</version>
     </dependency>
 
     <dependency>
@@ -219,4 +201,244 @@ public class SecKillController {
 </dependencies>
 ```
 
+### DistributedLockService
+
+分布式锁接口类定义
+
+```java
+public interface DistributedLockService {
+
+    /**
+     * 执行带锁的操作（互斥锁）
+     */
+    <T> T executeWithLock(String lockKey, long waitTime, TimeUnit timeUnit, Supplier<T> supplier);
+
+    /**
+     * 执行带锁的操作（无返回值）
+     */
+    void executeWithLock(String lockKey, long waitTime, TimeUnit timeUnit, Runnable runnable);
+
+    /**
+     * 执行读锁操作
+     */
+    <T> T executeWithReadLock(String lockKey, long waitTime, TimeUnit timeUnit, Supplier<T> supplier);
+
+    /**
+     * 执行写锁操作
+     */
+    <T> T executeWithWriteLock(String lockKey, long waitTime, TimeUnit timeUnit, Supplier<T> supplier);
+
+    /**
+     * 尝试获取锁（不阻塞）
+     */
+    boolean tryLock(String lockKey, long time, TimeUnit unit);
+
+    /**
+     * 释放锁
+     */
+    void unlock(String lockKey);
+}
+```
+
+### ZookeeperDistributedLockServiceImpl
+
+```java
+@Slf4j
+@Service
+public class ZookeeperDistributedLockServiceImpl implements DistributedLockService {
+    @Resource
+    private CuratorFramework curatorFramework;
+
+    private final Map<String, InterProcessLock> lockCache = new ConcurrentHashMap<>();
+    private static final String LOCK_ROOT = "/distributed-locks";
+
+    @Override
+    public <T> T executeWithLock(String lockKey, long waitTime, TimeUnit timeUnit, Supplier<T> supplier) {
+        String lockPath = buildLockPath("mutex", lockKey);
+        InterProcessMutex lock = new InterProcessMutex(curatorFramework, lockPath);
+
+        boolean acquired = false;
+        long startTime = System.currentTimeMillis();
+
+        try {
+            log.debug("尝试获取锁: {}", lockPath);
+            acquired = lock.acquire(waitTime, timeUnit);
+
+            if (!acquired) {
+                throw new RuntimeException("获取分布式锁超时: " + lockKey);
+            }
+
+            long lockTime = System.currentTimeMillis() - startTime;
+            log.debug("成功获取锁: {}, 等待时间: {}ms", lockPath, lockTime);
+
+            // 执行业务逻辑
+            return supplier.get();
+
+        } catch (Exception e) {
+            log.error("执行业务逻辑异常, lockKey: {}", lockKey, e);
+            throw new RuntimeException("业务执行失败: " + lockKey, e);
+        } finally {
+            if (acquired) {
+                safeUnlock(lock, lockPath);
+            }
+        }
+    }
+
+    @Override
+    public void executeWithLock(String lockKey, long waitTime, TimeUnit timeUnit, Runnable runnable) {
+        executeWithLock(lockKey, waitTime, timeUnit, () -> {
+            runnable.run();
+            return null;
+        });
+    }
+
+    @Override
+    public <T> T executeWithReadLock(String lockKey, long waitTime, TimeUnit timeUnit, Supplier<T> supplier) {
+        String lockPath = buildLockPath("rw", lockKey);
+        InterProcessReadWriteLock rwLock = new InterProcessReadWriteLock(curatorFramework, lockPath);
+        InterProcessMutex readLock = rwLock.readLock();
+
+        boolean acquired = false;
+        try {
+            acquired = readLock.acquire(waitTime, timeUnit);
+            if (!acquired) {
+                throw new RuntimeException("获取读锁超时: " + lockKey);
+            }
+
+            log.debug("成功获取读锁: {}", lockPath);
+            return supplier.get();
+
+        } catch (Exception e) {
+            log.error("读锁操作异常, lockKey: {}", lockKey, e);
+            throw new RuntimeException("读锁操作失败: " + lockKey, e);
+        } finally {
+            if (acquired) {
+                safeUnlock(readLock, lockPath);
+            }
+        }
+    }
+
+    @Override
+    public <T> T executeWithWriteLock(String lockKey, long waitTime, TimeUnit timeUnit, Supplier<T> supplier) {
+        String lockPath = buildLockPath("rw", lockKey);
+        InterProcessReadWriteLock rwLock = new InterProcessReadWriteLock(curatorFramework, lockPath);
+        InterProcessMutex writeLock = rwLock.writeLock();
+
+        boolean acquired = false;
+        try {
+            acquired = writeLock.acquire(waitTime, timeUnit);
+            if (!acquired) {
+                throw new RuntimeException("获取写锁超时: " + lockKey);
+            }
+
+            log.debug("成功获取写锁: {}", lockPath);
+            return supplier.get();
+
+        } catch (Exception e) {
+            log.error("写锁操作异常, lockKey: {}", lockKey, e);
+            throw new RuntimeException("写锁操作失败: " + lockKey, e);
+        } finally {
+            if (acquired) {
+                safeUnlock(writeLock, lockPath);
+            }
+        }
+    }
+
+    @Override
+    public boolean tryLock(String lockKey, long time, TimeUnit unit) {
+        String lockPath = buildLockPath("mutex", lockKey);
+        InterProcessMutex lock = new InterProcessMutex(curatorFramework, lockPath);
+
+        try {
+            boolean acquired = lock.acquire(time, unit);
+            if (acquired) {
+                lockCache.put(lockKey, lock);
+            }
+            return acquired;
+        } catch (Exception e) {
+            log.error("尝试获取锁异常, lockKey: {}", lockKey, e);
+            return false;
+        }
+    }
+
+    @Override
+    public void unlock(String lockKey) {
+        InterProcessLock lock = lockCache.get(lockKey);
+        if (lock != null) {
+            safeUnlock(lock, buildLockPath("mutex", lockKey));
+            lockCache.remove(lockKey);
+        }
+    }
+
+    /**
+     * 安全释放锁
+     */
+    private void safeUnlock(InterProcessLock lock, String lockPath) {
+        try {
+            if (lock != null && lock.isAcquiredInThisProcess()) {
+                lock.release();
+                log.debug("成功释放锁: {}", lockPath);
+            }
+        } catch (Exception e) {
+            log.error("释放锁异常: {}", lockPath, e);
+        }
+    }
+
+    /**
+     * 构建锁路径
+     */
+    private String buildLockPath(String type, String key) {
+        return LOCK_ROOT + "/" + type + "/" + key.replace("/", "-");
+    }
+}
+```
+
+### ProductService
+稍作改造
+
+```java
+@Slf4j
+@Service
+public class ProductService {
+
+    @Resource
+    private DistributedLockService distributedLockService;
+
+    /**
+     * 线程不安全的
+     */
+    @Getter
+    private Integer stock = 100;
+
+    public void nonLockSecKill() {
+        try {
+            TimeUnit.MILLISECONDS.sleep(100);
+        } catch (Exception ignore){
+        }
+
+        //减库存
+        if (stock <= 0) {
+            throw new RuntimeException("[secKill] stock is empty");
+        }
+        stock = stock - 1;
+        log.info("[secKill] 扣减成功，剩余库存:" + stock);
+    }
+
+    public void handLockSecKill() {
+        // 锁标识
+        String lockKey = "product:0";
+        try {
+            // 尝试获取锁（等待最多5秒）
+            if (distributedLockService.tryLock(lockKey, 5, TimeUnit.SECONDS)) {
+                nonLockSecKill();
+            } else {
+                throw new RuntimeException("[secKill] lock is take up");
+            }
+        } finally {
+            // 确保释放锁
+            distributedLockService.unlock(lockKey);
+        }
+    }
+}
+```
 
