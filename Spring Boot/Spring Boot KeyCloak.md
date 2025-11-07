@@ -1,12 +1,42 @@
 # Spring Boot KeyCloak
 
-## 背景
+Keycloak 是一个开源的身份和访问管理解决方案，提供单点登录（SSO）、身份代理、社交登录、用户联邦等功能
 
-Keycloak‌是一个开源的‌身份和访问管理(IAM)解决方案‌，主要用于现代应用程序和服务的身份验证和授权。
-它提供了各种身份管理功能，帮助开发者和系统管理员轻松集成和管理用户认证、单点登录（SSO）和访问控制等功能‌
+## 适用场景
+
+| 场景类型         | 	是否推荐          | 	说明                                |
+|--------------|----------------|------------------------------------|
+| 多应用统一认证（SSO） | 	✅ 强烈推荐	       | Keycloak 可集中管理多个系统的用户身份，避免重复登录     |
+| 需要社会化登录	     | ✅ 推荐	          | 快速集成第三方登录（如微信、钉钉、GitHub）           |
+| 简单单体应用       | 	⚠️ 过度设计	      | 若仅需基础角色权限，直接使用 Spring Security 更轻量 |
+| 无独立用户体系      | 	✅ 推荐	Keycloak | 自带用户管理功能，无需自建用户表                   |
+
+## 安装部署
+Docker
+
+```shell
+# 拉取 Keycloak 镜像
+docker pull quay.io/keycloak/keycloak:latest
+
+# 运行 Keycloak
+docker run -p 8080:8080 \
+  -e KEYCLOAK_ADMIN=admin \
+  -e KEYCLOAK_ADMIN_PASSWORD=admin \
+  quay.io/keycloak/keycloak:latest \
+  start-dev
+```
+
+```shell
+# 下载 Keycloak
+wget https://github.com/keycloak/keycloak/releases/download/24.0.0/keycloak-24.0.0.zip
+unzip keycloak-24.0.0.zip
+cd keycloak-24.0.0/bin/
+
+# 启动服务器
+./kc.sh start-dev
+```
 
 ## 核心概念
-
 ### Realm
 
 - 一个 Realm 表示一个完全隔离的身份和访问控制域
