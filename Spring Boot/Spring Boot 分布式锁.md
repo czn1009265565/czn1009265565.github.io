@@ -201,6 +201,77 @@ public class SecKillController {
 </dependencies>
 ```
 
+### 配置项
+
+```ymal
+spring:
+  application:
+    name: spring-boot-distribute-key
+
+zookeeper:
+  address: 127.0.0.1:2181  # ZooKeeper服务器地址
+  session-timeout: 60000   # 会话超时（毫秒）
+  connection-timeout: 15000 # 连接超时（毫秒）
+  base-sleep-time: 1000
+  max-retries: 3
+```
+
+### ZookeeperConfig
+
+```java
+@Configuration
+@Slf4j
+public class ZookeeperConfig {
+
+    @Value("${zookeeper.address}")
+    private String zkAddress;
+
+    @Value("${zookeeper.session-timeout}")
+    private int sessionTimeout;
+
+    @Value("${zookeeper.connection-timeout}")
+    private int connectionTimeout;
+
+    @Value("${zookeeper.base-sleep-time}")
+    private int baseSleepTime;
+
+    @Value("${zookeeper.max-retries}")
+    private int maxRetries;
+
+    @Value("${spring.application.name}")
+    private String applicationName;
+
+    @Bean(initMethod = "start", destroyMethod = "close")
+    public CuratorFramework curatorFramework() {
+        RetryPolicy retryPolicy = new ExponentialBackoffRetry(
+                baseSleepTime,
+                maxRetries
+        );
+
+        CuratorFramework client = CuratorFrameworkFactory.builder()
+                .connectString(zkAddress)
+                .sessionTimeoutMs(sessionTimeout)
+                .connectionTimeoutMs(connectionTimeout)
+                .retryPolicy(retryPolicy)
+                .namespace(applicationName)
+                .build();
+
+        // 添加连接状态监听
+        client.getConnectionStateListenable().addListener((c, newState) -> {
+            log.info("ZooKeeper连接状态变化: {}", newState);
+            if (newState == ConnectionState.LOST) {
+                log.error("ZooKeeper连接丢失");
+            } else if (newState == ConnectionState.RECONNECTED) {
+                log.info("ZooKeeper重新连接成功");
+            }
+        });
+
+        return client;
+    }
+}
+```
+
+
 ### DistributedLockService
 
 分布式锁接口类定义
