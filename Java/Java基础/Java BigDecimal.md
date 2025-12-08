@@ -75,6 +75,11 @@ BigDecimal比较大小推荐使用bigdemical的compareTo方法，
 
 equals方法会比较两部分内容，分别是值（value）和精度（scale），compareTo则忽略精度
 
+| 返回值 | 	含义                  |
+|-----|----------------------|
+| -1  | 	当前 BigDecimal 小于参数值 |
+| 0   | 	当前 BigDecimal 等于参数值 |
+| 1   | 	当前 BigDecimal 大于参数值 |
 
 ## 格式化
 
