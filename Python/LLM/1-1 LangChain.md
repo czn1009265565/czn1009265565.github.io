@@ -5,7 +5,61 @@ Langchain是一个用于构建大语言模型（LLM）应用程序的开源框�
 ## 环境搭建
 
 ```shell
-pip install "langchain>=1.1.0" langchain-openai langchain-community
+pip install --upgrade langchain==0.0.279 -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install openai==v0.28.1 -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install --upgrade openai==0.27.8 -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
+
+校验是否安装成功,查看是否打印对应版本
+```shell
+pip show langchain
+pip show openai
+```
+
+## First Example
+
+OpenAI 官方SDK
+```python
+import os
+import openai
+
+os.environ["OPENAI_KEY"] = "sk-"
+os.environ["OPENAI_API_BASE"] = "https://api.openai.com/v1"
+
+openai.api_key = os.getenv("OPENAI_KEY")
+openai.api_base = os.getenv("OPENAI_API_BASE")
+
+messages = [
+    {"role": "user", "content": "介绍下你自己"}
+]
+
+res = openai.ChatCompletion.create(
+    model="Qwen3-Coder-480B",
+    messages=messages,
+    stream=False,
+)
+
+print(res['choices'][0]['message']['content'])
+```
+
+LangChain调用
+```python
+import os
+from langchain.chat_models import ChatOpenAI
+
+
+os.environ["OPENAI_KEY"] = "sk-"
+os.environ["OPENAI_API_BASE"] = "https://api.openai.com/v1"
+
+api_base = os.getenv("OPENAI_API_BASE")
+api_key = os.getenv("OPENAI_KEY")
+llm = ChatOpenAI(
+   model="Qwen3-Coder-480B",
+   openai_api_key=api_key,
+   openai_api_base=api_base
+)
+predict = llm.predict("介绍下你自己")
+print(predict)
 ```
 
 ## 核心功能
@@ -52,28 +106,62 @@ Model I/O 是 LangChain 中最基础也是最核心的模块，它定义了与�
 这个流程可以概括为：输入（Prompt）→ 模型（LLM）→ 输出解析（Output Parser）。
 
 1. Prompts (提示模板)  
-   核心思想：将用户输入和固定指令模板化，实现提示词的复用和管理，而不仅仅是简单的字符串拼接
-
-2. LLMs (大语言模型)  
-   核心思想：提供一个统一的接口来调用各种语言模型，无论是 OpenAI、Anthropic 的开源模型，还是本地部署的模型。
-3. Output Parsers (输出解析器)  
-   核心思想：将语言模型返回的非结构化文本（字符串）转换成结构化、可编程的数据（如 JSON 对象、Pydantic 模型对象）
-
+核心思想：将用户输入和固定指令模板化，实现提示词的复用和管理，而不仅仅是简单的字符串拼接
 ```python
-from langchain_openai import ChatOpenAI
-from langchain_core.prompts import ChatPromptTemplate
+import os
+from langchain.prompts import PromptTemplate
+from langchain.chat_models import ChatOpenAI
 
+
+os.environ["OPENAI_KEY"] = "sk-"
+os.environ["OPENAI_API_BASE"] = "https://api.openai.com/v1"
+
+api_base = os.getenv("OPENAI_API_BASE")
+api_key = os.getenv("OPENAI_KEY")
 llm = ChatOpenAI(
-api_key="sk-",
-base_url="https://api.deepseek.com/v1",
-model="deepseek-chat"
+   model="Qwen3-Coder-480B",
+   openai_api_key=api_key,
+   openai_api_base=api_base
 )
 
-# 使用 ChatPromptTemplate
-prompt = ChatPromptTemplate.from_template("回答这个问题: {question}")
+prompt = PromptTemplate.from_template("回答这个问题: {question}")
 chain = prompt | llm
-response = chain.invoke({"question": "什么是机器学习？"})
-print(response.content)
+result = chain.invoke({"question": "什么是机器学习?"})
+print(result.content)
+```
+2. LLMs (大语言模型)  
+核心思想：提供一个统一的接口来调用各种语言模型，无论是 OpenAI、Anthropic 的开源模型，还是本地部署的模型。
+3. Output Parsers (输出解析器)  
+核心思想：将语言模型返回的非结构化文本（字符串）转换成结构化、可编程的数据（如 JSON 对象、Pydantic 模型对象）
+```python
+import os
+
+from langchain.chat_models import ChatOpenAI
+from langchain.schema import BaseOutputParser
+
+os.environ["OPENAI_KEY"] = "sk-"
+os.environ["OPENAI_API_BASE"] = "https://api.openai.com/v1"
+
+api_base = os.getenv("OPENAI_API_BASE")
+api_key = os.getenv("OPENAI_KEY")
+
+
+#自定义输出解析器
+class CommaSeparatedListOutputParser(BaseOutputParser):
+    def parse(self, text: str):
+        """Parse the output of an LLM call."""
+        return text.strip().split(", ")
+
+
+llm = ChatOpenAI(
+    model="Qwen3-Coder-480B",
+    openai_api_key=api_key,
+    openai_api_base=api_base
+)
+
+strs = llm.predict("你是一个起名大师,帮忙起三个常见的中文名。请返回以逗号分隔的列表形式。仅返回逗号分隔的列表，不要返回其他内容。")
+name_arr = CommaSeparatedListOutputParser().parse(strs)
+print(name_arr)
 ```
 
 ### LCEL(LangChain Expression Language)基础
