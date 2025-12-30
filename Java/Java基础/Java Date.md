@@ -94,7 +94,7 @@ public class CalendarTest {
 
 这里以LocalDate为例，LocalTime、LocalDateTime用法类似
 
-```
+```java
 public class LocalDateTest {
     public static void main(String[] args) {
         
@@ -112,6 +112,11 @@ public class LocalDateTest {
         // 日期计算
         LocalDate tomorrow = localDate.plus(1, ChronoUnit.DAYS);
         LocalDate yesterday = localDate.plus(-1, ChronoUnit.DAYS);
+        
+        // 计算相差的秒数
+        Duration duration = Duration.between(start, end);
+        long seconds = duration.getSeconds();
+        
         // 日期比较
         boolean equals = localDate.equals(future);
         boolean before = localDate.isBefore(future);
