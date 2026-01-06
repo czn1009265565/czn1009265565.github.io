@@ -63,3 +63,6 @@ bootstrap/
 </body>
 </html>
 ```
+
+- initial-scale=1.0 确保网页加载时，以 1:1 的比例呈现，不会有任何的缩放
+- user-scalable=no 可以禁用其缩放（zooming）功能，用户只能滚动屏幕，看上去更原生

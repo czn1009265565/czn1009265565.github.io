@@ -2,9 +2,16 @@
 
 jQuery 是一个快速、简洁的 JavaScript 库，简化了 HTML 文档遍历、事件处理、动画和 Ajax 交互
 
+## CDN引入
+
+国内推荐使用 `https://www.staticfile.net/`
+国际推荐使用 `https://cdnjs.com/`
+
 ```html
-<!-- 使用 CDN -->
+<!-- 官网 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- https://www.staticfile.net/ -->
+<script src="https://cdn.staticfile.net/jquery/3.6.0/jquery.min.js"></script>
 
 <!-- 或下载本地文件 -->
 <script src="/static/js/jquery-3.6.0.min.js"></script>
