@@ -5,6 +5,10 @@ Bootstrap的模态框（Modal）是一个灵活的可重复使用的对话框组
 ## 基本结构
 
 ```html
+<div class="container">
+    <button id="alertButton">触发模态框</button>
+</div>
+
 <!-- 模态框 -->
 <div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -44,10 +48,6 @@ Bootstrap的模态框（Modal）是一个灵活的可重复使用的对话框组
 ## 触发模态框
 
 ```html
-<div class="container">
-    <button id="alertButton">触发模态框</button>
-</div>
-
 <script>
     $("#alertButton").click(function() {
         $('#alertModal').modal('show');
