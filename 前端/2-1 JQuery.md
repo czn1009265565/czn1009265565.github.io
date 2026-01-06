@@ -206,3 +206,23 @@ $.post("/users",
     }
 );
 ```
+
+JSON请求
+```javascript
+$.ajax({
+        url: '/api/data',
+        type: 'POST',
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify({
+            id: 1,
+            name: 'Bob'
+        }),
+        success: function(response) {
+            console.log('JSON 请求成功:', response);
+        },
+        error: function(xhr, status, error) {
+            console.error('JSON 请求失败:', error);
+        }
+    });
+```
