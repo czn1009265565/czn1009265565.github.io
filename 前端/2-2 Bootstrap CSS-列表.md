@@ -97,3 +97,33 @@
     <li class="list-group-item">项目二</li>
 </ul>
 ```
+
+### 图片+文字
+
+```html
+<div class="list-group">
+    <div class="list-group-item">
+        <div class="row align-items-center">
+            <!-- 图片 -->
+            <div class="col-auto">
+                <img src="https://picsum.photos/150/120?random=1" style="width: 50px; height: 50px;" alt="产品图片">
+            </div>
+            <!-- 名称 -->
+            <div class="col">
+                <span class="fw-bold">产品名称</span>
+            </div>
+            <!-- 价格 -->
+            <div class="col-auto">
+                <span class="text-danger fw-bold">¥99.00</span>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+- `align-items-center`: 垂直居中对齐
+- `col`: 自适应宽度，让列自动占据父容器中剩余的可用空间，并与其他 col 列均分宽度
+- `col-auto`: 根据内容自动调整宽度
+
+左侧图片宽度由图片自身决定，中间的"产品名称"列使用 `col`，会占据所有剩余可用空间，右侧的价格宽度也由自身决定。
+由于中间列填充了所有剩余空间，将右侧的价格列"推"到了容器的最右边。
