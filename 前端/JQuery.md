@@ -98,6 +98,11 @@ $("#parent").append('<div>新的子元素</div>')
 
 ### 属性操作
 
+#### attr
+- 用于操作元素的 特性（attribute） - 即 HTML 标签中的属性
+- 返回的是初始值（HTML 中设置的值）
+- 主要用于操作字符串属性
+
 ```javascript
 // 获取属性
 var src = $("img").attr("src");
@@ -113,6 +118,20 @@ $("img").attr({
 
 // 移除属性
 $("img").removeAttr("alt");
+```
+
+#### prop
+- 用于操作元素的 属性（property） - 即 DOM 对象的属性
+- 返回的是当前值，反映元素的当前状态
+- 主要用于操作布尔属性（如 checked, selected, disabled 等）
+
+```javascript
+// 获取属性
+var isChecked = $('#checkbox').prop('checked');
+
+// 设置属性
+$('#checkbox').prop('checked', true);
+$('#button').prop('disabled', true);
 ```
 
 ### CSS 操作
