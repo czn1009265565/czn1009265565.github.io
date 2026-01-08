@@ -127,3 +127,14 @@
 
 左侧图片宽度由图片自身决定，中间的"产品名称"列使用 `col`，会占据所有剩余可用空间，右侧的价格宽度也由自身决定。
 由于中间列填充了所有剩余空间，将右侧的价格列"推"到了容器的最右边。
+
+### 支持滚动下拉
+
+```html
+<ul class="list-group" style="max-height: 50vh; overflow-y: auto;">
+  <li class="list-group-item">项目一</li>
+  <li class="list-group-item">项目二</li>
+</ul>
+```
+- `max-height: 50vh;`: 设置元素的最大高度限制为视口高度的 50%
+- `overflow-y: auto;`: 垂直方向超过最大高度时，自动显示滚动条
