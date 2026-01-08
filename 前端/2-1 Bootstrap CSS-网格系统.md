@@ -28,7 +28,7 @@ Bootstrap 的网格系统是其最强大的功能之一，提供了一个灵活�
 - `col-auto`: 根据内容自动调整宽度，`col-auto` 的宽度由其内部内容决定，不会均分剩余空间
 
 ### 基本用法
-等宽列 自动分配宽度
+1. 等宽列 自动分配宽度
 ```html
 <div class="container">
     <div class="row">
@@ -38,7 +38,7 @@ Bootstrap 的网格系统是其最强大的功能之一，提供了一个灵活�
 </div>
 ```
 
-中等屏幕及以上4:8，小于中等屏幕时堆叠
+2. 中等屏幕及以上4:8，小于中等屏幕时堆叠
 ```html
 <div class="row">
     <!--  -->
@@ -47,21 +47,21 @@ Bootstrap 的网格系统是其最强大的功能之一，提供了一个灵活�
 </div>
 ```
 
-混合断点 (小屏幕占 12 列（全宽），中等屏幕占 6 列)
+3. 混合断点 (小屏幕占 12 列（全宽），中等屏幕占 6 列)
 ```html
 <div class="row">
     <div class="col-12 col-md-6">自适应列</div>
 </div>
 ```
 
-偏移列
+4. 偏移列
 ```html
 <div class="row">
     <div class="col-md-4 offset-md-4">居中显示</div>
 </div>
 ```
 
-嵌套网格
+5. 嵌套网格
 ```html
 <div class="row">
     <div class="col-md-6">
@@ -72,3 +72,4 @@ Bootstrap 的网格系统是其最强大的功能之一，提供了一个灵活�
     </div>
 </div>
 ```
+禁止直接嵌套 row，需通过 col 内再嵌套 row 实现多层布局
