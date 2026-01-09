@@ -202,11 +202,26 @@ $(window).on("load", function() {
 ```
 
 事件委托
+
 ```javascript
-// 为动态添加的元素绑定事件
-$("#container").on("click", ".dynamic-element", function() {
+// 为动态添加的子元素绑定点击事件
+$(".container")
+    .on("click", ".dynamic-element", function () {
+    // 获取子元素的属性
+    let childId = $('this').attr('data-id');
     // 处理点击事件
 });
+
+// 为动态添加的子元素绑定悬停事件
+$('.container')
+    .on('mouseenter', '.dynamic-element', function () {
+        // 获取子元素
+        let $element = $(this);
+    })
+    .on('mouseleave', '.dynamic-element', function () {
+        // 获取子元素
+        let $element = $(this);
+    });
 ```
 
 ## AJAX请求
