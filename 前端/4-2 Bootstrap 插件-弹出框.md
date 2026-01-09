@@ -38,6 +38,25 @@
 </script>
 ```
 
+html样式
+
+```html
+<div class="container" style="padding: 100px 50px 10px;">
+    <button type="button"
+            class="btn btn-primary"
+            data-bs-toggle="popover"
+            data-bs-placement="top"
+            data-bs-trigger="hover"
+            data-bs-html="true"
+            data-bs-title="<i>提示标题</i>"
+            data-bs-content="这是弹出框内容">
+        悬停触发
+    </button>
+</div>
+```
+
+- `data-bs-html`: 是否解析内容中的 HTML 标签。若为 false，内容会被转义为纯文本
+
 ## 事件委托
 需要触发弹出框的元素是动态生成时，则不能简单直接基于元素绑定，需要通过事件委托的方式
 
