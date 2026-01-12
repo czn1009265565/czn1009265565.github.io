@@ -208,7 +208,7 @@ $(window).on("load", function() {
 $(".container")
     .on("click", ".dynamic-element", function () {
     // 获取子元素的属性
-    let childId = $('this').attr('data-id');
+    let childId = $(this).attr('data-id');
     // 处理点击事件
 });
 
