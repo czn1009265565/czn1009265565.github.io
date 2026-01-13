@@ -73,3 +73,32 @@ html样式
             });
 </script>
 ```
+
+如果弹出框的内容支持动态变更，则需要实时获取数据
+
+```html
+<script>
+    $('.container')
+            .on('mouseenter', '[data-bs-toggle="popover"]', function () {
+                let $element = $(this);
+                // 获取最新的数据 
+                // data-title和data-content是自定义的属性
+                let title = $element.attr('data-title');
+                let content = $element.attr('data-content');
+                // 更新 Popover 内容
+                $element.attr('data-bs-title', title);
+                $element.attr('data-bs-content', content);
+                $element.popover('dispose').popover({
+                    trigger: 'manual',
+                    html: true
+                });
+
+                $element.popover('show');
+            })
+            .on('mouseleave', '[data-bs-toggle="popover"]', function () {
+                let $element = $(this);
+                $element.popover('hide');
+            });
+
+</script>
+```
