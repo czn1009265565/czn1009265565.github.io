@@ -92,7 +92,7 @@
 * [数据库](数据库/README.md)
 	* [Redis设计与实现](Redis/Redis设计与实现.md)
 	* [MySQL 操作手册](数据库/MySQL 操作手册.md)
-	* [PostgreSQL操作手册](MySQL/PostgreSQL操作手册.md)
+	* [PostgreSQL操作手册](数据库/PostgreSQL操作手册.md)
 	* [PostGIS 操作手册](数据库/PostGIS 操作手册.md)
 * [企业级大数据平台](大数据/README.md)
 	* [数据仓库](大数据/数据仓库.md)
