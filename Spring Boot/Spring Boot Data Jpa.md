@@ -120,6 +120,8 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     @Query(value = "select id,name,age,create_time as createTime from person where name=?1", nativeQuery = true)
     List<Person> findByName(String name);
 
+    @Query(value = "select id,name,age,create_time as createTime from person where name in (:names)", nativeQuery = true)
+    List<Person> findByNameIn(@Param("names") List<String> names);
 }
 ```
 
