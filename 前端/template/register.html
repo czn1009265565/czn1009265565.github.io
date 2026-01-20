@@ -86,7 +86,10 @@
         }, 3000);
     }
 
-    function register() {
+    function register(element) {
+        // 阻止表单默认提交
+        element.preventDefault();
+
         let username = $('#username').val();
         let password = $('#password').val();
         let confirmPassword = $('#confirmPassword').val();
@@ -113,10 +116,13 @@
                 alert('注册接口请求异常!');
             }
         });
-
     }
-    // 绑定登录按钮
-    $('#register').click(register);
+
+    $(function() {
+        // 绑定注册按钮
+        $('#register').click(register);
+    });
+
 </script>
 </body>
 </html>

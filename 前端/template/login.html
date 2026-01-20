@@ -82,7 +82,10 @@
         }, 3000);
     }
 
-    function login() {
+    function login(element) {
+        // 阻止表单默认提交
+        element.preventDefault();
+
         let username = $('#username').val();
         let password = $('#password').val();
         $.ajax({
@@ -96,6 +99,7 @@
             }),
             success: function(response) {
                 if (response.code === 0) {
+                    // 跳转至主页
                     window.location.href = '/index';
                 } else {
                     alert(response.msg);
@@ -108,7 +112,10 @@
 
     }
     // 绑定登录按钮
-    $('#login').click(login);
+    $(function() {
+        // 绑定注册按钮
+        $('#login').click(login);
+    });
 </script>
 </body>
 </html>
