@@ -109,6 +109,8 @@ public class SecurityConfig {
                 .rememberMe(remember -> remember
                         // 加密密钥
                         .key("uniqueSecretKey")
+                        // 参数名，与前端传参一致
+                        .rememberMeParameter("remember")
                         // token有效期30天
                         .tokenValiditySeconds(3600 * 24 * 30)
                 )
@@ -149,7 +151,7 @@ public class AuthController {
         <h3>账户登录</h3>
         <input type="text" name="username" placeholder="用户名" required>
         <input type="password" name="password" placeholder="密码" required>
-        <input type="checkbox" name="remember-me"> 记住我
+        <input type="checkbox" name="remember"> 记住我
         <button type="submit">登录</button>
     </div>
 </form>

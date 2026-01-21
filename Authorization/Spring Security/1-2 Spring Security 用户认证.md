@@ -419,7 +419,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
     @Bean
@@ -444,20 +444,6 @@ public class SecurityConfig {
                 // 配置自定义的认证入口点和失败处理
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(authenticationEntryPointHandler)
-                )
-                .sessionManagement(session -> session
-                        // 每个用户最多允许1个活跃会话
-                        .maximumSessions(1)
-                        // 后登录的会使先登录的失效
-                        .maxSessionsPreventsLogin(false)
-                        // 会话过期后跳转的URL
-                        .expiredUrl("/auth/login?expired=true")
-                )
-                .rememberMe(remember -> remember
-                        // 加密密钥
-                        .key("uniqueSecretKey")
-                        // token有效期30天
-                        .tokenValiditySeconds(3600 * 24 * 30)
                 )
                 // 禁用csrf校验
                 .csrf(AbstractHttpConfigurer::disable);
