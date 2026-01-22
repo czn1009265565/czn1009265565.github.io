@@ -2,6 +2,33 @@
 
 ## 认证流程
 
+```mermaid
+sequenceDiagram
+    participant C as 客户端
+    participant S as 服务器
+    participant DB as 数据库
+    
+    C->>S: 1. 登录请求(用户名/密码)
+    S->>DB: 2. 验证用户凭证
+    DB-->>S: 3. 返回用户信息
+    S->>S: 4. 生成JWT Token
+    S-->>C: 5. 返回JWT Token
+    
+    Note over C,S: 后续请求
+    
+    C->>S: 6. 请求API(携带JWT Token)
+    S->>S: 7. 验证JWT签名和有效期
+    S->>S: 8. 解析用户信息
+    S->>S: 9. 设置Security Context
+    S-->>C: 10. 返回API响应
+```
+
+## JWT结构
+`Header.Payload.Signature`
+
+- Header: 指定签名算法
+- Payload: 消息体，包括用户信息及过期时间等
+- Signature: 签名，根据Header中指定的算法生成
 
 ## Spring Boot 集成
 
@@ -308,7 +335,49 @@ public class BaseConstants {
 }
 ```
 
+### 自定义公共响应体
+
+```java
+@Data
+public class ResponseVO<T> {
+    private Integer code;
+    private String msg;
+    private T data;
+
+    public ResponseVO() {
+    }
+
+    public ResponseVO(Integer code, String msg, T data) {
+        this.code = code;
+        this.msg = msg;
+        this.data = data;
+    }
+
+    public static <T> ResponseVO<T> success() {
+        return new ResponseVO<>(0, "success", null);
+    }
+
+    public static <T> ResponseVO<T> success(T data) {
+        return new ResponseVO<>(0, "success", data);
+    }
+
+    public static <T> ResponseVO<T> error(Integer code, String msg) {
+        return new ResponseVO<>(code, msg, null);
+    }
+}
+```
+
 ### 自定义登录登出
+
+请求体结构
+```java
+@Data
+public class AuthLoginReqVO {
+    private String username;
+    private String password;
+}
+```
+
 
 ```java
 @Slf4j
@@ -463,7 +532,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -508,4 +577,22 @@ public class SecurityConfig {
         return http.build();
     }
 }
+```
+
+### 自定义测试接口
+
+```java
+@RestController
+public class IndexController {
+    @GetMapping("/index")
+    public ResponseVO<String> index() {
+        return ResponseVO.success("index");
+    }
+}
+```
+
+```shell
+GET http://localhost:8080/index
+
+POST http://localhost:8080/auth/login
 ```

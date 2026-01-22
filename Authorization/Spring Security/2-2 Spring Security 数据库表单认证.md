@@ -38,6 +38,11 @@
         <groupId>com.mysql</groupId>
         <artifactId>mysql-connector-j</artifactId>
     </dependency>
+
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+    </dependency>
 </dependencies>
 ```
 
