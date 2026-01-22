@@ -1,4 +1,4 @@
-# Spring Security基础入门
+# Spring Security 基础入门
 
 Spring Security 是一个功能强大且高度可定制的身份验证和访问控制框架，包含如下核心功能:  
 
