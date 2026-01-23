@@ -35,11 +35,11 @@
     <div class="card mb-4">
         <div class="card-body">
             <form class="row g-3">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label for="search-keyword" class="form-label">关键词</label>
                     <input type="text" class="form-control" id="search-keyword" placeholder="输入搜索关键词">
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label for="search-category" class="form-label">分类</label>
                     <select class="form-select" id="search-category">
                         <option selected>全部</option>
@@ -48,8 +48,32 @@
                         <option>分类3</option>
                     </select>
                 </div>
-                <div class="col-md-4 d-flex align-items-end">
-                    <button type="submit" class="btn btn-secondary">搜索</button>
+                <div class="col-md-3">
+                    <label for="search-time-start" class="form-label">开始时间</label>
+                    <input type="datetime-local" class="form-control" id="search-time-start">
+                </div>
+                <div class="col-md-3">
+                    <label for="search-time-end" class="form-label">结束时间</label>
+                    <input type="datetime-local" class="form-control" id="search-time-end">
+                </div>
+                <div class="col-md-3">
+                    <label for="search-operator" class="form-label">比较运算符</label>
+                    <select class="form-select" id="search-operator">
+                        <option value="=" selected>等于</option>
+                        <option value=">">大于</option>
+                        <option value=">=">大于等于</option>
+                        <option value="<">小于</option>
+                        <option value="<=">小于等于</option>
+                        <option value="!=">不等于</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="search-value" class="form-label">比较值</label>
+                    <input type="number" class="form-control" id="search-value" placeholder="输入比较数值">
+                </div>
+                <div class="col-md-6 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary me-2">搜索</button>
+                    <button type="reset" class="btn btn-outline-secondary">重置</button>
                 </div>
             </form>
         </div>
