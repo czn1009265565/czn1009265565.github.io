@@ -92,3 +92,7 @@ System.out.println(a);
 System.out.println(b);
 ```
 
+- RoundingMode.HALF_UP 四舍五入
+- RoundingMode.CEILING 向上取整
+- RoundingMode.FLOOR 向下取整
+
