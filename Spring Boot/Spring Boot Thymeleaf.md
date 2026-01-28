@@ -165,8 +165,10 @@ public class IndexController {
 #### 引入片段
 在 `src\main\resources\templates\index.html` 中引入片段
 ```html
-<!-- 引用片段 -->
+<!-- 插入片段 -->
 <div th:insert="~{fragments/header :: header}"></div>
+<!-- 替换片段 -->
+<div th:replace="~{fragments/header :: header}"></div>
 ```
 
 ### 属性设置
