@@ -2,6 +2,8 @@
 
 Chart.js 是一个基于 HTML5 Canvas 的开源 JavaScript 图表库，用于创建响应式、美观的统计图表。
 
+官网地址: `https://www.chartjs.org/docs/latest/`
+
 ## CDN引入
 
 ```html
