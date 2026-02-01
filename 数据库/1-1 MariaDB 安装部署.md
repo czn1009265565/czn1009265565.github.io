@@ -72,6 +72,7 @@ collation-server = utf8mb4_unicode_ci
 innodb_buffer_pool_size = 256M
 max_connections = 100
 ```
+6. 重启服务 `sudo systemctl restart mariadb`
 
 ## 用户管理
 
@@ -101,7 +102,7 @@ ALTER USER 'username'@'%' IDENTIFIED BY 'new_password';
 
 ```mysql
 -- 授予所有数据库的所有权限
-GRANT ALL PRIVILEGES ON *.* TO 'username'@'%';
+GRANT ALL PRIVILEGES ON *.* TO 'cashbook'@'%';
 
 -- 授予特定数据库的所有权限
 GRANT ALL PRIVILEGES ON `dbname`.* TO 'username'@'%';
