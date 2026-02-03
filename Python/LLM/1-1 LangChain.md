@@ -5,8 +5,7 @@ Langchain是一个用于构建大语言模型（LLM）应用程序的开源框�
 ## 环境搭建
 
 ```shell
-pip install --upgrade langchain==0.0.279 -i https://pypi.tuna.tsinghua.edu.cn/simple
-pip install openai==v0.28.1 -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install --upgrade langchain==0.0.279 
 pip install --upgrade openai==0.27.8 -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 

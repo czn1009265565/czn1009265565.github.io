@@ -3,7 +3,7 @@
 `Prompt` 模板是 `LangChain` 中用于管理和格式化提示词的核心组件，它允许你创建可重用的提示词结构，并通过变量插值动态生成具体的提示内容
 
 ## PromptTemplate
-基础模板
+基础模板，用于创建简单的文本提示，支持变量替换
 
 ```python
 from langchain.prompts import PromptTemplate
@@ -14,7 +14,7 @@ print(prompt_format)
 ```
 
 ## ChatPromptTemplate
-对话式提示词的模板类
+对话式提示词的模板类，专为对话模型设计，支持多角色消息（如系统、用户、助手）
 
 ```python
 from langchain.prompts import ChatPromptTemplate
@@ -37,6 +37,7 @@ print(simple_prompt)
 ```
 
 ## 组合式提示词模板
+将多个提示模板组合成管道，按顺序处理输入
 
 ```python
 from langchain.prompts.pipeline import PipelinePromptTemplate
@@ -94,6 +95,6 @@ simple_prompt.json
 from langchain.prompts import load_prompt
 
 #加载json格式的prompt模版
-prompt = load_prompt("simple.json")
+prompt = load_prompt("simple_prompt.json")
 print(prompt.format(industry="物理",question="什么是量子力学?"))
 ```
