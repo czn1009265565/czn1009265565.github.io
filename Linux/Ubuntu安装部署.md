@@ -5,7 +5,7 @@
 ### 下载系统镜像
 
 官网地址: https://ubuntu.com/download  
-清华源镜像: https://mirrors.tuna.tsinghua.edu.cn  点击**获取下载链接**  
+清华源镜像: https://mirrors.tuna.tsinghua.edu.cn/ubuntu-releases/22.04/  点击**获取下载链接**  
 这里需要区分 `Ubuntu Desktop` 和 `Ubuntu Server`，对应桌面版本和服务器版本，我们选择服务器版本 `22.04.4 (amd64, Server)`
 
 
