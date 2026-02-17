@@ -34,15 +34,6 @@
 注意点:  
 如果出现 `[FAILED] Failed unmounting /cdrom`报错，移除U盘并重启服务，否则将会尝试重新安装
 
-
-### 扩展逻辑卷
-Ubuntu server 默认使用LVM进行磁盘管理,安装后只使用了硬盘一部分空间
-
-1. 查看现有的卷组 `sudo vgdisplay`
-2. 扩展现有的逻辑卷 `sudo lvextend -l +100%FREE /dev/mapper/ubuntu--vg-ubuntu--lv`
-3. 重新计算逻辑卷大小 `sudo resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv`
-4. 再次查看磁盘使用情况 `df -h`
-
 ### 设置静态IP
 1. 查看主机网络信息`ifconfig`，其中IP地址为inet，子网掩码为netmask
 2. 查看网关地址 `route -n`
@@ -59,17 +50,14 @@ Ubuntu server 默认使用LVM进行磁盘管理,安装后只使用了硬盘一�
    ```
 4. 修改配置文件
    ```yml
-   network:
-     ethernets:
-       enp3s0:
-         addresses: [192.168.1.100/24]          # 设置静态IP地址(192.168.1.100)和掩码
-         routes:                                 # 设置网关地址
-          - to: default
-            via: 192.168.1.254
-         dhcp4: false                            # 禁用dhcp
-         nameservers:
-           addresses: [114.114.114.114, 8.8.8.8] # 设置主、备DNS
-     version: 2
+     network:
+        version: 2
+        ethernets:
+           enp3s0:
+              addresses: [192.168.1.100/24] # 设置静态IP地址(192.168.1.100)和掩码
+              dhcp4: false                  # 禁用dhcp
+              nameservers:
+                 addresses: [114.114.114.114, 8.8.8.8] # 设置主、备DNS
    ```
 5. 应用配置更改
     ```shell
