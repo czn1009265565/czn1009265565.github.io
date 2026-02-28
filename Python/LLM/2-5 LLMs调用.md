@@ -4,7 +4,7 @@ LangChain 将 LLM 供应商的 API 进行了标准化封装，使得切换不同
 在 LangChain 中，主要有两种类型的模型封装:
 
 - LLMs(OpenAI): 基础文本补全模型。输入一个字符串，输出一个字符串，例如 `Qwen2.5-Coder`
-- ChatModels(ChatOpenAI): 对话优化的模型。它们的输入和输出是结构化的 消息（如 HumanMessage, AIMessage, SystemMessage）
+- ChatModels(ChatOpenAI): 对话优化的模型。它们的输入和输出是结构化的 消息（如 HumanMessage, AIMessage, SystemMessage），例如 `Qwen3-Coder-Flash`
 
 现代应用开发中，更推荐使用 ChatModels
 
