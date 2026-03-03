@@ -15,7 +15,7 @@ PyQt和PySide是两个Python绑定的Qt库，它们都用于在Python中构建GU
 
 ### 安装依赖  
 ```shell
-pip install pyqt6 -i https://mirrors.aliyun.com/pypi/simple
+pip install pyqt6 pyside6 -i https://mirrors.aliyun.com/pypi/simple
 ```
 
 安装完成后，基于脚本测试是否安装成功  
