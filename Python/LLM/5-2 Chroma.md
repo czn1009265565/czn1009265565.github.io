@@ -6,18 +6,10 @@ Chroma 是一个开源的向量数据库，专门为 AI 应用设计，特别适
 这里以Chroma为例
 
 ```shell
-python -m venv chroma
-source chroma/bin/activate  # Linux/macOS
-# 或 chroma\Scripts\activate  # Windows
-
-# 安装Chroma
-pip install chromadb
-
-# 启动服务
-chroma run --host 0.0.0.0 --port 8000
+```shell
+# 对应 langchain 0.0.279
+pip install chromadb==0.4.15
 ```
-
-访问 `http://localhost:8000/api/v2/heartbeat` 查看返回值
 
 ## 基本操作
 
