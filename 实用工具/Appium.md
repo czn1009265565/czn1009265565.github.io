@@ -46,8 +46,15 @@ appium driver install xcuitest
 ### Android SDK 环境配置
 Appium 依赖 Android SDK 中的工具（如 adb）
 
-1. 下载 Android Studio，`https://developer.android.com/studio`
-2. 安装 SDK 平台工具： 打开 Android Studio，进入 SDK Manager，安装以下内容：
+1. 下载 Android Studio，`https://www.androiddevtools.cn/` 安装
+2. 启动提示 `Android studio First Run Unable to access Android sdk add-on list` 选择Setup Proxy
+3. 选择 Manual proxy configuration
+   ```
+   Host name: 127.0.0.1
+   Port: 10808 (VPN代理端口)
+   ```
+4. 点击 Check connection，测试 `https://www.google.com`
+5. 安装 SDK 平台工具： 打开 Android Studio，进入 SDK Manager，安装以下内容：
    - Android SDK Platform-Tools（包含 adb 等关键工具）
    - Android SDK Build-Tools
    - 对应手机Android版本 Android Platform（例如 Android 13 (API 33)）
@@ -141,3 +148,60 @@ Appium Inspector 是一个图形化工具，用于查看移动应用的元素层
 - 验证定位策略：在写代码之前，先测试你的 XPath 或其他定位器是否能正确找到元素
 
 下载地址: `https://github.com/appium/appium-inspector/releases`
+
+
+### 建立连接
+
+#### 参数配置
+```json
+{
+   "platformName": "Android",
+   "appium:platformVersion": "14",
+   "appium:deviceName": "Pixel_6_Pro_API_34",
+   "appium:automationName": "UiAutomator2",
+   "appium:app": "/path/to/your/app.apk",
+   "appium:appPackage": "com.example.myapp",
+   "appium:appActivity": ".MainActivity"
+}
+```
+- platformName: 平台，填 Android 或 iOS
+- platformVersion: 设备安卓版本
+- deviceName: 你的手机或模拟器的名称。可以通过 `adb devices -l` 命令查看
+- automationName: 使用的自动化引擎
+- app(选填): 直接安装测试的APK路径
+- appPackage & appActivity(选填): 要测试的App包名与主界面，可以通过 `adb shell dumpsys window | find "mCurrentFocus"` 命令查看
+
+#### 启动appium
+1. 方式一: 在 Appium Inspector 中直接点击 Start Server 按钮
+2. 方式二: 在命令行 手动启动 appium
+
+#### 建立会话
+填写好 Capabilities 后，点击 Start Session 按钮
+
+
+### 核心界面
+
+1. 应用截图视图（左侧）：实时显示设备屏幕
+2. 元素层级树（中间）：以 XML 结构（称为 DOM 树）展示当前页面的所有 UI 组件
+3. 元素详细信息（右侧）：当你选中某个元素后，这里会显示其所有属性
+
+### 元素定位
+- 从截图中选择
+- 从层级树中点击选择
+- 使用搜索功能，在层级树上方有一个搜索框，可以根据元素的属性进行搜索
+
+### 设备交互
+
+在右侧面板的下方，你会找到 Actions 区域:
+
+- Tap：点击选中的元素
+- Send Keys：向输入框（EditText）元素发送文本
+- Clear：清空输入框的内容
+你可以直接点击这些按钮，动作会实时在你的设备上执行
+
+### 录制操作序列
+
+1. 点击截图视图上方的 `Start Recording` 按钮
+2. 然后你在左侧截图上执行的操作（点击、输入文本等），都会被记录下来
+3. 每记录一个动作，右侧会显示该动作生成的代码
+4. 操作完成后，点击 `Stop Recording`，你可以复制生成的所有代码片段，直接用于你的自动化测试脚本
