@@ -22,6 +22,10 @@ sequenceDiagram
 ## 安装部署
 
 ### Appium
+直接安装(推荐):
+[Appium Desktop](https://github.com/appium/appium-desktop) 集成了Appium与Inspector图形工具
+
+自行安装:
 
 1. 安装node(最新长期支持版本LTS) `https://nodejs.org/zh-cn/download`
 2. 添加node环境变量
@@ -29,6 +33,7 @@ sequenceDiagram
 4. 验证安装 `appium -v`
 5. 安装环境检查工具 `npm install -g appium-doctor`
 6. 检查环境配置 `appium-doctor --android`
+7. 卸载 `npm uninstall -g appium`
 
 启动命令 `appium`, 默认端口 4723
 
