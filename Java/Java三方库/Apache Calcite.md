@@ -1,159 +1,182 @@
 # Apache Calcite
+
 Apache Calcite 是一个动态的数据管理框架。提供了 SQL解析，SQL组装，SQL校验，SQL查询优化，以及多数据源适配等典型数据库管理功能。
 
-核心组件包括: SQL Parser -> Validator -> Query Optimizer -> Query Execution
 
-## SQL 解析
-Apache Calcite 提供了强大的 SQL 解析功能，可以将 SQL 字符串转换为抽象语法树 (AST)
+## 多数据源适配
 
-```java
-public class SQLTest {
-    public void parseSQL(String originSQL) throws SqlParseException {
-        // 使用配置构建解析器
-        SqlParser.Config config = SqlParser.config()
-                .withLex(Lex.MYSQL)  // 使用MySQL词法
-                .withCaseSensitive(false);  // 不区分大小写
+### 功能
+1. 多数据源支持标准SQL统一访问
+2. 统一SQL联邦查询(支持异构数据源连表查询)
+3. 查询性能优化
+    1. 谓词下推: 过滤条件在数据源端执行
+    2. 列剪裁: 只查询需要的列
+    3. 连接顺序优化: 基于成本的连接重排序
+4. 支持实时数据分析(流批一体查询)
 
-        SqlParser parser = SqlParser.create(originSQL, config);
-        // 解析SQL
-        SqlNode sqlNode = parser.parseStmt();
+### 原理
+Calcite 采用智能优化策略，优先将操作下推到数据源执行，只在必要时在内存中进行连接处理，并采用各种技术最大限度减少内存使用。
 
-        // 解析SelectList
-        if (sqlNode instanceof SqlSelect) {
-            SqlSelect select = (SqlSelect) sqlNode;
-            System.out.println("Select List: " + select.getSelectList());
-            System.out.println("From: " + select.getFrom());
-            System.out.println("Where: " + select.getWhere());
-            System.out.println("Group by: " + select.getGroup());
-            System.out.println("Order by: " + select.getOrderList());
-        }
-        
-        // 转换为对应PG语法
-        SqlDialect sqlDialect = PostgresqlSqlDialect.DEFAULT;
-        String translatedSQL = sqlNode.toSqlString(sqlDialect).getSql();
-        System.out.println("PG: " + translatedSQL);
-    }
-
-    public static void main(String[] args) throws SqlParseException {
-        new SQLTest().parseSQL("select c1,c2,c3 from t");
-    }
-}
-```
-
-AST节点类型
-
-| 节点类型 | 对应类           | 描述                     |
-|------|---------------|------------------------|
-| 查询语句 | SqlSelect     | 包含SELECT/FROM/WHERE等子句 |
-| 表达式  | SqlCall       | 函数调用、运算符表达式            |
-| 标识符  | SqlIdentifier | 表名、列名等标识符              |
-| 字面量  | SqlLiteral    | 数值、字符串等常量              |
-
-## SQL 组装
+### CalciteProvider
 
 ```java
-public class SQLTest {
-    public void buildSQL() {
-        List<String> columns = List.of("c1", "c2", "c3");
-        String tableName = "t";
-        List<String> indexColumns = List.of("c1", "c2", "c3");
+@Component
+public class CalciteProvider {
 
-        // 创建 SELECT 列表
-        SqlNodeList selectList = new SqlNodeList(SqlParserPos.ZERO);
-        for (String col : columns) {
-            selectList.add(new SqlIdentifier(col, SqlParserPos.ZERO));
+    private Connection connection;
+
+    public Connection getConnection() {
+        synchronized (CalciteProvider.class) {
+            if (connection == null) {
+                initConnectionPool();
+                return connection;
+            }
+            return connection;
+        }
+    }
+
+    private void initConnectionPool() {
+        // 创建 Calcite JDBC连接
+        Properties info = new Properties();
+        info.setProperty(CalciteConnectionProperty.LEX.camelName(), "JAVA");
+        info.setProperty(CalciteConnectionProperty.FUN.camelName(), "all");
+        info.setProperty(CalciteConnectionProperty.CASE_SENSITIVE.camelName(), "false");
+        info.setProperty(CalciteConnectionProperty.PARSER_FACTORY.camelName(), "org.apache.calcite.sql.parser.impl.SqlParserImpl#FACTORY");
+        info.setProperty(CalciteConnectionProperty.DEFAULT_NULL_COLLATION.camelName(), NullCollation.LAST.name());
+        info.setProperty("remarks", "true");
+        try {
+            Class.forName("org.apache.calcite.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:calcite:", info);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        // 创建 FROM 子句
-        SqlNode from = new SqlIdentifier(tableName, SqlParserPos.ZERO);
-
-        // 创建 WHERE 条件
-        SqlNode whereCondition = new SqlBasicCall(
-                SqlStdOperatorTable.GREATER_THAN,
-                List.of(selectList.get(0), SqlLiteral.createExactNumeric("500", SqlParserPos.ZERO)),
-                SqlParserPos.ZERO
+        // 新增Schema
+        addSchema(
+                "jdbc:mysql://127.0.0.1:3306/dbname",
+                "root",
+                "password",
+                "mysql_db",
+                null);
+        addSchema(
+                "jdbc:postgresql://127.0.0.1:5432/dbname",
+                "postgres",
+                "password",
+                "postgres_db",
+                "public"
         );
+    }
 
-        // 创建 GROUP BY
-        SqlNodeList groupByList = null;
-        if (!CollectionUtils.isEmpty(indexColumns)) {
-            groupByList = new SqlNodeList(SqlParserPos.ZERO);
-            for (String col : indexColumns) {
-                groupByList.add(new SqlIdentifier(col.trim(), SqlParserPos.ZERO));
+    private void addSchema(String jdbcUrl, String username, String password, String schemaName, String schema) {
+        try {
+            Connection connection = getConnection();
+            CalciteConnection calciteConnection = connection.unwrap(CalciteConnection.class);
+            SchemaPlus rootSchema = calciteConnection.getRootSchema();
+            DataSource mysqlDataSource = buildDataSource(jdbcUrl, username, password);
+            buildJdbcSchema(rootSchema, mysqlDataSource, schemaName, schema);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private DataSource buildDataSource(String jdbcUrl, String username, String password) {
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl(jdbcUrl);
+        config.setUsername(username);
+        config.setPassword(password);
+        config.setMinimumIdle(5);
+        config.setMaximumPoolSize(20);
+        config.setConnectionTimeout(10000);
+        config.setIdleTimeout(300000);
+        return new HikariDataSource(config);
+    }
+
+    private void buildJdbcSchema(SchemaPlus rootSchema, DataSource dataSource, String schemaName, String schema) {
+        JdbcSchema jdbcSchema = JdbcSchema.create(rootSchema,
+                schemaName,
+                dataSource,
+                null,
+                schema);
+        rootSchema.add(schemaName, jdbcSchema);
+    }
+
+    public List<String[]> query(String sql) {
+        List<String[]> dataResult = new ArrayList<>();
+        Statement stmt = null;
+        ResultSet rs = null;
+        try {
+            Connection connection = getConnection();
+            CalciteConnection calciteConnection = connection.unwrap(CalciteConnection.class);
+            stmt = calciteConnection.createStatement();
+            // 查询 target_database 数据库中的表
+            rs = stmt.executeQuery(sql);
+            dataResult = getDataResult(rs);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
-        // 分页设置
-        SqlNumericLiteral offset = SqlLiteral.createExactNumeric("0", SqlParserPos.ZERO);
-        SqlNumericLiteral limit = SqlLiteral.createExactNumeric("100", SqlParserPos.ZERO);
-        
-        SqlSelect sqlSelect = new SqlSelect(SqlParserPos.ZERO, null, selectList, from, whereCondition, groupByList,
-                null, null, null, null, offset, limit, null);
-        // 方言类型 MysqlSqlDialect.DEFAULT PostgresqlSqlDialect.DEFAULT等
-        System.out.println(sqlSelect.toSqlString(CalciteSqlDialect.DEFAULT).getSql());
-    }
-    
-    public static void main(String[] args) {
-        new SQLTest().buildSQL();
-    }
-}
-```
-
-## SQL 查询优化
-Apache Calcite 提供了强大的 SQL 查询优化能力，可以将 SQL 查询转换为最优化的执行计划
-
-|规则类别|示例规则|优化效果|
-|谓词下推|FilterPushDown|减少数据传输量30-70%|
-|投影下推|ProjectPushDown|减少字段传输50-90%|
-|连接重排|JoinCommute|降低IO成本20-50%|
-|子查询解耦|SubQueryRemove|提升执行效率2-10倍|
-
-```java
-public class SQLTest {
-    public static void main(String[] args) throws Exception {
-        // 1. 创建框架配置
-        FrameworkConfig config = Frameworks.newConfigBuilder()
-                .build();
-        // 2. 创建 Planner
-        Planner planner = Frameworks.getPlanner(config);
-        // 3. 解析 SQL
-        String sql = "SELECT d.name, COUNT(*) FROM emps e JOIN depts d ON e.deptno = d.deptno " +
-                "WHERE e.age > 30 GROUP BY d.name";
-        SqlNode sqlNode = planner.parse(sql);
-        SqlNode validated = planner.validate(sqlNode);
-        // 4. 转换为关系代数
-        RelRoot relRoot = planner.rel(validated);
-        // 5. 优化
-        RelNode optimizedRel = optimize(relRoot.project());
-        // 6. 输出优化后的 SQL
-        String optimizedSql = toSql(optimizedRel);
-        System.out.println("Optimized SQL:\n" + optimizedSql);
+        return dataResult;
     }
 
-    private static RelNode optimize(RelNode relNode) {
-        // 创建优化器
-        RelOptPlanner planner = relNode.getCluster().getPlanner();
-
-        // 设置规则集
-        planner.addRule(ProjectToWindowRule.PROJECT);
-        planner.addRule(FilterJoinRule.FILTER_ON_JOIN);
-        // 常用规则
-//        planner.addRule(FilterProjectTransposeRule.INSTANCE);  // 过滤和投影交换
-//        planner.addRule(ProjectMergeRule.INSTANCE);           // 合并投影
-//        planner.addRule(FilterJoinRule.FILTER_ON_JOIN);       // 将过滤条件下推到连接
-//        planner.addRule(AggregateProjectMergeRule.INSTANCE);  // 合并聚合和投影
-//        planner.addRule(SortRemoveRule.INSTANCE);             // 移除不必要的排序
-
-        // 执行优化
-        return planner.findBestExp();
-    }
-
-    private static String toSql(RelNode relNode) {
-        RelToSqlConverter converter = new RelToSqlConverter(CalciteSqlDialect.DEFAULT);
-        SqlNode sqlNode = converter.visitChild(0, relNode).asStatement();
-        return sqlNode.toSqlString(CalciteSqlDialect.DEFAULT).getSql();
+    private List<String[]> getDataResult(ResultSet rs) {
+        List<String[]> list = new LinkedList<>();
+        try {
+            ResultSetMetaData metaData = rs.getMetaData();
+            int columnCount = metaData.getColumnCount();
+            while (rs.next()) {
+                String[] row = new String[columnCount];
+                for (int j = 0; j < columnCount; j++) {
+                    int columnType = metaData.getColumnType(j + 1);
+                    switch (columnType) {
+                        case Types.DATE:
+                            if (rs.getDate(j + 1) != null) {
+                                row[j] = rs.getDate(j + 1).toString();
+                            }
+                            break;
+                        case Types.BOOLEAN:
+                            row[j] = rs.getBoolean(j + 1) ? "true" : "false";
+                            break;
+                        default:
+                            if (metaData.getColumnTypeName(j + 1).toLowerCase().equalsIgnoreCase("blob")) {
+                                row[j] = rs.getBlob(j + 1) == null ? "" : rs.getBlob(j + 1).toString();
+                            } else {
+                                row[j] = rs.getString(j + 1);
+                            }
+                            break;
+                    }
+                }
+                list.add(row);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }
 ```
 
 
+### JdbcSchema.create 函数
+```
+JdbcSchema create(SchemaPlus parentSchema,
+                  String name,
+                  DataSource dataSource,
+                  @Nullable String catalog,
+                  @Nullable String schema)
+```
 
+- parentSchema: 当前要创建的 JdbcSchema 的父级 Schema
+- name: 为此 Jdbc Schema 指定的名称。这个名称将在 SQL 查询中用于标识这个 schema（例如 SELECT * FROM "schema_name"."table_name"）
+- dataSource: 封装了到目标数据库的连接信息（如 URL、用户名、密码、连接池配置等）。通常使用如 HikariCP、DBCP 等连接池来创建 DataSource
+- catalog: 对应目标数据库中的 Catalog 名称
+- schema: 对应目标数据库中的 Schema 名称模式,MySQL 中通常传null。在 PostgreSQL 和 SQL Server 中，这指的是数据库下的 Schema
