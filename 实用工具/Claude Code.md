@@ -14,6 +14,8 @@ Claude Code 是由 Anthropic 公司开发的一款具有代理能力的智能编
 ### 1.安装 Node.js 和 npm
 - 确保您的系统已安装 `Node.js` 和 `npm`。可以通过命令 `node -v` 和 `npm -v` 检查版本。
 - 如果未安装，前往 `Node.js`(https://nodejs.org/zh-cn) 官网 下载并安装。
+- 配置npm淘宝镜像 `npm config set registry https://registry.npmmirror.com`
+- 查看镜像配置是否成功 `npm config get registry`
 
 ### 全局安装 Claude Code CLI
 
